@@ -17,9 +17,11 @@ on_success:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
   - git config --global user.email "find.leonardo@gmail.com"
-  - git config --global user.name "Leonardo Perez"
+  - git config --global user.name "Leonardo Perez" 
+  - git remote rename origin upstream
+  - git remote add origin https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60
   - git commit -m "Build commit from AppVeyor."
-  - git push https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git master
+  - git push origin master
 
 notifications:
 - provider: Slack
@@ -28,5 +30,4 @@ notifications:
   on_build_success: true
   on_build_failure: true
   on_build_status_changed: true
-  
-  
+   
