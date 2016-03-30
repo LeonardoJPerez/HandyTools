@@ -20,8 +20,7 @@ on_success:
   - git config --global user.name "lpere42" 
   - git config --global push.default matching
   - git remote rename origin upstream
-  - git remote add origin https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git   
-  - git checkout master
+  - git remote add origin https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
   - git push
 
 notifications:
