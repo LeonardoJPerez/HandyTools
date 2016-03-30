@@ -20,7 +20,6 @@ on_success:
   - git config --global user.name "Leonardo Perez" 
   - git remote rename origin upstream
   - git remote add origin https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60
-  - git commit -m "Build commit from AppVeyor."
   - git push origin master
 
 notifications:
