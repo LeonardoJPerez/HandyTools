@@ -18,8 +18,9 @@ on_success:
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
   - git config --global user.email "find.leonardo@gmail.com"
   - git config --global user.name "lpere42" 
-  - git remote rename origin upstream
-  - git remote add origin git@github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git   
+  #- git remote rename origin upstream
+  - git remote add origin https://lperez:Diamondsword987@github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
+  #- git remote add origin git@github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git   
   - git push origin master
 
 notifications:
@@ -29,4 +30,3 @@ notifications:
   on_build_success: true
   on_build_failure: true
   on_build_status_changed: true
-   
