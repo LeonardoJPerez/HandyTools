@@ -23,7 +23,7 @@ on_success:
   - git remote add origin https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
   - git checkout master
   - git pull
-  - git push origin master
+  - git push upstream master
 
 notifications:
 - provider: Slack
