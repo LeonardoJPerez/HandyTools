@@ -20,8 +20,9 @@ on_success:
   - git config --global user.name "lpere42" 
   - git remote rename origin upstream
   - git remote add origin https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git   
-  - git pull origin master
-  - git push origin master
+  - git checkout origin master
+  - git pull
+  - git push
 
 notifications:
 - provider: Slack
