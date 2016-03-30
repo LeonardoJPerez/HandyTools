@@ -1,0 +1,59 @@
+﻿<div class="container" ng-controller="loginController as vm">
+    <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+
+        <div class="row">
+            <div class="span4"></div>
+            <div class="span4"><img src="/Assets/constructocat2.jpg" class="iconmelon center-block" alt="Constructocat" /></div>
+            <div class="span4"></div>
+        </div>
+
+        <div class="panel panel-default" ng-form name="loginForm">
+            <div class="panel-body">
+
+                <div class="input-group" ng-class="!loginForm.user.$valid ? 'has-error' : ''">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+
+                    <input id="customer" type="email" class="form-control" name="user" placeholder="User Name"
+                           ng-model="vm.userName" ng-show="vm.userType === 'customer'">
+
+                    <input id="clerk" type="text" class="form-control" name="clerk" placeholder="Clerk User Name"
+                           ng-model="vm.userName" ng-hide="vm.userType !== 'clerk'">
+                </div>
+
+                <br />
+                <div class="input-group" ng-class="!loginForm.password.$valid ? 'has-error' : ''">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password"
+                           ng-model="vm.password" required>
+                </div>
+
+                <br />
+
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn" ng-class="vm.userType === 'customer' ? 'btn-primary' : 'btn-disabled'"
+                                ng-click="vm.setUserType('customer')">
+                            Customer
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn" ng-class="vm.userType !== 'customer' ? 'btn-primary' : 'btn-disabled'"
+                                ng-click="vm.setUserType('clerk')">
+                            Clerk
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!-- Button -->
+                    <br />
+                    <div class="col-sm-12 controls">
+                        <button class="btn btn-primary pull-right" ng-click="vm.login()">
+                            <i class="glyphicon glyphicon-log-in"></i> Log in
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

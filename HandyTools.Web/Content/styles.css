@@ -1,0 +1,65 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    border-top: solid #eee 1px;
+    background-color: #eee;
+}
+
+    .footer div {
+        width: 200px;
+        padding-top: 1em;
+    }
+
+.iconmelon {
+    width: 50%;
+    height: 50%;
+}
+
+#loginbox {
+    margin-top: 3em;
+}
+
+.glyphicon-none:before {
+    content: "\2122";
+    color: transparent !important;
+}
+
+.row.top-buffer {
+    margin-top: 2em;
+}
+
+.form-horizontal.create-profile .control-label {
+    padding-top: 0;
+}
+
+
+.img-circle {
+    margin-right: 1em;
+    margin-top: .5em;
+    margin-left: .5em;
+}
+
+.nav .dropdown, .logout {
+    cursor: pointer;
+
+}

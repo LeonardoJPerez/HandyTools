@@ -1,0 +1,44 @@
+﻿<div class="container" ng-controller="reservationController as vm">
+    <div class="row top-buffer">
+        <div class="pull-left">
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.createReservation()">
+                <i class="glyphicon glyphicon-plus"></i>
+                <i class="glyphicon glyphicon-none"></i> Make a Reservation
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.refresh()">
+                <i class="glyphicon glyphicon-refresh"></i>
+                <i class="glyphicon glyphicon-none"></i> Refresh
+            </button>
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <table datatable="" class="table table-striped table-hover ">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Foo</td>
+                    <td>Bar</td>
+                </tr>
+                <tr>
+                    <td>123</td>
+                    <td>Someone</td>
+                    <td>Youknow</td>
+                </tr>
+                <tr>
+                    <td>987</td>
+                    <td>Iamout</td>
+                    <td>Ofinspiration</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
