@@ -9,6 +9,18 @@ build:
   project: HandyTools.sln
   verbosity: minimal
   
+environment:
+  access_token:
+    secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
+    
+on_success:
+  - git config --global credential.helper store
+  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git config --global user.email "find.leonardo@gmail.com"
+  - git config --global user.name "Leonardo Perez"
+  - git commit -m "Build commit from AppVeyor."
+  - git push https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git master
+
 notifications:
 - provider: Slack
   incoming_webhook: https://hooks.slack.com/services/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
@@ -16,3 +28,5 @@ notifications:
   on_build_success: true
   on_build_failure: true
   on_build_status_changed: true
+  
+  
