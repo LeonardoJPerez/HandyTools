@@ -33,7 +33,7 @@ deploy:
     secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
   region: us-east-1
   bucket: handytools-api
-  artifacts: handytoolswebapi
+  artifacts: handytoolsapi
   set_public: true
     
 on_success:
@@ -48,8 +48,8 @@ on_success:
   - git push gatech master
   
 after_build:
-  - ps: $root = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -DeploymentName handytoolsweb }
-  - ps: $root = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -DeploymentName handytoolswebapi }
+  - ps: $root = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName handytoolsweb }
+  - ps: $root = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName handytoolsapi }
 
 notifications:
 - provider: Slack
