@@ -48,8 +48,8 @@ on_success:
   - git push gatech master
   
 after_build:
-  - ps: $root = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName handytoolsweb }
-  - ps: $root = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName handytoolswebapi }
+  - ps: $root = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_) -DeploymentName handytoolsweb }
+  - ps: $root = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_) -DeploymentName handytoolswebapi }
 
 notifications:
 - provider: Slack

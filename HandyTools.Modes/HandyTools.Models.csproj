@@ -7,8 +7,8 @@
     <ProjectGuid>{F1F15717-7A41-4FDD-883E-40728976A38F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HandyTools.Modes</RootNamespace>
-    <AssemblyName>HandyTools.Modes</AssemblyName>
+    <RootNamespace>HandyTools.Models</RootNamespace>
+    <AssemblyName>HandyTools.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

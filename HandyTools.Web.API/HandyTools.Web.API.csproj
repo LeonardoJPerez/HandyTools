@@ -206,9 +206,9 @@
       <Project>{379ae69e-08b9-440f-8c67-a8d9425eb793}</Project>
       <Name>HandyTools.Database</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HandyTools.Modes\HandyTools.Modes.csproj">
+    <ProjectReference Include="..\HandyTools.Modes\HandyTools.Models.csproj">
       <Project>{f1f15717-7a41-4fdd-883e-40728976a38f}</Project>
-      <Name>HandyTools.Modes</Name>
+      <Name>HandyTools.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

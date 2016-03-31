@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Database", "HandyTools.Database\HandyTools.Database.csproj", "{379AE69E-08B9-440F-8C67-A8D9425EB793}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Modes", "HandyTools.Modes\HandyTools.Modes.csproj", "{F1F15717-7A41-4FDD-883E-40728976A38F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Models", "HandyTools.Modes\HandyTools.Models.csproj", "{F1F15717-7A41-4FDD-883E-40728976A38F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Web", "HandyTools.Web\HandyTools.Web.csproj", "{94CD745C-8645-4383-A448-32C0FD7FEE9C}"
 EndProject
