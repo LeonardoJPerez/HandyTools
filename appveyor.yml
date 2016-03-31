@@ -20,9 +20,10 @@ environment:
 
 artifacts:
 - path: HandyTools.Web\*
-    name: handytoolsweb
+  name: handytoolsweb
+  
 - path: HandyTools.Web.API\*
-    name: handytoolsapi
+  name: handytoolsapi
 
 deploy:
 - provider: S3
