@@ -19,9 +19,9 @@ environment:
         secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv 
 
 artifacts:
-  - path: HandyTools.Web\*
+- path: HandyTools.Web\*
     name: handytoolsweb
-     - path: HandyTools.Web.API\*
+- path: HandyTools.Web.API\*
     name: handytoolsapi
 
 deploy:
