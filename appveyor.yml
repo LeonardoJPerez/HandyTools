@@ -24,7 +24,7 @@ environment:
 #         secure: ms/NiihkXlzalWGYkQ9WN3z+P+tpAUzhH/r1kDDHYtk=
 #     secret_access_key:
 #         secure: BF3muB5RvCK9P5fD422fXipJy5C3WlYhZi0Q9TM12iQ2PUMzIPdUcgm3Khj9IwvH
-#     bucket: elasticbeanstalk-us-east-1-430147571149
+#     bucket: handytools
 #     set_public: false
     
 on_success:
@@ -34,8 +34,8 @@ on_success:
   - git config --global user.name "lperez42"
   - git remote rename origin upstream
   - git remote add gatech https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
-  - git checkout master
-  - git pull gatech master
+#   - git checkout master
+#   - git pull gatech master
   - git push gatech master
 
 notifications:
