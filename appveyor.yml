@@ -16,7 +16,7 @@ branches:
        
 environment:
     access_token:
-        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv       
+        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv 
 
 deploy:
 - provider: S3
@@ -25,7 +25,7 @@ deploy:
     secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
   region: us-east-1
   bucket: handytools
-  folder: HandyTools.Web\*
+  artifacts: handytoolsweb
   set_public: true
 - provider: S3
   access_key_id: AKIAJ5FDT2D2WPEZIUMA
@@ -33,9 +33,9 @@ deploy:
     secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
   region: us-east-1
   bucket: handytools-api
-  folder: HandyTools.Web.API\*
+  artifacts: handytoolswebapi
   set_public: true
-
+    
 on_success:
   - git config --global credential.helper store
   - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git`n"
@@ -45,7 +45,11 @@ on_success:
   - git remote add gatech https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
   - git checkout master
   - git pull gatech master
-  - git push gatech master  
+  - git push gatech master
+  
+after_build:
+  - ps: $root = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName handytoolsweb }
+  - ps: $root = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($root.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($root.Path.Length + 1) -DeploymentName handytoolswebapi }
 
 notifications:
 - provider: Slack
@@ -53,4 +57,4 @@ notifications:
   channel: handytools-bot
   on_build_success: true
   on_build_failure: true
-  on_build_status_changed: true 
+  on_build_status_changed: true
