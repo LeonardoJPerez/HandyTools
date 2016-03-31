@@ -13,35 +13,48 @@ branches:
 #Whitelist
     only:
         - master
-       
+
+#Token used for Github Enterprise deployment to GaTech Repo.       
 environment:
-    access_token:
+    access_token:        
         secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
-        
-# deploy:
-#     provider: S3
-#     access_key_id:
-#         secure: ms/NiihkXlzalWGYkQ9WN3z+P+tpAUzhH/r1kDDHYtk=
-#     secret_access_key:
-#         secure: BF3muB5RvCK9P5fD422fXipJy5C3WlYhZi0Q9TM12iQ2PUMzIPdUcgm3Khj9IwvH
-#     bucket: handytools
-#     set_public: false
+
+deploy:
+- provider: S3
+    access_key_id:
+        secure: 6GxC48+3M7FM873hSLQSun/xtHad4ugwl1KKEeTj45k=
+    secret_access_key:
+        secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
+    region: us-east-1
+    bucket: handytools
+    folder: HandyTools.Web
+    set_public: true
+- provider: S3
+    access_key_id:
+        secure: 6GxC48+3M7FM873hSLQSun/xtHad4ugwl1KKEeTj45k=
+    secret_access_key:
+        secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
+    region: us-east-1
+    bucket: handytools-api
+    folder: HandyTools.Web.API
+    set_public: true        
     
 on_success:
-  - git config --global credential.helper store
-  - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git`n"
-  - git config --global user.email "find.leonardo@gmail.com"
-  - git config --global user.name "lperez42"
-  - git remote rename origin upstream
-  - git remote add gatech https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
-  - git pull gatech master
-  - git push gatech master
+    - git config --global credential.helper store
+    - ps: Add-Content "$env:USERPROFILE\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git`n"
+    - git config --global user.email "find.leonardo@gmail.com"
+    - git config --global user.name "lperez42"
+    - git remote rename origin upstream
+    - git remote add gatech https://github.gatech.edu/gt-omscs-dbscd/CS6400Spring16Team60.git
+    - git checkout master
+    - git pull gatech master
+    - git push gatech master
 
 notifications:
 - provider: Slack
-  incoming_webhook: https://hooks.slack.com/services/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
-  channel: handytools-bot
-  on_build_success: true
-  on_build_failure: true
-  on_build_status_changed: true
+    incoming_webhook: https://hooks.slack.com/services/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
+    channel: handytools-bot
+    on_build_success: true
+    on_build_failure: true
+    on_build_status_changed: true
    
