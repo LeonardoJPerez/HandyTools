@@ -6,12 +6,17 @@ before_build:
 - cmd: nuget restore
 
 build:
-  project: HandyTools.sln
-  verbosity: minimal
-  
+    project: HandyTools.sln
+    verbosity: minimal
+ 
+branches:
+#Whitelist
+    only:
+        - master
+       
 environment:
-  access_token:
-    secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
+    access_token:
+        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
     
 on_success:
   - git config --global credential.helper store
