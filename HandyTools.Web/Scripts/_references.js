@@ -58,6 +58,7 @@
 /// <reference path="datatables/responsive.bootstrap.js" />
 /// <reference path="datatables/responsive.foundation.js" />
 /// <reference path="datatables/responsive.jqueryui.js" />
+/// <reference path="event.min.js" />
 /// <reference path="jquery-2.2.1.js" />
 /// <reference path="jquery-2.2.2.js" />
 /// <reference path="jquery-2.2.2.min.js" />

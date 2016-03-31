@@ -52,7 +52,6 @@ body {
     padding-top: 0;
 }
 
-
 .img-circle {
     margin-right: 1em;
     margin-top: .5em;
@@ -61,5 +60,12 @@ body {
 
 .nav .dropdown, .logout {
     cursor: pointer;
+}
 
+.has-error .form-control, .has-error .form-control:focus {
+    border: 2px solid #e74c3c;
+}
+
+#loading-bar .bar {
+    background: #18bc9c !important; 
 }
