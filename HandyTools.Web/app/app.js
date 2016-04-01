@@ -38,7 +38,7 @@
                 })
                  .when("/login", {
                      controller: "loginController",
-                     controllerAs: "vm",
+                     controllerAs: "login",
                      templateUrl: "app/login/loginView.html",
                      data: {
                          authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
@@ -46,7 +46,7 @@
                  })
                 .when("/profile/create", {
                     controller: "profileController",
-                    controllerAs: "vm",
+                    controllerAs: "profile",
                     templateUrl: "app/profile/profileCreateView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Customer]
@@ -59,7 +59,7 @@
                 })
                 .when("/reservations", {
                     controller: "reservationController",
-                    controllerAs: "vm",
+                    controllerAs: "reservation",
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
@@ -72,7 +72,7 @@
                 })
                 .when("/pickups", {
                     controller: "reservationController",
-                    controllerAs: "vm",
+                    controllerAs: "pickups",
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk]
@@ -83,7 +83,7 @@
                         }
                     }
                 })
-                .otherwise("/");
+                .otherwise({ redirectTo: "/" });
         })
         .config(function ($httpProvider) {
             $httpProvider.interceptors.push([

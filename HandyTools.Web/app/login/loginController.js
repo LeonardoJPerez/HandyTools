@@ -54,13 +54,12 @@
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
                 $scope.setCurrentUser(user);
 
-                // Add switch 
+                // Add switch
                 if (user.role === USER_ROLES.Customer) {
-                    $window.location = APPSETTINGS.ApplicationPaths.CustomerHome;
+                    $window.location.href = APPSETTINGS.ApplicationPaths.CustomerHome;
                 } else {
-                    $window.location = APPSETTINGS.ApplicationPaths.ClerkHome;
+                    $window.location.href = APPSETTINGS.ApplicationPaths.ClerkHome;
                 }
-
             }, function (error) {
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginFailed);
                 displayError(error);
