@@ -1,75 +1,78 @@
-﻿<ul class="nav navbar-nav navbar-right" ng-if="currentUser && currentUser.role == USER_ROLES.Customer" ng-controller="navigationController">
-    <li>
-        <a href="#/reservations">Reservations</a>
-    </li>
-    <li>
-        <a href="#/tools">Tools Availability</a>
-    </li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-            Account <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                <a href="#/profile">
-                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    <i class="glyphicon glyphicon-none"></i> Profile
-                </a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a ng-click="vm.logoff()">
-                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                    <i class="glyphicon glyphicon-none"></i> Logout
-                </a>
-            </li>
-        </ul>
-    </li>
-</ul>
+﻿<div ng-model="vm" ng-controller="navigationController as vm">
 
-<ul class="nav navbar-nav navbar-right" ng-if="currentUser && currentUser.role == USER_ROLES.Clerk" ng-controller="navigationController">
-    <li>
-        <a href="#/pickup">Pick Ups</a>
-    </li>
-    <li>
-        <a href="#/dropoff">Drop Offs</a>
-    </li>
-    <li>
-        <a href="#/service-orders">Service Orders</a>
-    </li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-            Tools <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                <a href="#/add-tool">Add Tool</a>
-            </li>
-            <li>
-                <a href="#/sale">Mark for Sale</a>
-            </li>
-        </ul>
-    </li>
-    <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-            Reports <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-            <li>
-                <a href="#/report1">Report 1</a>
-            </li>
-            <li>
-                <a href="#/report2">Report 2</a>
-            </li>
-            <li>
-                <a href="#/report3">Report 3</a>
-            </li>
-        </ul>
-    </li>
-    <li>
-        <a class="logout" ng-click="vm.logoff()">
-            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-            <i class="glyphicon glyphicon-none"></i> Logout
-        </a>
-    </li>
-</ul>
+    <ul class="nav navbar-nav navbar-right" ng-show="vm.currentRole === 'customer'">
+        <li>
+            <a href="#/reservations">Reservations</a>
+        </li>
+        <li>
+            <a href="#/tools">Tools Availability</a>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                Account <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#/profile">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <i class="glyphicon glyphicon-none"></i> Profile
+                    </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a ng-click="vm.logoff()">
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        <i class="glyphicon glyphicon-none"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right" ng-hide="vm.currentRole !== 'clerk'">
+        <li>
+            <a href="#/pickup">Pick Ups</a>
+        </li>
+        <li>
+            <a href="#/dropoff">Drop Offs</a>
+        </li>
+        <li>
+            <a href="#/service-orders">Service Orders</a>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                Tools <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#/add-tool">Add Tool</a>
+                </li>
+                <li>
+                    <a href="#/sale">Mark for Sale</a>
+                </li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                Reports <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="#/report1">Report 1</a>
+                </li>
+                <li>
+                    <a href="#/report2">Report 2</a>
+                </li>
+                <li>
+                    <a href="#/report3">Report 3</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="logout" ng-click="vm.logoff()">
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                <i class="glyphicon glyphicon-none"></i> Logout
+            </a>
+        </li>
+    </ul>
+</div>

@@ -1,8 +1,6 @@
 ﻿(function () {
     "use strict";
 
-    var _currentUser = null;
-
     var app = angular
         .module("handytoolsApp", ["ngRoute", "ngAnimate", "ngCookies", "angular-loading-bar", "ui.event", "datatables", "handy.services"])
         .constant("APPSETTINGS",
@@ -26,7 +24,6 @@
             }
         })
         .constant("USER_ROLES", {
-            All: "*",
             Clerk: "clerk",
             Customer: "customer"
         })
@@ -34,17 +31,30 @@
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
-                .when("/", {                                  
+                .when("/", {                    
                     data: {
-                        authorizedRoles: [USER_ROLES.All]
+                        authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
                 })
+                 .when("/login", {
+                     controller: "loginController",
+                     controllerAs: "vm",
+                     templateUrl: "app/login/loginView.html",
+                     data: {
+                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
+                     }
+                 })
                 .when("/profile/create", {
                     controller: "profileController",
                     controllerAs: "vm",
                     templateUrl: "app/profile/profileCreateView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Customer]
+                    },
+                    resolve: {
+                        "auth": function (authResolver) {
+                            return authResolver.resolve();
+                        }
                     }
                 })
                 .when("/reservations", {
@@ -53,6 +63,11 @@
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
+                    },
+                    resolve: {
+                        "auth": function (authResolver) {
+                            return authResolver.resolve();
+                        }
                     }
                 })
                 .when("/pickups", {
@@ -61,6 +76,11 @@
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk]
+                    },
+                    resolve: {
+                        "auth": function (authResolver) {
+                            return authResolver.resolve();
+                        }
                     }
                 })
                 .otherwise("/");

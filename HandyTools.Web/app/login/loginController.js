@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("loginController", ["$rootScope", "$scope", "handy.authService", "APPSETTINGS", loginController]);
+        .controller("loginController", ["$rootScope", "$scope", "$window", "handy.authService", "APPSETTINGS", "USER_ROLES", loginController]);
 
-    function loginController($rootScope, $scope, authService, APPSETTINGS) {
+    function loginController($rootScope, $scope, $window, authService, APPSETTINGS, USER_ROLES) {
         var vm = this;
         vm.userName = "";
         vm.clerkName = "";
@@ -53,6 +53,14 @@
             authService.login(vm.credentials).then(function (user) {
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
                 $scope.setCurrentUser(user);
+
+                // Add switch 
+                if (user.role === USER_ROLES.Customer) {
+                    $window.location = APPSETTINGS.ApplicationPaths.CustomerHome;
+                } else {
+                    $window.location = APPSETTINGS.ApplicationPaths.ClerkHome;
+                }
+
             }, function (error) {
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginFailed);
                 displayError(error);

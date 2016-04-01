@@ -8,6 +8,7 @@
 /// <reference path="../app/reservation/reservationController.js" />
 /// <reference path="../app/services/handy.api.js" />
 /// <reference path="../app/services/handy.authinterceptor.js" />
+/// <reference path="../app/services/handy.authresolver.js" />
 /// <reference path="../app/services/handy.authservice.js" />
 /// <reference path="../app/services/handy.services.js" />
 /// <reference path="../app/services/handy.session.js" />

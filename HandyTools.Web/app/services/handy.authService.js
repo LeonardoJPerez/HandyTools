@@ -29,8 +29,10 @@
             return (_authService.isAuthenticated() && authorizedRoles.indexOf(session.userRole) !== -1);
         };
 
-        _authService.logoff = function () {
+        _authService.logoff = function (callback) {
             // Clear session
+            session.destroy();
+            callback({});
         };
 
         // Private Methods

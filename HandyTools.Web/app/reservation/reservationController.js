@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("reservationController", ["$route", "handy.api", reservationController]);
+        .controller("reservationController", ["$route", reservationController]);
 
-    function reservationController($route, handyApi) {
+    function reservationController($route) {
         var vm = this;
 
         vm.refresh = function () {
