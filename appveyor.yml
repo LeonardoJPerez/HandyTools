@@ -7,7 +7,7 @@ before_build:
 
 build:
     project: HandyTools.sln
-    verbosity: minimal
+    verbosity: normal
  
 branches:
 #Whitelist
@@ -16,14 +16,7 @@ branches:
        
 environment:
     access_token:
-        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv 
-
-artifacts:
-- path: HandyTools.Web\*
-  name: handytoolsweb
-  
-- path: HandyTools.Web.API\*
-  name: handytoolsapi
+        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
 
 deploy:
 - provider: S3
@@ -32,16 +25,16 @@ deploy:
     secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
   region: us-east-1
   bucket: handytools  
-  artifacts: handytoolsweb
-  set_public: true
+  artifact: handytoolsweb
+  set_public: false
 - provider: S3
   access_key_id: AKIAJ5FDT2D2WPEZIUMA
   secret_access_key:
     secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
   region: us-east-1
   bucket: handytools-api
-  artifacts: handytoolsapi
-  set_public: true
+  artifact: handytoolsapi
+  set_public: false
     
 on_success:
   - git config --global credential.helper store
