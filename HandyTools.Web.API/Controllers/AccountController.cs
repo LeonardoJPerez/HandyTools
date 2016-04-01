@@ -51,14 +51,16 @@ namespace HandyTools.Web.API.Controllers
                         return Ok<LoginResponse>(new LoginResponse
                         {
                             UserName = login.UserName,
-                            Code = this._repository.AuthenticateUser<Customer>(login.UserName, login.Password)
+                            Code = this._repository.AuthenticateUser<Customer>(login.UserName, login.Password),
+                            Role = login.Type
                         });
 
                     case "clerk":
                         return Ok<LoginResponse>(new LoginResponse
                         {
                             UserName = login.UserName,
-                            Code = this._repository.AuthenticateUser<Clerk>(login.UserName, login.Password, false)
+                            Code = this._repository.AuthenticateUser<Clerk>(login.UserName, login.Password, false),
+                            Role = login.Type
                         });
 
                     default:

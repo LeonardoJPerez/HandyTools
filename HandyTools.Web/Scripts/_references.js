@@ -6,7 +6,6 @@
 /// <reference path="../app/navigation/navigationController.js" />
 /// <reference path="../app/profile/profileController.js" />
 /// <reference path="../app/reservation/reservationController.js" />
-/// <reference path="../app/services/currentUser.js" />
 /// <reference path="../app/services/handy.api.js" />
 /// <reference path="../app/services/handy.authinterceptor.js" />
 /// <reference path="../app/services/handy.authservice.js" />

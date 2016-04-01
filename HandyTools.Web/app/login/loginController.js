@@ -3,27 +3,25 @@
 
     angular
         .module("handytoolsApp")
-        .controller("loginController", ["$route", "$rootScope", "$scope", "handy.authService", "APPSETTINGS", loginController]);
+        .controller("loginController", ["$rootScope", "$scope", "handy.authService", "APPSETTINGS", loginController]);
 
-    function loginController($route, $rootScope, $scope, authService, APPSETTINGS) {
+    function loginController($rootScope, $scope, authService, APPSETTINGS) {
         var vm = this;
+        vm.userName = "";
+        vm.clerkName = "";
+        vm.error = false;
+
         vm.credentials = {
             username: "",
             password: "",
             type: "customer"
         };
 
-        vm.userName = "";
-        vm.clerkname = "";
-
-        vm.error = false;
-        vm.errorMessage = "";
-
         vm.isCustomer = function () {
             return vm.credentials.type === "customer";
         }
 
-        vm.validateInput = function (isvalid, elemid) {
+        vm.validate = function (isvalid, elemid) {
             if (isvalid) {
                 angular.element("#" + elemid).removeClass("has-error");
             } else {
@@ -32,8 +30,10 @@
         }
 
         vm.setUserType = function (userType) {
-            if (userType === vm.userType) { return; }
+            if (userType === vm.credentials.type) { return; }
+
             vm.credentials.type = "none";
+
             angular.element("#customer").addClass("ng-hide");
             angular.element("#clerk").addClass("ng-hide");
 
@@ -44,25 +44,26 @@
             if (vm.isCustomer()) {
                 credentials.username = vm.userName;
             } else {
-                credentials.username = vm.clerkname;
+                credentials.username = vm.clerkName;
             }
 
             // Clear error messages.
             vm.error = false;
 
-            authService.login.then(function (user) {
-                $rootScope.$broadcast(APPSETTINGS.loginSuccess);
-                vm.setCurrentUser(user);
-            }, function () {
-                $rootScope.$broadcast(APPSETTINGS.loginFailed);
+            authService.login(vm.credentials).then(function (user) {
+                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
+                $scope.setCurrentUser(user);
+            }, function (error) {
+                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginFailed);
                 displayError(error);
             });
         }
+
+        // Private Methods
 
         function displayError(error) {
             vm.error = true;
             console.log(error);
         }
     };
-
 }());

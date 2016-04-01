@@ -3,39 +3,20 @@
 
     angular
         .module("handy.services")
-        .factory("handy.authService", ["$http", "handy.session", "handy.api", authService]);
+        .factory("handy.authService", ["$http", "handy.session", "$q", "handy.api", authService]);
 
-    function authService($http, session, handyApi) {
+    function authService($http, session, $q, handyApi) {
         var _authService = {};
 
         _authService.login = function (credentials) {
-            handyApi.Login.save({
+            return handyApi.Login.save({
                 "userName": credentials.username,
                 "password": credentials.password,
                 "type": credentials.type
-            }).$promise.then(
-                // Success
-                function (data) {
-                    var type = "invalid";
-                    switch (data.code) {
-                        case 1: // Wrong password
-                            type = credentials.type;
-                            break;
-                        case -1: // User not found.
-                            if (credentials.type === "customer") {
-                                type = "new";
-                            }
-                            break;
-                    }
-
-                    session.create(credentials.username, credentials.username, credentials.type);
-
-                    return {
-                        username: credentials.username,
-                        type: type
-                    }
-                });
-        }
+            })
+                .$promise
+                .then(handleLoginResponse);
+        };
 
         _authService.isAuthenticated = function () {
             return !!session.userId;
@@ -50,6 +31,36 @@
 
         _authService.logoff = function () {
             // Clear session
+        };
+
+        // Private Methods
+
+        function handleLoginResponse(res) {
+            var deferred = $q.defer();
+            var role = "invalid";
+            switch (res.code) {
+                case 1: // Wrong password
+                    role = res.role;
+                    break;
+                case -1: // User not found.
+                    if (res.role === "customer") { role = "new"; }
+                    break;
+            }
+
+            // Set new response object with modified role.
+            var response = {
+                username: res.userName,
+                role: role
+            };
+
+            if (role !== "invalid") {
+                session.create(response.username, response.username, response.role);
+                deferred.resolve(response);
+            } else {
+                deferred.reject(response);
+            }
+
+            return deferred.promise;
         }
 
         return _authService;

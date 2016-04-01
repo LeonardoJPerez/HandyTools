@@ -27,19 +27,16 @@
         })
         .constant("USER_ROLES", {
             All: "*",
-            clerk: "clerk",
-            customer: "customer"
+            Clerk: "clerk",
+            Customer: "customer"
         })
         .config(function ($routeProvider, $locationProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
-                .when("/", {
+                .when("/", {                                  
                     data: {
                         authorizedRoles: [USER_ROLES.All]
-                    },
-                    redirectTo: function(params, currPath, currSearch) {
-
                     }
                 })
                 .when("/profile/create", {
@@ -47,7 +44,7 @@
                     controllerAs: "vm",
                     templateUrl: "app/profile/profileCreateView.html",
                     data: {
-                        authorizedRoles: [USER_ROLES.customer]
+                        authorizedRoles: [USER_ROLES.Customer]
                     }
                 })
                 .when("/reservations", {
@@ -55,7 +52,7 @@
                     controllerAs: "vm",
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
-                        authorizedRoles: [USER_ROLES.clerk, USER_ROLES.customer]
+                        authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
                 })
                 .when("/pickups", {
@@ -63,9 +60,10 @@
                     controllerAs: "vm",
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
-                        authorizedRoles: [USER_ROLES.clerk]
-                    },
-                });
+                        authorizedRoles: [USER_ROLES.Clerk]
+                    }
+                })
+                .otherwise("/");
         })
         .config(function ($httpProvider) {
             $httpProvider.interceptors.push([
@@ -76,7 +74,7 @@
             ]);
         });
 
-    app.run(["$rootScope", "APPSETTINGS", "handy.authService", function ($rootScope, APPSETTINGS, authService) {
+    app.run(["$rootScope", "$location", "APPSETTINGS", "handy.authService", function ($rootScope, $location, APPSETTINGS, authService) {
         $rootScope.$on("$routeChangeStart", function (event, next) {
             var authorizedRoles = next.data.authorizedRoles;
             if (!authService.isAuthorized(authorizedRoles)) {

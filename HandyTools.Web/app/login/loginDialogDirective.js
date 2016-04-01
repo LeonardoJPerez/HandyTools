@@ -6,7 +6,7 @@
         .directive("loginDialogDirective", function (APPSETTINGS) {
             return {
                 restrict: "A",
-                template: "<div ng-if=\"visible\" ng-include=\"loginView.html\">",
+                template: "<div ng-if=\"visible\" ng-include=\"'app/login/loginView.html'\">",
                 link: function (scope) {
                     var showDialog = function () {
                         scope.visible = true;

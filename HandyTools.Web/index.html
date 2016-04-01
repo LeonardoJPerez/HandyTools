@@ -14,7 +14,7 @@
 
     <script src="Scripts/modernizr-2.8.3.js"></script>
 </head>
-<body ng-app="handytoolsApp" ng-controller="mainController as vm">
+<body ng-app="handytoolsApp" ng-controller="mainController">
     <div id="wrapper">
 
         <!-- Page Content -->
@@ -32,14 +32,15 @@
                         <a class="navbar-brand" href="#/">Handy Tools Management System</a>
                     </div>
 
-                    <div class="navbar-collapse collapse" ng-if="vm.isAuthorized" ng-include="'app/navigation/navigationView.html'"></div>
+                    <div class="navbar-collapse collapse" ng-if="currentUser" ng-include="'app/navigation/navigationView.html'"></div>
                 </div>
             </div>
 
             <!-- Body Content -->
             <div class="container-fluid">
                 <div class="container body-content">
-                    <div login-dialog ng-if="!vm.isAuthenticated"></div>
+                    <!-- Authentication Directive -->
+                    <div login-dialog-directive ng-if="!isAuthenticated()"></div>
                     <div ng-view></div>
                 </div>
 

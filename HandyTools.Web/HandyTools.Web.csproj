@@ -138,7 +138,6 @@
     <Content Include="app\reservation\reservationController.js" />
     <Content Include="app\reservation\reservationCreateView.html" />
     <Content Include="app\reservation\reservationsView.html" />
-    <Content Include="app\services\currentUser.js" />
     <Content Include="app\services\handy.api.js" />
     <Content Include="app\services\handy.services.js" />
     <Content Include="Assets\constructocat2.jpg" />

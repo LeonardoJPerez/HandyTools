@@ -1,5 +1,4 @@
-﻿<
-<ul class="nav navbar-nav navbar-right" ng-if="vm.isAuthorized(userRoles.customer)" ng-controller="navigationController as vm">
+﻿<ul class="nav navbar-nav navbar-right" ng-if="currentUser && currentUser.role == USER_ROLES.Customer" ng-controller="navigationController">
     <li>
         <a href="#/reservations">Reservations</a>
     </li>
@@ -28,7 +27,7 @@
     </li>
 </ul>
 
-<ul class="nav navbar-nav navbar-right" ng-if="vm.isAuthorized(userRoles.clerk)" ng-controller="navigationController as vm">
+<ul class="nav navbar-nav navbar-right" ng-if="currentUser && currentUser.role == USER_ROLES.Clerk" ng-controller="navigationController">
     <li>
         <a href="#/pickup">Pick Ups</a>
     </li>

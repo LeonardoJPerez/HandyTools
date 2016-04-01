@@ -11,7 +11,7 @@
             <div class="panel-heading" ng-show="vm.error">
                 <div class="panel-title text-center text-danger">
                     Username or Password incorrect.
-                    <br/>
+                    <br />
                     Please try again
                 </div>
             </div>
@@ -21,20 +21,20 @@
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 
                     <input id="customer" type="email" class="form-control" name="user" placeholder="User Name" required
-                           ng-blur="vm.validateInput(loginForm.user.$valid, 'username-section')"
-                           ng-model="vm.userName" ng-show="vm.userType === 'customer'">
+                           ng-blur="vm.validate(loginForm.user.$valid, 'username-section')"
+                           ng-model="vm.userName" ng-show="vm.credentials.type === 'customer'">
 
                     <input id="clerk" type="text" class="form-control" name="clerk" placeholder="Clerk User Name" required
-                           ng-blur="vm.validateInput(loginForm.user.$valid, 'username-section')"
-                           ng-model="vm.clerkName" ng-hide="vm.userType !== 'clerk'">
+                           ng-blur="vm.validate(loginForm.user.$valid, 'username-section')"
+                           ng-model="vm.clerkName" ng-hide="vm.credentials.type !== 'clerk'">
                 </div>
 
                 <br />
                 <div id="password-section" class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                     <input id="password" type="password" class="form-control" name="password" placeholder="Password"
-                           ng-blur="vm.validateInput(loginForm.password.$valid, 'password-section')"
-                           ng-model="vm.password" required>
+                           ng-blur="vm.validate(loginForm.password.$valid, 'password-section')"
+                           ng-model="vm.credentials.password" required>
                 </div>
 
                 <br />
@@ -58,7 +58,7 @@
                     <!-- Button -->
                     <br />
                     <div class="col-sm-12 controls">
-                        <button class="btn btn-primary pull-right" ng-click="vm.login()">
+                        <button class="btn btn-primary pull-right" ng-click="vm.login(vm.credentials)">
                             <i class="glyphicon glyphicon-log-in"></i> Log in
                         </button>
                     </div>

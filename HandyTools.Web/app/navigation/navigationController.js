@@ -3,19 +3,12 @@
 
     angular
         .module("handytoolsApp")
-        .controller("navigationController", ["$route", "$scope", "USER_ROLES", "handy.authService", navigationController]);
+        .controller("navigationController", ["$rootscope", "$scope", "USER_ROLES", "handy.authService", navigationController]);
 
-    function navigationController($route, $scope, USER_ROLES, authService) {
-        var vm = this;
+    function navigationController($rootscope, $scope, USER_ROLES, authService) {       
 
-        vm.userRoles = USER_ROLES;
-        vm.isAuthorized = authService.isAuthorized;
-        vm.logoff = authService.logoff;
-
-        //vm.logout = function () {
-        //    if (currentUser.getProfile().isLoggedIn) {
-        //        currentUser.clearUserSession();
-        //    }
-        //}
+        $scope.userRoles = USER_ROLES;
+        $scope.isAuthorized = authService.isAuthorized;
+        $scope.logoff = authService.logoff;
     }
 }());
