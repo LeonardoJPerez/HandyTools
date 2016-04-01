@@ -3,23 +3,19 @@
 
     angular
         .module("handytoolsApp")
-        .controller("navigationController", ["$route", "$scope", "handy.api", "currentUser", navigationController]);
+        .controller("navigationController", ["$route", "$scope", "USER_ROLES", "handy.authService", navigationController]);
 
-    function navigationController($route, $scope, handyApi, currentUser) {
+    function navigationController($route, $scope, USER_ROLES, authService) {
         var vm = this;
 
-        vm.loggedIn = currentUser.getProfile().isLoggedIn;
-        vm.activeMenu = getActiveMenu() === "customer";
+        vm.userRoles = USER_ROLES;
+        vm.isAuthorized = authService.isAuthorized;
+        vm.logoff = authService.logoff;
 
-        function getActiveMenu() {
-            console.log(currentUser.getProfile().userType);
-            return currentUser.getProfile().userType;
-        };
-
-        vm.logout = function () {
-            if (currentUser.getProfile().isLoggedIn) {
-                currentUser.clearUserSession();
-            }
-        }
+        //vm.logout = function () {
+        //    if (currentUser.getProfile().isLoggedIn) {
+        //        currentUser.clearUserSession();
+        //    }
+        //}
     }
 }());

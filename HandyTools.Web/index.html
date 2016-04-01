@@ -32,13 +32,14 @@
                         <a class="navbar-brand" href="#/">Handy Tools Management System</a>
                     </div>
 
-                    <div class="navbar-collapse collapse" ng-if="vm.loggedIn" ng-include="'app/navigation/navigationView.html'"></div>
+                    <div class="navbar-collapse collapse" ng-if="vm.isAuthorized" ng-include="'app/navigation/navigationView.html'"></div>
                 </div>
             </div>
 
             <!-- Body Content -->
             <div class="container-fluid">
-                <div class="container body-content">                   
+                <div class="container body-content">
+                    <div login-dialog ng-if="!vm.isAuthenticated"></div>
                     <div ng-view></div>
                 </div>
 
@@ -52,7 +53,7 @@
         </div>
         <!-- /#page-content-wrapper -->
     </div>
- 
+
     <script src="Scripts/jquery-2.2.1.min.js"></script>
     <script src="Scripts/DataTables/jquery.dataTables.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
@@ -65,7 +66,7 @@
     <script src="Scripts/angular-resource.js"></script>
     <script src="Scripts/angular-cookies.min.js"></script>
     <script src="Scripts/angular-datatables.js"></script>
-    <script src="Scripts/angular-ui.js"></script> 
+    <script src="Scripts/angular-ui.js"></script>
     <script src="Scripts/event.js"></script>
     <script src="Scripts/loading-bar.min.js"></script>
 
@@ -75,7 +76,9 @@
     <!-- Services Scripts -->
     <script src="app/services/handy.services.js"></script>
     <script src="app/services/handy.api.js"></script>
-    <script src="app/services/currentUser.js"></script>
+    <script src="app/services/handy.authService.js"></script>
+    <script src="app/services/handy.authInterceptor.js"></script>
+    <script src="app/services/handy.session.js"></script>
 
     <!-- Controllers Scripts -->
     <script src="app/main/mainController.js"></script>
@@ -83,5 +86,8 @@
     <script src="app/navigation/navigationController.js"></script>
     <script src="app/reservation/reservationController.js"></script>
     <script src="app/profile/profileController.js"></script>
+
+    <!-- Directives Scripts -->
+    <script src="app/login/loginDialogDirective.js"></script>
 </body>
 </html>

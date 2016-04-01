@@ -3,22 +3,24 @@
 
     angular
         .module("handytoolsApp")
-        .controller("loginController", ["$route", "$scope", "$window", "handy.api", "currentUser", "appSettings", loginController]);
+        .controller("loginController", ["$route", "$rootScope", "$scope", "handy.authService", "APPSETTINGS", loginController]);
 
-    function loginController($route, $scope, $window, handyApi, currentUser, appSettings) {
+    function loginController($route, $rootScope, $scope, authService, APPSETTINGS) {
         var vm = this;
+        vm.credentials = {
+            username: "",
+            password: "",
+            type: "customer"
+        };
 
-        vm.userType = "customer";
+        vm.userName = "";
+        vm.clerkname = "";
+
         vm.error = false;
         vm.errorMessage = "";
 
-        function displayError(error) {
-            vm.error = true;
-            console.log(error);
-        }
-
         vm.isCustomer = function () {
-            return vm.userType === "customer";
+            return vm.credentials.type === "customer";
         }
 
         vm.validateInput = function (isvalid, elemid) {
@@ -31,51 +33,36 @@
 
         vm.setUserType = function (userType) {
             if (userType === vm.userType) { return; }
-            vm.userType = "none";
+            vm.credentials.type = "none";
             angular.element("#customer").addClass("ng-hide");
             angular.element("#clerk").addClass("ng-hide");
 
-            vm.userType = userType === "customer" ? userType : "clerk";
+            vm.credentials.type = userType === "customer" ? userType : "clerk";
         };
 
-        vm.login = function () {
-            var username;
+        vm.login = function (credentials) {
             if (vm.isCustomer()) {
-                username = vm.userName;
+                credentials.username = vm.userName;
             } else {
-                username = vm.clerkname;
+                credentials.username = vm.clerkname;
             }
 
             // Clear error messages.
             vm.error = false;
 
-            handyApi.Login.save({
-                "userName": username,
-                "password": vm.password,
-                "type": vm.userType
-            }).$promise.then(
-                // Success
-                function (data) {
-                    if (data) {
-                        switch (data.code) {
-                            case 0:
-                                displayError(data);
-                                break;
-                            case -1:
-                                if (vm.isCustomer()) { $window.location = appSettings.ApplicationPaths.CreateProfile; }
-                                if (!vm.isCustomer()) { displayError(data); }
-                                break;
-                            default:
-                                currentUser.setProfile(vm.userName, vm.userType);
-                                currentUser.redirectToHome();
-                        }
-                    }
-                },
-                // Error
-                function (error) {
-                    displayError(error);
-                }
-            );
+            authService.login.then(function (user) {
+                $rootScope.$broadcast(APPSETTINGS.loginSuccess);
+                vm.setCurrentUser(user);
+            }, function () {
+                $rootScope.$broadcast(APPSETTINGS.loginFailed);
+                displayError(error);
+            });
         }
-    }
+
+        function displayError(error) {
+            vm.error = true;
+            console.log(error);
+        }
+    };
+
 }());

@@ -86,6 +86,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\login\loginDialogDirective.js" />
+    <Content Include="app\services\handy.authInterceptor.js" />
+    <Content Include="app\services\handy.authService.js" />
+    <Content Include="app\services\handy.session.js" />
     <Content Include="packages.config" />
     <Content Include="Assets\states.json" />
     <Content Include="Content\bootstrap-theme.css.map" />

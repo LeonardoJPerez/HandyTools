@@ -1,10 +1,10 @@
 ﻿<
-<ul class="nav navbar-nav navbar-right" ng-show="vm.activeMenu" ng-controller="navigationController as vm">
+<ul class="nav navbar-nav navbar-right" ng-if="vm.isAuthorized(userRoles.customer)" ng-controller="navigationController as vm">
     <li>
         <a href="#/reservations">Reservations</a>
     </li>
     <li>
-        <a href="#/reservations">Tools Availability</a>
+        <a href="#/tools">Tools Availability</a>
     </li>
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -19,7 +19,7 @@
             </li>
             <li class="divider"></li>
             <li>
-                <a ng-click="vm.logout()">
+                <a ng-click="vm.logoff()">
                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                     <i class="glyphicon glyphicon-none"></i> Logout
                 </a>
@@ -28,7 +28,7 @@
     </li>
 </ul>
 
-<ul class="nav navbar-nav navbar-right" ng-hide="vm.activeMenu" ng-controller="navigationController as vm">
+<ul class="nav navbar-nav navbar-right" ng-if="vm.isAuthorized(userRoles.clerk)" ng-controller="navigationController as vm">
     <li>
         <a href="#/pickup">Pick Ups</a>
     </li>
@@ -68,7 +68,7 @@
         </ul>
     </li>
     <li>
-        <a class="logout" ng-click="vm.logout()">
+        <a class="logout" ng-click="vm.logoff()">
             <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
             <i class="glyphicon glyphicon-none"></i> Logout
         </a>

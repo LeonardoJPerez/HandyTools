@@ -3,9 +3,9 @@
 
     angular
         .module("handy.services")
-        .factory("currentUser", ["$cookies", "$window", "appSettings", currentUser]);
+        .factory("currentUser", ["$cookies", "$window", "APPSETTINGS", currentUser]);
 
-    function currentUser($cookies, $window, appSettings) {
+    function currentUser($cookies, $window, APPSETTINGS) {
         var self = this;
 
         var defaultProfile = {
@@ -37,9 +37,9 @@
             var profile = getProfile();
             switch (profile.userType) {
                 case "customer":
-                    return $window.location = appSettings.ApplicationPaths.CustomerHome;
+                    return $window.location = APPSETTINGS.ApplicationPaths.CustomerHome;
                 case "clerk":
-                    return $window.location = appSettings.ApplicationPaths.ClerkHome;
+                    return $window.location = APPSETTINGS.ApplicationPaths.ClerkHome;
                 default:
                     return $window.location = "/";
             }
