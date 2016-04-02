@@ -27,11 +27,11 @@
             Clerk: "clerk",
             Customer: "customer"
         })
-        .config(function ($routeProvider, $locationProvider, cfpLoadingBarProvider, USER_ROLES) {
+        .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
-                .when("/", {                    
+                .when("/", {
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
