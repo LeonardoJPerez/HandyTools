@@ -1,0 +1,4 @@
+﻿{
+  ApiServerPath: "handytools.s3-website-us-east-1.amazonaws.com",
+  CurrentServer: "handytools-api.s3-website-us-east-1.amazonaws.com",
+}

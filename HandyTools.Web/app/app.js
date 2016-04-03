@@ -5,10 +5,9 @@
         .module("handytoolsApp", ["ngRoute", "ngAnimate", "ngCookies", "angular-loading-bar", "ui.event", "datatables", "handy.services"])
         .constant("APPSETTINGS",
         {
-            //ApiServerPath: "handytools.s3-website-us-east-1.amazonaws.com",
-            //CurrentServer: "handytools-api.s3-website-us-east-1.amazonaws.com",
-            ApiServerPath: "http://localhost:62581/",
-            CurrentServer: "http://localhost:49460/",
+           
+            ApiServerUrl: "@@APISERVERURL",
+            CurrentServerUrl: "@@CURRENTSERVERURL",
             ApplicationPaths: {
                 ClerkHome: "#/pickups",
                 CustomerHome: "#/reservations",
