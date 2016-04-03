@@ -2,30 +2,7 @@
     "use strict";
 
     var app = angular
-        .module("handytoolsApp", ["ngRoute", "ngAnimate", "ngCookies", "angular-loading-bar", "ui.event", "datatables", "handy.services"])
-        .constant("APPSETTINGS",
-        {
-           
-            ApiServerUrl: "@@APISERVERURL",
-            CurrentServerUrl: "@@CURRENTSERVERURL",
-            ApplicationPaths: {
-                ClerkHome: "#/pickups",
-                CustomerHome: "#/reservations",
-                CreateProfile: "#/profile/create"
-            },
-            AUTH_EVENTS: {
-                LoginSuccess: "auth-login-success",
-                LoginFailed: "auth-login-failed",
-                LogoutSuccess: "auth-logout-success",
-                SessionTimeout: "auth-session-timeout",
-                NotAuthenticated: "auth-not-authenticated",
-                NotAuthorized: "auth-not-authorized"
-            }
-        })
-        .constant("USER_ROLES", {
-            Clerk: "clerk",
-            Customer: "customer"
-        })
+        .module("handytoolsApp", ["ngRoute", "ngAnimate", "ngCookies", "angular-loading-bar", "ui.event", "datatables", "handy.services", "APPSETTINGS"])
         .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
