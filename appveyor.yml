@@ -4,15 +4,33 @@ platform: Any CPU
 
 before_build:
 - cmd: nuget restore
+- cmd: npm install gulp
 
-build:
-    project: HandyTools.sln
-    verbosity: normal
+# build:
+#     project: HandyTools.sln
+#     verbosity: normal
  
 branches:
 #Whitelist
     only:
         - master
+        
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node
+  # install modules
+  - npm install
+
+# Post-install test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+
+# Don't actually build.
+build: off
        
 environment:
     access_token:
