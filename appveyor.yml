@@ -1,7 +1,7 @@
 version: 1.0.{build}
 configuration: Debug
 platform: Any CPU
-clone_folder: c:\projects
+clone_folder: c:\projects\handytools
 
 # Install scripts. (runs after repo cloning)
 install:
@@ -9,6 +9,7 @@ install:
   - ps: Install-Product node
   # install modules
   - cmd: cd c:\projects\handytools\HandyTools.Web
+  - cmd: dir c:\projects\handytools
   - cmd: npm install
   
 # Post-install test scripts.
