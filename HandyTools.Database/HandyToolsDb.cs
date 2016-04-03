@@ -37,7 +37,23 @@ namespace HandyTools.Database
         }
 
         /// <summary>
-        /// Gets the model from the db.
+        /// Gets the models.
+        /// </summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
+        public List<TModel> GetModels<TModel>(string key, string value)
+        {
+            var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+            var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
+
+            var returnValue = this.ExecuteStoredProcedure($"Get{typeof(TModel).Name}", parameter);
+            return returnValue.TableToList<TModel>();
+        }
+
+        /// <summary>
+        /// Gets the model.
         /// </summary>
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="key">The key.</param>
@@ -45,11 +61,7 @@ namespace HandyTools.Database
         /// <returns></returns>
         public TModel GetModel<TModel>(string key, string value)
         {
-            var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-            var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
-
-            var returnValue = this.ExecuteStoredProcedure($"Get{typeof(TModel).Name}", parameter);
-            return returnValue.TableToList<TModel>().FirstOrDefault();
+            return this.GetModels<TModel>(key, value).FirstOrDefault();
         }
 
         /// <summary>
