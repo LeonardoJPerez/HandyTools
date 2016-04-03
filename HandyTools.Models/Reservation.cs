@@ -2,7 +2,7 @@
 
 namespace HandyTools.Models
 {
-    public class Reservation : IIdentifier
+    public class Reservation : BaseModel, IIdentifier
     {
         public string ID { get; set; }
 

@@ -10,9 +10,7 @@ namespace HandyTools.Web.API.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-
-            return View();
+            return new RedirectResult("~/swagger/ui/index");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using HandyTools.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +9,7 @@ using System.Reflection;
 
 namespace HandyTools.Database
 {
-    public class HandyToolsDb : IDisposable
+    public class HandyToolsDb : IDbContext, IDisposable
     {
         /// <summary>
         /// Gets the connection string.
@@ -25,7 +26,7 @@ namespace HandyTools.Database
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
         /// <returns></returns>
-        public int AuthUser<TUserModel>(string userName, string password)
+        public int AuthUser<TUserModel>(string userName, string password) where TUserModel : BaseModel, IUser
         {
             var parameters = new List<MySqlParameter>
             {
@@ -43,13 +44,20 @@ namespace HandyTools.Database
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public List<TModel> GetModels<TModel>(string key, string value)
+        public IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false) where TModel : BaseModel
         {
             var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
 
-            var returnValue = this.ExecuteStoredProcedure($"Get{typeof(TModel).Name}", parameter);
-            return returnValue.TableToList<TModel>();
+            if (useView)
+            {
+                var returnValue = (DataTable)this.Execute($"select * from v{typeof(TModel).Name}", CommandType.Text, false, parameter);
+                return returnValue.TableToList<TModel>();
+            }
+            else
+            {
+                return this.ExecuteStoredProcedure($"Get{typeof(TModel).Name}", parameter).TableToList<TModel>();
+            }
         }
 
         /// <summary>
@@ -59,7 +67,7 @@ namespace HandyTools.Database
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public TModel GetModel<TModel>(string key, string value)
+        public TModel GetModel<TModel>(string key, string value) where TModel : BaseModel
         {
             return this.GetModels<TModel>(key, value).FirstOrDefault();
         }
@@ -70,7 +78,7 @@ namespace HandyTools.Database
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public TModel SetModel<TModel>(TModel model)
+        public TModel SetModel<TModel>(TModel model) where TModel : BaseModel
         {
             var props = typeof(TModel).GetProperties();
             var parameters = new List<MySqlParameter>();
@@ -93,7 +101,7 @@ namespace HandyTools.Database
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="model">The model.</param>
         /// <returns></returns>
-        public TModel AddModel<TModel>(TModel model)
+        public TModel AddModel<TModel>(TModel model) where TModel : BaseModel
         {
             var props = typeof(TModel).GetProperties();
             var parameters = new List<MySqlParameter>();

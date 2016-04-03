@@ -1,6 +1,6 @@
 ﻿namespace HandyTools.Models
 {
-    public class Customer : IUser
+    public class Customer : BaseModel, IUser
     {
         public string LastName { get; set; }
 

@@ -4,11 +4,19 @@ namespace HandyTools.Web.API.Repositiory
 {
     public class BaseRepository
     {
-        protected HandyToolsDb _db;
+        private readonly IDbContext _dbContext;
 
-        public BaseRepository()
+        /// <summary>
+        /// Gets the context.Gets the Database Context.
+        /// </summary>
+        public IDbContext Context
         {
-            this._db = new HandyToolsDb();
+            get { return this.Context; }
+        }
+
+        public BaseRepository(IDbContext context)
+        {
+            this._dbContext = context;
         }
     }
 }

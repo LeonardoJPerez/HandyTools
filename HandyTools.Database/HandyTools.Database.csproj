@@ -47,12 +47,19 @@
   <ItemGroup>
     <Compile Include="DataTableExtensions.cs" />
     <Compile Include="HandyToolsDb.cs" />
+    <Compile Include="IDbContext.cs" />
     <Compile Include="MySqlParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HandyTools.Models\HandyTools.Models.csproj">
+      <Project>{F1F15717-7A41-4FDD-883E-40728976A38F}</Project>
+      <Name>HandyTools.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

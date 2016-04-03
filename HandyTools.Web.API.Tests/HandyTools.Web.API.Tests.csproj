@@ -39,6 +39,10 @@
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -63,11 +67,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Controllers\HomeControllerTest.cs" />
-    <Compile Include="Controllers\ValuesControllerTest.cs" />
+    <Compile Include="Controllers\AccountControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\HandyTools.Database\HandyTools.Database.csproj">
+      <Project>{379AE69E-08B9-440F-8C67-A8D9425EB793}</Project>
+      <Name>HandyTools.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HandyTools.Models\HandyTools.Models.csproj">
+      <Project>{F1F15717-7A41-4FDD-883E-40728976A38F}</Project>
+      <Name>HandyTools.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HandyTools.Web.API\HandyTools.Web.API.csproj">
       <Project>{6892d041-5911-4c82-9e63-1d38aa2de0e3}</Project>
       <Name>HandyTools.Web.API</Name>

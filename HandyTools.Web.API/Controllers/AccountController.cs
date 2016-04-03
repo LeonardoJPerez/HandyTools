@@ -1,41 +1,51 @@
 ﻿using HandyTools.Models;
+using HandyTools.Web.API.Interfaces;
 using HandyTools.Web.API.Models;
-using HandyTools.Web.API.Repositiory;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace HandyTools.Web.API.Controllers
 {
-    [RoutePrefix("api/account")]
+    [RoutePrefix("api/profile")]
     public class AccountController : ApiController
     {
-        protected UserRepository _repository;
+        protected IUserRepository _repository;
 
-        public AccountController()
+        public AccountController(IUserRepository repository)
         {
-            _repository = new UserRepository();
+            _repository = repository;
         }
 
         // GET: api/Profile/{id}
         [HttpGet]
         [Route("{id}")]
-        public Customer GetByUserName(string id)
+        public IHttpActionResult GetByUserName(string id)
         {
-            return this._repository.GetCustomer(id);
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            if (string.IsNullOrEmpty(id)) { return BadRequest(ModelState); }
+
+            return Ok(this._repository.GetCustomer(id));
         }
 
-        // PUT: api/Profile/{id}
-        [HttpPut]
-        [Route("{id}")]
-        public Customer UpdateCustomer([FromBody] Customer customer)
-        {
-            return this._repository.UpdateCustomer(customer);
-        }
-
-        // POST: api/Profile/
+        // POST: api/Profile/{id}
         [HttpPost]
-        public Customer AddCustomer([FromBody] Customer customer)
+        [Route("{id}")]
+        [ResponseType(typeof(Customer))]
+        public IHttpActionResult UpdateCustomer([FromBody] Customer customer)
         {
-            return this._repository.UpdateCustomer(customer);
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            if (string.IsNullOrEmpty(customer.UserName)) { return BadRequest(ModelState); }
+
+            return Ok(this._repository.UpdateCustomer(customer));
+        }
+
+        // PUT: api/Profile/
+        [HttpPut]
+        [ResponseType(typeof(Customer))]
+        public IHttpActionResult AddCustomer([FromBody] Customer customer)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            return Ok(this._repository.UpdateCustomer(customer));
         }
 
         // POST: api/Profile/login

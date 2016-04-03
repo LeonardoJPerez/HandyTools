@@ -2,7 +2,7 @@
 
 namespace HandyTools.Models
 {
-    public class ServiceOrder : IIdentifier
+    public class ServiceOrder : BaseModel, IIdentifier
     {
         public string ID { get; set; }
 
