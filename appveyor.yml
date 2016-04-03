@@ -19,8 +19,8 @@ test_script:
   - npm --version
 
 # build:
-#     project: HandyTools.sln
-#     verbosity: normal
+     project: HandyTools.sln
+     verbosity: normal
  
 before_build:
 - cmd: nuget restore -SolutionDirectory c:\projects\handytools
