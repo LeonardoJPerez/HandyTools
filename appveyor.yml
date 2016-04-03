@@ -68,8 +68,8 @@ on_success:
 after_build:
   #- ps: $webroot = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($webroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($webroot.Path.Length + 1) -DeploymentName handytoolsweb }
   #- ps: $apiroot = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($apiroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($apiroot.Path.Length + 1) -DeploymentName handytoolsapi }
-  - ps: appveyor PushArtifact "HandyTools.Web" -DeploymentName handytoolsweb 
-  - ps: appveyor PushArtifact "HandyTools.Web.API" -DeploymentName handytoolsapi
+  - ps: appveyor PushArtifact HandyTools.Web/* -DeploymentName handytoolsweb 
+  - ps: appveyor PushArtifact HandyTools.Web.API/* -DeploymentName handytoolsapi
 
 notifications:
 - provider: Slack
