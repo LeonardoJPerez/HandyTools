@@ -30,7 +30,7 @@ branches:
         - master
 
 # Don't actually build.
- build: off
+build: off
        
 environment:
     access_token:
