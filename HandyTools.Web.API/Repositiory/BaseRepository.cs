@@ -11,7 +11,7 @@ namespace HandyTools.Web.API.Repositiory
         /// </summary>
         public IDbContext Context
         {
-            get { return this.Context; }
+            get { return this._dbContext; }
         }
 
         public BaseRepository(IDbContext context)
