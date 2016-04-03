@@ -33,6 +33,12 @@ branches:
 # Don't actually build.
 # build: off
        
+artifacts:
+  - path: HandyTools.Web\*
+    name: handytoolsweb       
+  - path: HandyTools.Web.API\*
+    name: handytoolsapi  
+       
 environment:
     access_token:
         secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
@@ -67,9 +73,8 @@ on_success:
   - git push gatech master
   
 after_build:
-  - ps: $webroot = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($webroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($webroot.Path.Length + 1) -DeploymentName handytoolsweb }
-  - ps: Start-sleep -s 10
-  - ps: $apiroot = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($apiroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($apiroot.Path.Length + 1) -DeploymentName handytoolsapi }
+#  - ps: $webroot = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($webroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($webroot.Path.Length + 1) -DeploymentName handytoolsweb }
+#  - ps: $apiroot = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($apiroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($apiroot.Path.Length + 1) -DeploymentName handytoolsapi }
 #   - appveyor PushArtifact .\HandyTools.Web -DeploymentName handytoolsweb 
 #   - appveyor PushArtifact .\HandyTools.Web.API -DeploymentName handytoolsapi
 
