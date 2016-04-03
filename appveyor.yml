@@ -9,8 +9,8 @@ install:
   - ps: Install-Product node
   # install modules
   - cmd: cd c:\projects\handytools\HandyTools.Web
-  - cmd: dir c:\projects\handytools
   - cmd: npm install
+  - cmd: cd ..
   
 # Post-install test scripts.
 test_script:
