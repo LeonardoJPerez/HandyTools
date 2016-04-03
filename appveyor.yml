@@ -8,7 +8,7 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node
   # install modules
-  - cmd: cd $(appveyor_build_folder)\HandyTools.Web
+  - cmd: cd c:\projects\handytools\HandyTools.Web
   - cmd: npm install
 
 before_build:
