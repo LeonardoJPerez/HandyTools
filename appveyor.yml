@@ -18,12 +18,12 @@ test_script:
   - node --version
   - npm --version
 
-# build:
-     project: HandyTools.sln
-     verbosity: normal
+build:
+  project: HandyTools.sln
+  verbosity: normal
  
 before_build:
-- cmd: nuget restore -SolutionDirectory c:\projects\handytools
+  - cmd: nuget restore -SolutionDirectory c:\projects\handytools
 
 branches:
 #Whitelist
