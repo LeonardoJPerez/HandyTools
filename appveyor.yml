@@ -22,7 +22,7 @@ test_script:
 #     verbosity: normal
  
 before_build:
-- cmd: nuget restore
+- cmd: nuget restore -SolutionDirectory c:\projects\handytools
 
 branches:
 #Whitelist
