@@ -1,7 +1,7 @@
 version: 1.0.{build}
 configuration: Debug
 platform: Any CPU
-clone_folder: c:\projects\handytools
+clone_folder: c:\projects
 
 # Install scripts. (runs after repo cloning)
 install:
