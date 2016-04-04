@@ -7,9 +7,9 @@
             ApiServerUrl: "http://localhost:62581/",
             CurrentServerUrl: "http://localhost:49460/",
             ApplicationPaths: {
-                ClerkHome: "#/pickups",
-                CustomerHome: "#/reservations",
-                CreateProfile: "#/profile/create"
+                ClerkHome: "/pickups",
+                CustomerHome: "/reservations",
+                CreateProfile: "/profile/create"
             },
             AUTH_EVENTS: {
                 LoginSuccess: "auth-login-success",

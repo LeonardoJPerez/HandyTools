@@ -7,11 +7,6 @@
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
-                .when("/", {
-                    data: {
-                        authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
-                    }
-                })
                  .when("/login", {
                      controller: "loginController",
                      controllerAs: "login",
@@ -26,24 +21,20 @@
                     templateUrl: "app/profile/profileCreateView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Customer]
-                    },
-                    resolve: {
-                        "auth": function (authResolver) {
-                            return authResolver.resolve();
-                        }
                     }
                 })
                 .when("/reservations", {
-                    controller: "reservationController",
-                    controllerAs: "reservation",
+                    controller: "reservationController as vm",
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
-                    },
-                    resolve: {
-                        "auth": function (authResolver) {
-                            return authResolver.resolve();
-                        }
+                    }
+                })
+                .when("/tools", {
+                    controller: "toolsController as vm",
+                    templateUrl: "app/tools/toolsView.html",
+                    data: {
+                        authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
                 })
                 .when("/pickups", {
@@ -52,11 +43,6 @@
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk]
-                    },
-                    resolve: {
-                        "auth": function (authResolver) {
-                            return authResolver.resolve();
-                        }
                     }
                 })
                 .otherwise({ redirectTo: "/" });
@@ -83,6 +69,10 @@
                     $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.NotAuthenticated);
                 }
             }
+        });
+
+        $rootScope.$on("routeChangeSuccess", function (event, current, previous, rejection) {
+            console.log($scope, $rootScope, $route, $location);
         });
     }]);
 }());
