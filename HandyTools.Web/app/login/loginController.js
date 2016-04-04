@@ -50,21 +50,15 @@
             // Clear error messages.
             vm.error = false;
 
-            authService.login(vm.credentials).then(function (user) {                
+            authService.login(vm.credentials).then(function (user) {
                 $scope.setCurrentUser(user);
+                _authService.redirectTo(role);
 
-                // Add switch
-                if (user.role === USER_ROLES.Customer) {
-                    $location.path(APPSETTINGS.ApplicationPaths.CustomerHome);                   
-                } else {
-                    $location.path(APPSETTINGS.ApplicationPaths.ClerkHome);
-                }
+                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
             }, function (error) {
-                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginFailed);
                 displayError(error);
+                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginFailed);
             });
-
-            $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
         }
 
         // Private Methods

@@ -1,5 +1,5 @@
 ﻿<div class="container-fluid">
-    <form class="form-horizontal create-profile" ng-controller="profileController as vm">
+    <form name="profileForm" class="form-horizontal create-profile" novalidate ng-controller="profileController as vm" ng-submit="vm.createProfile(profileForm.$valid)">
         <fieldset>
 
             <div class="row top-buffer">
@@ -14,8 +14,8 @@
                 <div class="col-md-6 col-md-offset-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtEmail">Email Address (Username)</label>
-                        <div class="form-group">
-                            <input id="txtEmail" name="txtEmail" type="text" placeholder="Enter an Email Address" class="form-control input-md" required="">
+                        <div class="form-group" ng-class="{ 'has-error' : profileForm.email.$invalid && !profileForm.email.$pristine }">
+                            <input id="txtEmail" name="email" type="email" placeholder="Enter an Email Address" class="form-control input-md" required ng-model="vm.profile.email">
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtPassword">Password</label>
                         <div class="form-group">
-                            <input id="txtPassword" name="txtPassword" type="password" placeholder="Enter Password" class="form-control input-md" required="">
+                            <input id="txtPassword" name="txtPassword" type="password" placeholder="Enter Password" class="form-control input-md" required ng-model="vm.profile.password">
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtConfirmPassword">Confirm Password</label>
                         <div class="form-group">
-                            <input id="txtConfirmPassword" name="txtConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required="">
+                            <input id="txtConfirmPassword" name="txtConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required ng-model="vm.profile.passwordConfirm">
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtFirstName">First Name</label>
                         <div class="form-group">
-                            <input id="txtFirstName" name="txtFirstName" type="text" placeholder="Enter First Name" class="form-control input-md" required="">
+                            <input id="txtFirstName" name="txtFirstName" type="text" placeholder="Enter First Name" class="form-control input-md" required ng-model="vm.profile.firstName">
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtLastName">Last Name</label>
                         <div class="form-group">
-                            <input id="txtLastName" name="txtLastName" type="text" placeholder="Enter Last Name" class="form-control input-md" required="">
+                            <input id="txtLastName" name="txtLastName" type="text" placeholder="Enter Last Name" class="form-control input-md" required ng-model="vm.profile.lastName">
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="txtHomePhone">Home Phone</label>
-                            <input id="txtHomePhone" name="txtHomePhone" type="text" placeholder="Enter Home Number" class="form-control input-md" required=""
+                            <input id="txtHomePhone" name="txtHomePhone" type="text" placeholder="Enter Home Number" class="form-control input-md" required ng-model="vm.profile.homePhone"
                                    ui-mask="(999) 999-9999" ui-mask-placeholder ui-mask-placeholder-char="_">
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtWorkPhone">Work Phone</label>
                         <div class="form-group">
-                            <input id="txtWorkPhone" name="txtWorkPhone" type="text" placeholder="Enter Work Number (Optional)" class="form-control input-md">
+                            <input id="txtWorkPhone" name="txtWorkPhone" type="text" placeholder="Enter Work Number (Optional)" class="form-control input-md" required ng-model="vm.profile.workPhone">
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtAddressLine1">Address Line 1</label>
                         <div class="form-group">
-                            <input id="txtAddressLine1" name="txtAddressLine1" type="text" placeholder="Enter Address Line 1" class="form-control input-md" required="">
+                            <input id="txtAddressLine1" name="txtAddressLine1" type="text" placeholder="Enter Address Line 1" class="form-control input-md" required ng-model="vm.profile.addressLine1">
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtAddressLine2">Address Line 2</label>
                         <div class="form-group">
-                            <input id="txtAddressLine2" name="txtAddressLine2" type="text" placeholder="Enter Address Line 2" class="form-control input-md">
+                            <input id="txtAddressLine2" name="txtAddressLine2" type="text" placeholder="Enter Address Line 2" class="form-control input-md" ng-model="vm.profile.addressLine2">
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                     <div class="col-md-12">
                         <label class="col-md-2 control-label" for="txtCity">City</label>
                         <div class="form-group">
-                            <input id="txtCity" name="txtCity" type="text" placeholder="Enter City" class="form-control input-md" required="">
+                            <input id="txtCity" name="txtCity" type="text" placeholder="Enter City" class="form-control input-md" required ng-model="vm.profile.city">
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,7 @@
                         <label class="col-md-2 control-label" for="ddlState">State</label>
                         <div class="form-group">
                             <select id="ddlState" ng-model="vm.selectedState"
-                                    ng-options="state.name as state.name for state in vm.states" class="form-control" required="">
+                                    ng-options="state.name as state.name for state in vm.states" class="form-control" required>
                                 <option value="" selected>Select a State</option>
                             </select>
                         </div>
@@ -140,7 +140,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtCountry">Country</label>
                         <div class="form-group">
-                            <input id="txtCountry" name="txtCountry" type="text" placeholder="United States" class="form-control input-md" disabled>
+                            <input id="txtCountry" name="txtCountry" type="text" placeholder="United States" class="form-control input-md" disabled ng-model="vm.profile.country">
                         </div>
                     </div>
                 </div>
@@ -149,25 +149,31 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtZipCode">Zip Code</label>
                         <div class="form-group">
-                            <input id="txtZipCode" name="txtZipCode" type="text" placeholder="Enter Zip Code" class="form-control input-md" required="">
+                            <input id="txtZipCode" name="txtZipCode" type="text" placeholder="Enter Zip Code" class="form-control input-md" required ng-model="vm.profile.zipCode">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row row-centered">
                 <!-- Submit -->
-                <div class="col-md-2 col-md-offset-3"></div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-centered">
                     <label class="control-label" for="btnSubmit"></label>
                     <div class="form-group">
-                        <!--<button id="btnSubmit" name="btnSubmit" class="btn btn-primary">Button</button>-->
-                        <a id="btnSubmit" href="#" class="btn btn-block btn-lg btn-primary">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>  Submit
+                        <a id="lnkReturn" href="/" class="btn btn-block btn-lg btn-default">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>  Back
                         </a>
                     </div>
                 </div>
-                <div class="col-md-2"></div>
+                <div class="col-md-1 col-centered"></div>
+                <div class="col-md-2 col-centered">
+                    <label class="control-label" for="btnSubmit"></label>
+                    <div class="form-group">
+                        <button id="btnSubmit" name="btnSubmit" class="btn btn-block btn-lg btn-success" type="submit" ng-disabled="profileForm.$invalid">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>  Submit
+                        </button>
+                    </div>
+                </div>
             </div>
         </fieldset>
     </form>

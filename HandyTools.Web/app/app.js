@@ -15,12 +15,11 @@
                          authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                      }
                  })
-                .when("/account/create", {
-                    controller: "profileController",
-                    controllerAs: "profile",
+                .when("/profile/create", {
+                    controller: "profileController as vm",
                     templateUrl: "app/profile/profileCreateView.html",
                     data: {
-                        authorizedRoles: [USER_ROLES.Customer]
+                        authorizedRoles: [USER_ROLES.NewCustomer]
                     }
                 })
                 .when("/reservations", {
@@ -41,11 +40,13 @@
                     controller: "reservationController",
                     controllerAs: "pickups",
                     templateUrl: "app/reservation/reservationsView.html",
-                    data: {
-                        authorizedRoles: [USER_ROLES.Clerk]
-                    }
                 })
-                .otherwise({ redirectTo: "/" });
+                .otherwise({
+                    redirectTo: "/",
+                    data: {
+                        authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer, USER_ROLES.NewCustomer]
+                    }
+                });
         })
         .config(function ($httpProvider) {
             $httpProvider.interceptors.push([
@@ -56,7 +57,7 @@
             ]);
         });
 
-    app.run(["$rootScope", "$location", "APPSETTINGS", "handy.authService", function ($rootScope, $location, APPSETTINGS, authService) {
+    app.run(["$rootScope", "$location", "APPSETTINGS", "handy.authService", "handy.session", function ($rootScope, $location, APPSETTINGS, authService, session) {
         $rootScope.$on("$routeChangeStart", function (event, next) {
             var authorizedRoles = next.data && next.data.authorizedRoles;
             if (!authService.isAuthorized(authorizedRoles)) {
@@ -68,6 +69,8 @@
                     // user is not logged in
                     $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.NotAuthenticated);
                 }
+            } else {
+                authService.redirectTo(session.userRole);
             }
         });
 

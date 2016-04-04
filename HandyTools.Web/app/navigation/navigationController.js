@@ -8,8 +8,8 @@
     function navigationController($window, $rootScope, $scope, APPSETTINGS, USER_ROLES, authService) {
         var vm = this;
 
-        vm.currentUser = $scope.currentUser;
-        vm.currentRole = $scope.currentUser.role;
+        vm.currentUser = $scope.getCurrentUser();
+        vm.currentRole = $scope.getCurrentUser().role;
         vm.userRoles = USER_ROLES;
         vm.isAuthorized = authService.isAuthorized;
         vm.logoff = function () {
