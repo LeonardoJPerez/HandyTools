@@ -1,8 +1,7 @@
 ﻿using HandyTools.Models;
+using HandyTools.Web.API.Helpers;
 using HandyTools.Web.API.Interfaces;
 using HandyTools.Web.API.Models;
-using System;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -27,9 +26,7 @@ namespace HandyTools.Web.API.Controllers
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             if (string.IsNullOrEmpty(id)) { return BadRequest(ModelState); }
 
-            byte[] data = Convert.FromBase64String(id);
-            string username = Encoding.UTF8.GetString(data);
-
+            var username = UserHelper.DecodeUser(id);
             if (!this.IsValidUserName(username)) { return BadRequest(ModelState); }
 
             return Ok(this._repository.GetCustomer(username));

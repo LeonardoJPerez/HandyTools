@@ -43,22 +43,40 @@ namespace HandyTools.Database
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
+        /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
         public IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false) where TModel : BaseModel
         {
+            return this.GetModels<TModel>(key, value, useView, true);
+        }
+
+        /// <summary>
+        /// Gets the Models internally.
+        /// </summary>
+        /// <typeparam name="TModel">The type of the model.</typeparam>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="useView">if set to <c>true</c> [use view].</param>
+        /// <param name="pluralize">if set to <c>true</c> [pluralize].</param>
+        /// <returns></returns>
+        private IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false, bool pluralize = false) where TModel : BaseModel
+        {
             var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
             var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
+            var entityName = $"{typeof(TModel).Name}";
+            if (pluralize) { entityName = $"{entityName}s"; }
 
             if (useView)
             {
-                var returnValue = (DataTable)this.Execute($"select * from v{typeof(TModel).Name}", CommandType.Text, false, parameter);
+                var returnValue = (DataTable)this.Execute($"select * from v{entityName}", CommandType.Text, false, parameter);
                 return returnValue.TableToList<TModel>();
             }
             else
             {
-                return this.ExecuteStoredProcedure($"Get{typeof(TModel).Name}", parameter).TableToList<TModel>();
+                return this.ExecuteStoredProcedure($"Get{entityName}", parameter).TableToList<TModel>();
             }
         }
+
 
         /// <summary>
         /// Gets the model.
@@ -66,10 +84,11 @@ namespace HandyTools.Database
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
+        /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
-        public TModel GetModel<TModel>(string key, string value) where TModel : BaseModel
+        public TModel GetModel<TModel>(string key, string value, bool useView = false) where TModel : BaseModel
         {
-            return this.GetModels<TModel>(key, value).FirstOrDefault();
+            return this.GetModels<TModel>(key, value, useView, false).FirstOrDefault();
         }
 
         /// <summary>

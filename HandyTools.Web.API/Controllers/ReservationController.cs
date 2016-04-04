@@ -1,4 +1,5 @@
 ﻿using HandyTools.Models;
+using HandyTools.Web.API.Helpers;
 using HandyTools.Web.API.Interfaces;
 using System.Web.Http;
 
@@ -25,38 +26,42 @@ namespace HandyTools.Web.API.Controllers
         /// <param name="username">The username of the Customer.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{username}")]
-        public IHttpActionResult Get(string username)
+        [Route("getbyuser/{username}")]
+        public IHttpActionResult GetByUser(string username)
         {
             if (!ModelState.IsValid) { return BadRequest(); }
             if (string.IsNullOrEmpty(username)) { return BadRequest("Missing Username value"); }
 
-            return Ok(this._repository.GetReservations(username));
+            var decodedUsername = UserHelper.DecodeUser(username);
+            return Ok(this._repository.GetReservations(decodedUsername));
         }
 
         // GET api/reservation/{id}
         [HttpGet]
         [Route("{id}")]
-        public Reservation Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return new Reservation();
-        }
-
-        [HttpPost]
-        // POST api/values
-        public void Post([FromBody]string value)
-        {
+            if (id <= 0) { return BadRequest(); }
+            return Ok(this._repository.GetReservation(id));
         }
 
         [HttpPut]
-        // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        // PUT api/reservation
+        public IHttpActionResult Put(int id, [FromBody] Reservation reservation)
         {
-        }
+            if (!ModelState.IsValid) { return BadRequest(); }
 
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
+            if (string.IsNullOrEmpty(""))
+            {
+                return BadRequest("Missing Username value");
+            }
+
+            // Add Date Checks
+            // Add Tools limit checks
+            // Add customer username check
+            // Add Credit card information check.
+ 
+            return Ok(this._repository.CreateReservation(reservation));
         }
     }
 }

@@ -9,7 +9,7 @@ namespace HandyTools.Database
 
         IEnumerable<T> GetModels<T>(string key, string value, bool useView = false) where T : BaseModel;
 
-        T GetModel<T>(string key, string value) where T : BaseModel;
+        T GetModel<T>(string key, string value, bool useView = false) where T : BaseModel;
 
         T SetModel<T>(T model) where T : BaseModel;
 

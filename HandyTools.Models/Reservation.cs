@@ -12,7 +12,7 @@ namespace HandyTools.Models
 
         public DateTime EndDate { get; set; }
 
-        public string CustomerID { get; set; }
+        public string CustomerUserName { get; set; }
 
         public DateTime PickUpDate { get; set; }
 
@@ -36,8 +36,8 @@ namespace HandyTools.Models
 
         public double? RentalPrice { get; set; }
 
-        public DateTime? PickUpClerk { get; set; }
+        public string PickUpClerk { get; set; }
 
-        public DateTime? DropOffClerk { get; set; }
+        public string DropOffClerk { get; set; }
     }
 }

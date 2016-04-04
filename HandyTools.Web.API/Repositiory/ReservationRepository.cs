@@ -1,13 +1,15 @@
-﻿using HandyTools.Models;
-using System.Collections.Generic;
-using HandyTools.Database;
+﻿using HandyTools.Database;
+using HandyTools.Models;
 using HandyTools.Web.API.Interfaces;
+using System.Collections.Generic;
 
 namespace HandyTools.Web.API.Repositiory
 {
     public class ReservationRepository : BaseRepository, IReservationRepository
     {
-        public ReservationRepository(IDbContext context) : base(context) { }
+        public ReservationRepository(IDbContext context) : base(context)
+        {
+        }
 
         public Reservation GetReservation(int reservationId)
         {
@@ -16,12 +18,7 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<Reservation> GetReservations(string userName)
         {
-            // Get reservations from db.
-            // Load up Tools objects.
-            // Load up Handle By Clerk
-            // Load up Picked By clerk.
-
-            return this.Context.GetModels<Reservation>(nameof(userName), userName);
+            return this.Context.GetModels<Reservation>("customerUserName", userName);
         }
 
         /// <summary>

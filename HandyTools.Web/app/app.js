@@ -20,7 +20,7 @@
                          authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                      }
                  })
-                .when("/profile/create", {
+                .when("/account/create", {
                     controller: "profileController",
                     controllerAs: "profile",
                     templateUrl: "app/profile/profileCreateView.html",
@@ -72,7 +72,7 @@
 
     app.run(["$rootScope", "$location", "APPSETTINGS", "handy.authService", function ($rootScope, $location, APPSETTINGS, authService) {
         $rootScope.$on("$routeChangeStart", function (event, next) {
-            var authorizedRoles = next.data.authorizedRoles;
+            var authorizedRoles = next.data && next.data.authorizedRoles;
             if (!authService.isAuthorized(authorizedRoles)) {
                 event.preventDefault();
                 if (authService.isAuthenticated()) {
