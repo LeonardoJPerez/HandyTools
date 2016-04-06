@@ -9,7 +9,7 @@
             ApplicationPaths: {
                 ClerkHome: "/pickups",
                 CustomerHome: "/reservations",
-                CreateProfile: "/profile/create"
+                CreateProfile: "/account/create"
             },
             AUTH_EVENTS: {
                 LoginSuccess: "auth-login-success",
@@ -22,6 +22,7 @@
         })
         .constant("USER_ROLES", {
             Clerk: "clerk",
-            Customer: "customer"
+            Customer: "customer",
+            NewCustomer: "Newcustomer"
         });
 }());

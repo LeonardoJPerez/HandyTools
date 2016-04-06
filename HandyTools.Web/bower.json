@@ -1,0 +1,21 @@
+{
+  "name": "handytools.web",
+  "description": "HandyTools Managment System.",
+  "main": "app/app.js",
+  "authors": [
+    "Leonardo J. Perez"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/LeonardoJPerez/HandyTools",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-datatables": "^0.5.4"
+  }
+}

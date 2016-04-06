@@ -52,7 +52,7 @@
 
             authService.login(vm.credentials).then(function (user) {
                 $scope.setCurrentUser(user);
-                _authService.redirectTo(role);
+                authService.redirectTo(user.role);
 
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
             }, function (error) {

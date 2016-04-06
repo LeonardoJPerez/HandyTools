@@ -159,12 +159,14 @@
                 <!-- Submit -->
                 <div class="col-md-2 col-centered">
                     <label class="control-label" for="btnSubmit"></label>
-                    <div class="form-group">
-                        <a id="lnkReturn" href="/" class="btn btn-block btn-lg btn-default">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>  Back
-                        </a>
+                    <div class="form-group">                       
+                        <button id="btnBack" name="btnSubmit" class="btn btn-block btn-lg btn-default" type="button" ng-click="vm.back()">
+                            <span class="glyphicon glyphicon-log-out icon-flipped"></span>  Back
+                        </button>
                     </div>
                 </div>
+
+                
                 <div class="col-md-1 col-centered"></div>
                 <div class="col-md-2 col-centered">
                     <label class="control-label" for="btnSubmit"></label>

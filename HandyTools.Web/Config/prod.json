@@ -1,4 +1,4 @@
 ﻿{
-  "ApiServerPath": "handytools.s3-website-us-east-1.amazonaws.com",
-  "CurrentServer": "handytools-api.s3-website-us-east-1.amazonaws.com"
+  "ApiServerPath": "http://ec2-54-210-167-103.compute-1.amazonaws.com/",
+  "CurrentServer": "http://ec2-54-164-107-81.compute-1.amazonaws.com/"
 }

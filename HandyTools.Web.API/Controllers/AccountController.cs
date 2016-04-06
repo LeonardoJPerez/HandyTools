@@ -1,7 +1,7 @@
 ﻿using HandyTools.Models;
 using HandyTools.Web.API.Helpers;
 using HandyTools.Web.API.Interfaces;
-using HandyTools.Web.API.Models;
+using HandyTools.Web.API.ViewModels;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -56,26 +56,26 @@ namespace HandyTools.Web.API.Controllers
         // POST: api/account/login
         [HttpPost]
         [Route("login")]
-        public IHttpActionResult Login(Login login)
+        public IHttpActionResult Login(LoginViewModel loginViewModel)
         {
             if (ModelState.IsValid)
             {
-                switch (login.Type.ToLower())
+                switch (loginViewModel.Type.ToLower())
                 {
                     case "customer":
-                        return Ok<LoginResponse>(new LoginResponse
+                        return Ok<LoginResponseViewModel>(new LoginResponseViewModel
                         {
-                            UserName = login.UserName,
-                            Code = this._repository.AuthenticateUser<Customer>(login.UserName, login.Password),
-                            Role = login.Type
+                            UserName = loginViewModel.UserName,
+                            Code = this._repository.AuthenticateUser<Customer>(loginViewModel.UserName, loginViewModel.Password),
+                            Role = loginViewModel.Type
                         });
 
                     case "clerk":
-                        return Ok<LoginResponse>(new LoginResponse
+                        return Ok<LoginResponseViewModel>(new LoginResponseViewModel
                         {
-                            UserName = login.UserName,
-                            Code = this._repository.AuthenticateUser<Clerk>(login.UserName, login.Password, false),
-                            Role = login.Type
+                            UserName = loginViewModel.UserName,
+                            Code = this._repository.AuthenticateUser<Clerk>(loginViewModel.UserName, loginViewModel.Password, false),
+                            Role = loginViewModel.Type
                         });
 
                     default:

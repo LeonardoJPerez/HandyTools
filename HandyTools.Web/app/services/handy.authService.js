@@ -26,12 +26,8 @@
             if (!angular.isArray(authorizedRoles)) {
                 authorizedRoles = [authorizedRoles];
             }
-
-            if ($location.path() === APPSETTINGS.ApplicationPaths.CreateProfile && authorizedRoles.indexOf(USER_ROLES.NewCustomer) !== -1) {
-                return true;
-            }
-
-            return (_authService.isAuthenticated() && authorizedRoles.indexOf(session.userRole) !== -1);
+ 
+            return authorizedRoles.indexOf(session.userRole) !== -1;
         };
 
         _authService.redirectTo = function (role) {
@@ -44,6 +40,9 @@
                     break;
                 case USER_ROLES.NewCustomer:
                     $location.path(APPSETTINGS.ApplicationPaths.CreateProfile);
+                    break;
+                default:
+                    $location.path("/");
                     break;
             }
         };

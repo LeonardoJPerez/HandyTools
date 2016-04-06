@@ -1,6 +1,8 @@
 ﻿using HandyTools.Models;
 using HandyTools.Web.API.Helpers;
 using HandyTools.Web.API.Interfaces;
+using HandyTools.Web.API.ViewModels;
+using System.Linq;
 using System.Web.Http;
 
 namespace HandyTools.Web.API.Controllers
@@ -33,7 +35,26 @@ namespace HandyTools.Web.API.Controllers
             if (string.IsNullOrEmpty(username)) { return BadRequest("Missing Username value"); }
 
             var decodedUsername = UserHelper.DecodeUser(username);
-            return Ok(this._repository.GetReservations(decodedUsername));
+
+            var reservations = this._repository.GetReservations(decodedUsername);
+            var reservationsViewModels = reservations.Select(r =>
+            new ReservationViewModel
+            {
+                ID = r.ID,
+                CustomerUserName = r.CustomerUserName,
+                DateCreated = r.ToUnixTime(r.DateCreated),
+                StartDate = r.ToUnixTime(r.StartDate),
+                EndDate = r.ToUnixTime(r.EndDate),
+                Deposit = r.Deposit,
+                RentalPrice = r.RentalPrice,
+                DropOffDate = r.ToUnixTime(r.DropOffDate),
+                DropOffHandledBy = r.DropOffHandledBy,
+                PickUpDate = r.ToUnixTime(r.PickUpDate),
+                PickUpHandledBy = r.PickUpHandledBy,
+                Tools = r.Tools
+            });
+
+            return Ok(reservationsViewModels);
         }
 
         // GET api/reservation/{id}
@@ -60,7 +81,7 @@ namespace HandyTools.Web.API.Controllers
             // Add Tools limit checks
             // Add customer username check
             // Add Credit card information check.
- 
+
             return Ok(this._repository.CreateReservation(reservation));
         }
     }

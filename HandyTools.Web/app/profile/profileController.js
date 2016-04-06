@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("profileController", ["handy.api", profileController]);
+        .controller("profileController", ["handy.authService", "handy.api", profileController]);
 
-    function profileController(handyApi) {
+    function profileController(authService, handyApi) {
         var vm = this;
 
         vm.profile = {
@@ -31,10 +31,12 @@
         vm.states = [];
 
         vm.states = function () {
-            handyApi.States.get(function (data) {
-                vm.states = data.states;
-            });
+            return handyApi.States.get();
         };
+
+        vm.back = function (isValid) {
+            return authService.redirectTo("/");
+        }
 
         vm.createProfile = function (isValid) {
             // Validate profile

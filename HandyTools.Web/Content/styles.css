@@ -98,3 +98,14 @@ body {
     /* custom max width */
     max-width: 320px;
 }
+
+.icon-flipped {
+    transform: scaleX(-1);
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+}
+
+.reservation-grid tbody tr td div div {
+    font-size: 14px;
+}

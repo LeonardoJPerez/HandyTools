@@ -3,13 +3,17 @@
 
     angular
         .module("handytoolsApp")
-        .controller("mainController", ["$scope", "handy.session", "USER_ROLES", "handy.authService", mainController]);
+        .controller("mainController", ["$scope", "$location", "handy.session", "USER_ROLES", "handy.authService", mainController]);
 
-    function mainController($scope, session, USER_ROLES, authService) {
+    function mainController($scope, $location, session, USER_ROLES, authService) {
         $scope.currentUser = null;
         $scope.userRoles = USER_ROLES;
         $scope.isAuthorized = authService.isAuthorized;
         $scope.isAuthenticated = authService.isAuthenticated;
+
+        $scope.showLogin = function () {
+            return !authService.isAuthenticated() && $location.path() === "/";
+        };
 
         $scope.setCurrentUser = function (user) {
             $scope.currentUser = user;

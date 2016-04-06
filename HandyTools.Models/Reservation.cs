@@ -14,9 +14,9 @@ namespace HandyTools.Models
 
         public string CustomerUserName { get; set; }
 
-        public DateTime PickUpDate { get; set; }
+        public DateTime? PickUpDate { get; set; }
 
-        public DateTime DropOffDate { get; set; }
+        public DateTime? DropOffDate { get; set; }
 
         public string PickUpHandledBy { get; set; }
 
@@ -36,8 +36,10 @@ namespace HandyTools.Models
 
         public double? RentalPrice { get; set; }
 
-        public string PickUpClerk { get; set; }
-
-        public string DropOffClerk { get; set; }
+        public long ToUnixTime(DateTime? date)
+        {
+            if (!date.HasValue) { return 0; }
+            return (date.Value.ToUniversalTime().Ticks - 621355968000000000) / 10000;
+        }
     }
 }

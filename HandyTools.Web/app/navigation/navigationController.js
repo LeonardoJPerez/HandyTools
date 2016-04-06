@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("navigationController", ["$window", "$rootScope", "$scope", "APPSETTINGS", "USER_ROLES", "handy.authService", navigationController]);
+        .controller("navigationController", ["$rootScope", "$scope", "APPSETTINGS", "USER_ROLES", "handy.authService", navigationController]);
 
-    function navigationController($window, $rootScope, $scope, APPSETTINGS, USER_ROLES, authService) {
+    function navigationController($rootScope, $scope, APPSETTINGS, USER_ROLES, authService) {
         var vm = this;
 
         vm.currentUser = $scope.getCurrentUser();
@@ -17,7 +17,7 @@
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LogoutSuccess);
                 $scope.setCurrentUser(user);
 
-                $window.location = "/";
+                authService.redirectTo(user.role);
             });
         }
     };
