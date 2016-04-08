@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row top-buffer" ng-init="alertOnSelectionChange();">
-        <table tr-ng-grid="" class="table table-striped table-hover reservation-grid" selected-items="mySelectedItems" items="vm.reservations" enable-filtering="false" 
+        <table tr-ng-grid="" class="table table-striped table-hover reservation-grid" selected-items="mySelectedItems" items="vm.reservations" enable-filtering="false"
                cell-width="10em" selection-mode="SingleRow">
             <thead>
                 <tr>
@@ -31,6 +31,9 @@
                     <th field-name="dropOffHandledBy" display-name="DropOff Clerk" cell-width="8em"></th>
                 </tr>
             </thead>
+            <!--<tbody>
+                <tr ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"></tr>
+            </tbody>-->
         </table>
     </div>
 </div>

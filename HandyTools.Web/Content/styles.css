@@ -141,3 +141,7 @@ div[ng-view].ng-hide-add {
     animation: flipOutX 2.5s;
     display: block !important;
 }
+
+tr.ng-scope {
+    cursor: pointer;
+}
