@@ -16,8 +16,8 @@
 
         vm.logoff = function () {
             authService.logoff(function (user) {
-                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LogoutSuccess);
                 authService.redirectTo(user.userRole);
+                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LogoutSuccess);
             });
         }
     };

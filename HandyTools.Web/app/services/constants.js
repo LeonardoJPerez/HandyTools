@@ -17,7 +17,8 @@
                 LogoutSuccess: "auth-logout-success",
                 SessionTimeout: "auth-session-timeout",
                 NotAuthenticated: "auth-not-authenticated",
-                NotAuthorized: "auth-not-authorized"
+                NotAuthorized: "auth-not-authorized",
+                NewCustomerInProcess: "new-customer-in-process"
             }
         })
         .constant("USER_ROLES", {

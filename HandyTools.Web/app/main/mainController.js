@@ -3,16 +3,29 @@
 
     angular
         .module("handytoolsApp")
-        .controller("mainController", ["$scope", "$location", "USER_ROLES", "handy.authService", mainController]);
+        .controller("mainController", ["$scope", "$location", "APPSETTINGS", "USER_ROLES", "handy.authService", mainController]);
 
-    function mainController($scope, $location, USER_ROLES, authService) {
-        $scope.userRoles = USER_ROLES;
-        $scope.isAuthorized = authService.isAuthorized;
-        $scope.isAuthenticated = authService.isAuthenticated;
-        $scope.getCurrentUser = authService.getCurrentUser;
+    function mainController($scope, $location, APPSETTINGS, USER_ROLES, authService) {
+        var vm = this;
 
-        $scope.showLogin = function () {
+        vm.userRoles = USER_ROLES;
+        vm.isAuthorized = authService.isAuthorized();
+        vm.isAuthenticated = authService.isAuthenticated();
+
+        vm.showLogin = function () {
             return !authService.isAuthenticated() && $location.path() === "/";
         };
+
+        $scope.getCurrentUser = authService.getCurrentUser;
+
+        $scope.$on(APPSETTINGS.AUTH_EVENTS.LoginSuccess, function (event, data) {
+            vm.currentUser = authService.getCurrentUser();
+            vm.isAuthenticated = authService.isAuthenticated();
+        });
+
+        $scope.$on(APPSETTINGS.AUTH_EVENTS.LogoutSuccess, function (event, data) {
+            vm.isAuthorized = false;
+            vm.isAuthenticated = false;
+        });
     }
 }());

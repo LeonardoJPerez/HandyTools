@@ -49,10 +49,13 @@
             // Clear error messages.
             vm.error = false;
 
-            authService.login(vm.credentials).then(function (user) {             
+            authService.login(vm.credentials).then(function (user) {
                 authService.redirectTo(user.userRole);
-
-                $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
+                if (user.userRole === USER_ROLES.NewCustomer) {
+                    $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.NewCustomerInProcess);
+                } else {
+                    $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
+                }
             }, function (error) {
                 displayError(error);
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginFailed);

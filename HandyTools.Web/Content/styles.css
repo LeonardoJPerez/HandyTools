@@ -131,12 +131,12 @@ div[ng-view].ng-enter-active {
     opacity: 1;
 }
 
-.ng-hide-remove {
+div[ng-view].ng-hide-remove {
     -webkit-animation: fadeOut 2.5s;
     animation: fadeOut 2.5s;
 }
 
-.ng-hide-add {
+div[ng-view].ng-hide-add {
     -webkit-animation: flipOutX 2.5s;
     animation: flipOutX 2.5s;
     display: block !important;

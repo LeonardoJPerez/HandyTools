@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("profileController", ["$scope", "handy.authService", "handy.api", "USER_ROLES", "$sce", profileController]);
+        .controller("profileController", ["$rootScope", "$scope", "handy.authService", "handy.api", "APPSETTINGS", "USER_ROLES", "$sce", profileController]);
 
-    function profileController($scope, authService, handyApi, USER_ROLES,  $sce) {
+    function profileController($rootScope, $scope, authService, handyApi, APPSETTINGS, USER_ROLES, $sce) {
         var vm = this;
 
         vm.currentUser = $scope.getCurrentUser();
@@ -48,7 +48,7 @@
         };
 
         vm.back = function () {
-            $scope.setCurrentUser(null);
+            authService.setCurrentUser(null);
             return authService.redirectTo("/");
         }
 
@@ -66,6 +66,7 @@
                         });
 
                         authService.redirectTo(USER_ROLES.Customer);
+                        $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess)
                     } else {
                         vm.showPopup = true;
                     }
