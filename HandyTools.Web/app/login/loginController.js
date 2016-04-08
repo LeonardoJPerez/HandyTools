@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("loginController", ["$rootScope", "$scope", "$location", "handy.authService", "APPSETTINGS", "USER_ROLES", loginController]);
+        .controller("loginController", ["$rootScope", "$scope", "handy.authService", "APPSETTINGS", "USER_ROLES", loginController]);
 
-    function loginController($rootScope, $scope, $location, authService, APPSETTINGS, USER_ROLES) {
+    function loginController($rootScope, $scope, authService, APPSETTINGS, USER_ROLES) {
         var vm = this;
         vm.userName = "";
         vm.clerkName = "";
@@ -14,11 +14,11 @@
         vm.credentials = {
             username: "",
             password: "",
-            type: "customer"
+            type: USER_ROLES.Customer
         };
 
         vm.isCustomer = function () {
-            return vm.credentials.type === "customer";
+            return vm.credentials.type === USER_ROLES.Customer;
         }
 
         vm.validate = function (isvalid, elemid) {
@@ -31,13 +31,12 @@
 
         vm.setUserType = function (userType) {
             if (userType === vm.credentials.type) { return; }
-
             vm.credentials.type = "none";
 
             angular.element("#customer").addClass("ng-hide");
             angular.element("#clerk").addClass("ng-hide");
 
-            vm.credentials.type = userType === "customer" ? userType : "clerk";
+            vm.credentials.type = userType === USER_ROLES.Customer ? userType : USER_ROLES.Clerk;
         };
 
         vm.login = function (credentials) {
@@ -50,9 +49,8 @@
             // Clear error messages.
             vm.error = false;
 
-            authService.login(vm.credentials).then(function (user) {
-                $scope.setCurrentUser(user);
-                authService.redirectTo(user.role);
+            authService.login(vm.credentials).then(function (user) {             
+                authService.redirectTo(user.userRole);
 
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
             }, function (error) {

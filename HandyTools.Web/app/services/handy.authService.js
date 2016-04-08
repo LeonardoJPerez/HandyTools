@@ -19,14 +19,14 @@
         };
 
         _authService.isAuthenticated = function () {
-            return !!session.userId;
+            return !!session.userName;
         };
 
         _authService.isAuthorized = function (authorizedRoles) {
             if (!angular.isArray(authorizedRoles)) {
                 authorizedRoles = [authorizedRoles];
             }
- 
+
             return authorizedRoles.indexOf(session.userRole) !== -1;
         };
 
@@ -49,9 +49,27 @@
 
         _authService.logoff = function (callback) {
             // Clear session
-            session.destroy();
+            session.destroyUserCookie();
             callback({});
         };
+
+        _authService.getCurrentUser = function () {
+            return {
+                userName: session.userName,
+                userRole: session.userRole
+            };
+        }
+
+        _authService.setCurrentUser = function (user) {
+            // if null, nuke cookie.
+            if (user) {
+                var username = user.hasOwnProperty("userName") ? user.userName : null;
+                var role = user.hasOwnProperty("userRole") ? user.userRole : null;
+                session.createUserCookie(username, role);
+            } else {
+                session.destroyUserCookie();
+            }
+        }
 
         // Private Methods
 
@@ -59,28 +77,31 @@
             var deferred = $q.defer();
 
             var response = {
-                username: res.userName,
-                role: res.role
+                userName: res.userName,
+                userRole: res.role
             };
 
             switch (res.code) {
                 case 1:
-                    session.create(response.username, response.username, response.role);
+                    _authService.setCurrentUser(response);
                     break;
+
                 case -1:
                     // User not found.
-                    if (response.role === USER_ROLES.Customer) {
-                        response.role = USER_ROLES.NewCustomer;
+                    if (response.userRole === USER_ROLES.Customer) {
+                        response.userRole = USER_ROLES.NewCustomer;
+                        _authService.setCurrentUser(response);
                     } else {
-                        response.role = USER_ROLES.Invalid;
+                        response.userRole = USER_ROLES.Invalid;
                     }
                     break;
+
                 default:
                     // Handle invalid login.
-                    response.role = USER_ROLES.Invalid;
+                    response.userRole = USER_ROLES.Invalid;
             }
 
-            if (response.role === USER_ROLES.Invalid) {
+            if (response.userRole === USER_ROLES.Invalid) {
                 deferred.reject(response);
             } else {
                 deferred.resolve(response);

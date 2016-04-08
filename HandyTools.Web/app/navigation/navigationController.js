@@ -8,16 +8,16 @@
     function navigationController($rootScope, $scope, APPSETTINGS, USER_ROLES, authService) {
         var vm = this;
 
-        vm.currentUser = $scope.getCurrentUser();
-        vm.currentRole = $scope.getCurrentUser().role;
+        vm.currentUser = authService.getCurrentUser();
+        vm.currentRole = vm.currentUser.userRole;
         vm.userRoles = USER_ROLES;
+
         vm.isAuthorized = authService.isAuthorized;
+
         vm.logoff = function () {
             authService.logoff(function (user) {
                 $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LogoutSuccess);
-                $scope.setCurrentUser(user);
-
-                authService.redirectTo(user.role);
+                authService.redirectTo(user.userRole);
             });
         }
     };

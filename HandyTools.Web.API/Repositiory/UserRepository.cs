@@ -47,7 +47,8 @@ namespace HandyTools.Web.API.Repositiory
         /// <returns></returns>
         public Customer CreateCustomer(Customer customer)
         {
-            return this.Context.AddModel(customer);
+            var newModel = this.Context.AddModel(customer);
+            return newModel ?? new Customer();
         }
 
         /// <summary>

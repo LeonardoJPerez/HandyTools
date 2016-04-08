@@ -1,48 +1,35 @@
 ﻿<div class="container-fluid">
     <form name="profileForm" class="form-horizontal create-profile" novalidate ng-controller="profileController as vm" ng-submit="vm.createProfile(profileForm.$valid)">
         <fieldset>
-
+            <script type="text/ng-template" id="myPopoverTemplate.html">
+                <div>{{dynamicPopover.content}}</div>
+                <div class="form-group">
+                    <label>Popup Title:</label>
+                    <input type="text" ng-model="dynamicPopover.title" class="form-control">
+                </div>
+            </script>
             <div class="row top-buffer">
                 <div class="col-md-6 col-md-offset-5">
                     <!-- Form Name -->
                     <legend>Create New Profile</legend>
                 </div>
             </div>
-            <!-- Account Inputs-->
+            <!-- Account Inputs -->
             <div class="row">
                 <!-- Email Address input-->
                 <div class="col-md-6 col-md-offset-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtEmail">Email Address (Username)</label>
-                        <div class="form-group" ng-class="{ 'has-error' : profileForm.email.$invalid && !profileForm.email.$pristine }">
-                            <input id="txtEmail" name="email" type="email" placeholder="Enter an Email Address" class="form-control input-md" required ng-model="vm.profile.email">
+                        <div class="form-group" ng-class="{ 'has-error' : vm.showPopup }">
+                            <input id="txtEmail" name="email" type="email" placeholder="Enter an Email Address" class="form-control input-md" required
+                                   ng-model="vm.profile.userName" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                                   uib-popover-html="vm.popupHtml" popover-placement="right" popover-trigger="none" popover-is-open="vm.showPopup">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
-                <!-- Password input-->
-                <div class="col-md-3 col-md-offset-3">
-                    <div class="col-md-12">
-                        <label class="control-label" for="txtPassword">Password</label>
-                        <div class="form-group">
-                            <input id="txtPassword" name="txtPassword" type="password" placeholder="Enter Password" class="form-control input-md" required ng-model="vm.profile.password">
-                        </div>
-                    </div>
-                </div>
-                <!-- Confirm Password input-->
-                <div class="col-md-3">
-                    <div class="col-md-12">
-                        <label class="control-label" for="txtConfirmPassword">Confirm Password</label>
-                        <div class="form-group">
-                            <input id="txtConfirmPassword" name="txtConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required ng-model="vm.profile.passwordConfirm">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Personal Inputs-->
+            <!-- Personal Inputs -->
             <div class="row">
                 <!-- FirstName input-->
                 <div class="col-md-3 col-md-offset-3">
@@ -65,32 +52,57 @@
                 </div>
             </div>
 
-            <!-- Phone Inputs-->
+            <!-- Password Inputs -->
+            <div class="row">
+                <!-- Password input-->
+                <div class="col-md-3 col-md-offset-3">
+                    <div class="col-md-12">
+                        <label class="control-label" for="txtPassword">Password</label>
+                        <div class="form-group">
+                            <input id="txtPassword" name="txtPassword" type="password" placeholder="Enter Password" class="form-control input-md" required ng-model="vm.profile.password">
+                        </div>
+                    </div>
+                </div>
+                <!-- Confirm Password input-->
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <label class="control-label" for="txtConfirmPassword">Confirm Password</label>
+                        <div class="form-group">
+                            <input id="txtConfirmPassword" name="txtConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required
+                                   ng-model="vm.profile.passwordConfirm" field-match="vm.profile.password">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone Inputs -->
             <div class="row">
                 <!-- HomePhone input-->
                 <div class="col-md-3 col-md-offset-3">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label class="control-label" for="txtHomePhone">Home Phone</label>
-                            <input id="txtHomePhone" name="txtHomePhone" type="text" placeholder="Enter Home Number" class="form-control input-md" required ng-model="vm.profile.homePhone"
+                            <input id="txtHomePhone" name="txtHomePhone" type="text" placeholder="Enter Home Number" class="form-control input-md" required ng-model="vm.profile.homePhoneNumber"
                                    ui-mask="(999) 999-9999" ui-mask-placeholder ui-mask-placeholder-char="_">
                         </div>
                     </div>
                 </div>
 
-                <!-- WorkPhone input-->
+                <!-- WorkPhone input -->
                 <div class="col-md-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtWorkPhone">Work Phone</label>
                         <div class="form-group">
-                            <input id="txtWorkPhone" name="txtWorkPhone" type="text" placeholder="Enter Work Number (Optional)" class="form-control input-md" required ng-model="vm.profile.workPhone">
+                            <input id="txtWorkPhone" name="txtWorkPhone" type="text" placeholder="Enter Work Number (Optional)" class="form-control input-md" ng-model="vm.profile.workPhoneNumber"
+                                   ui-mask="(999) 999-9999" ui-mask-placeholder ui-mask-placeholder-char="_">
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Address inputs-->
+
+            <!-- Address inputs -->
             <div class="row">
-                <!-- AddressLine1 input-->
+                <!-- AddressLine1 input -->
                 <div class="col-md-3 col-md-offset-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtAddressLine1">Address Line 1</label>
@@ -100,6 +112,7 @@
                     </div>
                 </div>
 
+                <!-- AddressLine2 input-->
                 <div class="col-md-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtAddressLine2">Address Line 2</label>
@@ -110,8 +123,9 @@
                 </div>
             </div>
 
+            <!-- Address input -->
             <div class="row">
-                <!-- City input-->
+                <!-- City input -->
                 <div class="col-md-3 col-md-offset-3">
                     <div class="col-md-12">
                         <label class="col-md-2 control-label" for="txtCity">City</label>
@@ -120,22 +134,23 @@
                         </div>
                     </div>
                 </div>
-                <!-- State input-->
+                <!-- State input -->
                 <div class="col-md-3">
                     <div class="col-md-12">
                         <label class="col-md-2 control-label" for="ddlState">State</label>
                         <div class="form-group">
-                            <select id="ddlState" ng-model="vm.selectedState"
-                                    ng-options="state.name as state.name for state in vm.states" class="form-control" required>
-                                <option value="" selected>Select a State</option>
+                            <select id="ddlState" ng-model="vm.profile.state" class="form-control" required>
+                                <option value="-1" selected>Select a State</option>
+                                <option ng-repeat="state in vm.states" value="{{state.code}}">{{ state.name }}</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Address input -->
             <div class="row">
-                <!-- Country input-->
+                <!-- Country input -->
                 <div class="col-md-3 col-md-offset-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtCountry">Country</label>
@@ -144,29 +159,29 @@
                         </div>
                     </div>
                 </div>
-                <!-- ZipCode input-->
+                <!-- ZipCode input -->
                 <div class="col-md-3">
                     <div class="col-md-12">
                         <label class="control-label" for="txtZipCode">Zip Code</label>
                         <div class="form-group">
-                            <input id="txtZipCode" name="txtZipCode" type="text" placeholder="Enter Zip Code" class="form-control input-md" required ng-model="vm.profile.zipCode">
+                            <input id="txtZipCode" name="txtZipCode" type="text" placeholder="Enter Zip Code" class="form-control input-md" required ng-model="vm.profile.postalCode">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Submit Buttons -->
             <div class="row row-centered">
                 <!-- Submit -->
                 <div class="col-md-2 col-centered">
                     <label class="control-label" for="btnSubmit"></label>
-                    <div class="form-group">                       
+                    <div class="form-group">
                         <button id="btnBack" name="btnSubmit" class="btn btn-block btn-lg btn-default" type="button" ng-click="vm.back()">
                             <span class="glyphicon glyphicon-log-out icon-flipped"></span>  Back
                         </button>
                     </div>
                 </div>
 
-                
                 <div class="col-md-1 col-centered"></div>
                 <div class="col-md-2 col-centered">
                     <label class="control-label" for="btnSubmit"></label>

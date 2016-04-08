@@ -20,8 +20,8 @@
                 <div id="username-section" class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 
-                    <input id="customer" type="email" class="form-control" name="user" placeholder="User Name" required
-                           ng-blur="vm.validate(loginForm.user.$valid, 'username-section')"
+                    <input id="customer" type="email" class="form-control" name="user" placeholder="User Name (Or Enter email to create an Account)" required
+                           ng-blur="vm.validate(loginForm.user.$valid, 'username-section')" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
                            ng-model="vm.userName" ng-show="vm.credentials.type === 'customer'">
 
                     <input id="clerk" type="text" class="form-control" name="clerk" placeholder="Clerk User Name" required

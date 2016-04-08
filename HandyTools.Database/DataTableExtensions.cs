@@ -14,7 +14,9 @@ namespace HandyTools.Database
         /// <returns></returns>
         public static List<T> TableToList<T>(this DataTable table)
         {
-            var rez = new List<T>();
+            var res = new List<T>();
+            if (table == null) { return res; }
+
             foreach (DataRow rw in table.Rows)
             {
                 var item = Activator.CreateInstance<T>();
@@ -26,10 +28,10 @@ namespace HandyTools.Database
                     var propType = Nullable.GetUnderlyingType(pi.PropertyType) ?? pi.PropertyType;
                     pi.SetValue(item, Convert.ChangeType(rw[cl], propType), new object[0]);
                 }
-                rez.Add(item);
+                res.Add(item);
             }
 
-            return rez;
+            return res;
         }
     }
 }

@@ -77,7 +77,6 @@ namespace HandyTools.Database
             }
         }
 
-
         /// <summary>
         /// Gets the model.
         /// </summary>
@@ -186,11 +185,12 @@ namespace HandyTools.Database
 
                 connection.Open();
 
-                var readerResult = cmd.ExecuteReader();
                 object result = null;
+                MySqlDataReader readerResult = null;
 
                 try
                 {
+                    readerResult = cmd.ExecuteReader();
                     adapter.SelectCommand = cmd;
 
                     switch (cmdType)
@@ -221,11 +221,11 @@ namespace HandyTools.Database
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(ex.Message);            
                 }
                 finally
                 {
-                    readerResult.Close();
+                    readerResult?.Close();
                     connection.Close();
                 }
 

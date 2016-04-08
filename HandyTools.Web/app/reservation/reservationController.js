@@ -21,8 +21,8 @@
 
     function reservationController($rootScope, $scope, APPSETTINGS, handyApi, $uibModal, $log, $window) {
         var vm = this;
-
-        this.userId = btoa($scope.getCurrentUser().username);
+        vm.currentUser = $scope.getCurrentUser();
+        this.userId = btoa(vm.currentUser.userName);
 
         this.getReservations = function () {
             return handyApi.Reservations.getByUser.query({ id: this.userId });

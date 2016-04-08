@@ -2,12 +2,13 @@
     "use strict";
 
     var app = angular
-        .module("handytoolsApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "ngCookies", "trNgGrid", "angular-loading-bar", "ui.event", "handy.services", "APPSETTINGS"])
+        .module("handytoolsApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.mask", "ngCookies", "trNgGrid", "angular-uuid", "ngSanitize",
+            "angular-loading-bar", "ui.event", "handy.services", "APPSETTINGS"])
         .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
-                .when("/profile/create", {
+                .when("/account/create", {
                     controller: "profileController as vm",
                     templateUrl: "app/profile/profileCreateView.html",
                     data: {

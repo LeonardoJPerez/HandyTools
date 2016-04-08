@@ -66,8 +66,12 @@ body {
     border: 2px solid #e74c3c;
 }
 
+input.ng-dirty.ng-invalid {
+    border: 2px solid #e74c3c;
+}
+
 #loading-bar .bar {
-    background: #18bc9c !important;
+    background: #3be6c4 !important;
 }
 
 /* centered columns styles */
@@ -108,4 +112,32 @@ body {
 
 .reservation-grid tbody tr td div div {
     font-size: 14px;
+}
+
+.form-group .popover-inner {
+    width: 10em;
+}
+
+.input-group-addon {
+    cursor: pointer;
+}
+
+div[ng-view].ng-enter {
+    -webkit-animation: fadeIn 0.5s;
+    animation: fadeIn 0.5s;
+}
+
+div[ng-view].ng-enter-active {
+    opacity: 1;
+}
+
+.ng-hide-remove {
+    -webkit-animation: fadeOut 2.5s;
+    animation: fadeOut 2.5s;
+}
+
+.ng-hide-add {
+    -webkit-animation: flipOutX 2.5s;
+    animation: flipOutX 2.5s;
+    display: block !important;
 }

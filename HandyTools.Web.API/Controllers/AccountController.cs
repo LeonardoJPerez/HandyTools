@@ -32,24 +32,23 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.GetCustomer(username));
         }
 
-        // POST: api/account/{id}
+        // POST: api/account/
         [HttpPost]
-        [Route("{id}")]
+        [ResponseType(typeof(Customer))]
+        public IHttpActionResult AddCustomer([FromBody] Customer customer)
+        {
+            if (!ModelState.IsValid) { return BadRequest(ModelState); }
+            return Ok(this._repository.CreateCustomer(customer));
+        }
+
+        // PUT: api/account/
+        [HttpPut]
         [ResponseType(typeof(Customer))]
         public IHttpActionResult UpdateCustomer([FromBody] Customer customer)
         {
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             if (string.IsNullOrEmpty(customer.UserName)) { return BadRequest(ModelState); }
 
-            return Ok(this._repository.UpdateCustomer(customer));
-        }
-
-        // PUT: api/account/
-        [HttpPut]
-        [ResponseType(typeof(Customer))]
-        public IHttpActionResult AddCustomer([FromBody] Customer customer)
-        {
-            if (!ModelState.IsValid) { return BadRequest(ModelState); }
             return Ok(this._repository.UpdateCustomer(customer));
         }
 
