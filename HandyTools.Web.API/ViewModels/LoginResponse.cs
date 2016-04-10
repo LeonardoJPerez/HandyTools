@@ -1,4 +1,8 @@
-﻿namespace HandyTools.Web.API.ViewModels
+﻿using HandyTools.Web.API.Enums;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace HandyTools.Web.API.ViewModels
 {
     public class LoginResponseViewModel
     {
@@ -6,6 +10,7 @@
 
         public int Code { get; set; }
 
-        public string Role { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public UserRole Role { get; set; }
     }
 }

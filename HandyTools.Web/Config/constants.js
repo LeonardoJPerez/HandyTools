@@ -21,8 +21,8 @@
             }
         })
         .constant("USER_ROLES", {
-            Clerk: "clerk",
-            Customer: "customer",
-            NewCustomer: "Newcustomer"
+            Clerk: "Clerk",
+            Customer: "Customer",
+            NewCustomer: "NewCustomer"
         });
 }());

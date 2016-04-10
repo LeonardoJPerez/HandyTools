@@ -8,10 +8,11 @@
 
     <link rel="shortcut icon" href="favicon.ico" />
     <link href="Content/bootstrap.css" rel="stylesheet" />
-    <link href="Content/styles.css" rel="stylesheet" />
+    <link href="Content/toaster.css" rel="stylesheet" />
     <link href="Content/loading-bar.min.css" rel="stylesheet" />
     <link href="bower_components/tr-ng-grid/trNgGrid.min.css" rel="stylesheet" />
     <link href="Content/animate.css" rel="stylesheet" />
+    <link href="Content/styles.css" rel="stylesheet" />
     <script src="Scripts/modernizr-2.8.3.js"></script>
 </head>
 <body ng-app="handytoolsApp" ng-controller="mainController as vm">
@@ -44,6 +45,7 @@
 
                     <!-- Content View -->
                     <div ng-view ng-animate></div>
+                    <toaster-container toaster-options="{'time-out': 2000, 'position-class': 'toast-bottom-right'}"></toaster-container>
                 </div>
 
                 <!-- Footer Content -->
@@ -72,6 +74,7 @@
     <script src="Scripts/angular-resource.js"></script>
     <script src="Scripts/angular-cookies.min.js"></script>
     <script src="Scripts/angular-sanitize.min.js"></script>
+    <script src="Scripts/toaster.min.js"></script>
 
     <script src="Scripts/event.js"></script>
     <script src="Scripts/loading-bar.min.js"></script>

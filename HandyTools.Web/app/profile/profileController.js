@@ -3,15 +3,45 @@
 
     angular
         .module("handytoolsApp")
-        .controller("profileController", ["$rootScope", "$scope", "handy.authService", "handy.api", "APPSETTINGS", "USER_ROLES", "$sce", profileController]);
+        .controller("profileController", ["$rootScope", "$scope", "$timeout", "toaster", "handy.authService", "handy.api", "APPSETTINGS", "USER_ROLES", "$sce", profileController]);
 
-    function profileController($rootScope, $scope, authService, handyApi, APPSETTINGS, USER_ROLES, $sce) {
+    function profileController($rootScope, $scope, $timeout, toaster, authService, handyApi, APPSETTINGS, USER_ROLES, $sce) {
         var vm = this;
 
-        vm.currentUser = $scope.getCurrentUser();
+        var getProfile = function () {
+            if (vm.IsNewCustomer) {
+                vm.profile = {
+                    userName: vm.currentUser.userName,
+                    password: null,
+                    passwordConfirm: null,
+                    firstName: null,
+                    lastName: null,
+                    homePhone: null,
+                    workPhone: null,
+                    addressLine1: null,
+                    addressLine2: null,
+                    city: null,
+                    state: { code: '-1', name: 'Select a State' },
+                    country: "USA",
+                    postalCode: null
+                };
+            } else {
+                handyApi.Profile.get({ id: btoa(vm.currentUser.userName) }, function (res) {
+                    // Parse phone numbers.
+                    vm.profile = res;
+                    vm.profile.homePhoneNumber = res.homePhoneAreaCode + res.homePhoneNumber;
+                    vm.profile.workPhoneNumber = res.workPhoneAreaCode + res.workPhoneNumber;
+                    vm.profile.state = { code: res.state, name: 'Select a State' };
+                });
+            }
+        };
 
-        var getstates = function () {
+        var getStates = function () {
             return handyApi.States.query();
+        };
+
+        var getTitle = function () {
+            return vm.IsNewCustomer ? "Create New Profile" : "View/Edit Profile";
         };
 
         var preparePayload = function (profile) {
@@ -21,59 +51,55 @@
             payload.workPhoneAreaCode = profile.workPhoneNumber.substring(0, 3);
             payload.homePhoneNumber = profile.homePhoneNumber.substring(3, profile.homePhoneNumber.length);
             payload.workPhoneNumber = profile.workPhoneNumber.substring(3, profile.workPhoneNumber.length);
+            payload.state = profile.state.code;
 
             return payload;
-        }
-
-        vm.showPopup = false;
-
-        vm.popupHtml = $sce.trustAsHtml("<span class='text-danger'>Username taken!</span>");
-
-        vm.profile = {
-            userName: vm.currentUser.userName,
-            password: null,
-            passwordConfirm: null,
-            firstName: null,
-            lastName: null,
-            homePhoneAreaCode: null,
-            homePhoneNumber: null,
-            workPhoneAreaCode: null,
-            workPhoneNumber: null,
-            addressLine1: null,
-            addressLine2: null,
-            city: null,
-            state: "-1",
-            country: "USA",
-            postalCode: null
         };
 
+        vm.currentUser = $scope.getCurrentUser();
+        vm.isNewCustomer = vm.currentUser.userRole === USER_ROLES.NewCustomer
+        vm.showPopup = false;
+        vm.popupHtml = $sce.trustAsHtml("<span class='text-danger'>Username taken!</span>");
+        vm.title = getTitle();
+        vm.states = getStates();
+        vm.submitText = vm.isNewCustomer ? "Submit" : "Save";
+
         vm.back = function () {
-            authService.setCurrentUser(null);
+            if (vm.IsNewCustomer) { authService.setCurrentUser(null); }
             return authService.redirectTo("/");
         }
 
-        vm.createProfile = function (isValid) {
+       
+
+        vm.submitProfile = function (isValid) {
             // Validate profile
             if (isValid) {
-                handyApi.Profile.save(preparePayload(vm.profile), function (res) {
-                    console.log(res);
-                    if (res.userName) {
-                        vm.showPopup = false;
+                if (vm.IsNewCustomer) {
+                    handyApi.Profile.save(preparePayload(vm.profile), function (res) {
+                        console.log(res);
+                        if (res.userName) {
+                            vm.showPopup = false;
 
-                        authService.setCurrentUser({
-                            userName: vm.profile.userName,
-                            userRole: USER_ROLES.Customer
-                        });
+                            authService.setCurrentUser({
+                                userName: vm.profile.userName,
+                                userRole: USER_ROLES.Customer
+                            });
 
-                        authService.redirectTo(USER_ROLES.Customer);
-                        $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess)
-                    } else {
-                        vm.showPopup = true;
-                    }
-                });
+                            authService.redirectTo(USER_ROLES.Customer);
+                            $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess)
+                        } else {
+                            vm.showPopup = true;
+                        }
+                    });
+                } else {
+                    handyApi.Profile.update(preparePayload(vm.profile), function (res) {                
+                        console.log(res);
+                        toaster.pop('success', "Account Updated!", "");
+                    });
+                }
             }
-        }
+        };
 
-        vm.states = getstates();
+        getProfile();
     }
 }());

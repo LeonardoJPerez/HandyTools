@@ -9,7 +9,8 @@
             ApplicationPaths: {
                 ClerkHome: "/pickups",
                 CustomerHome: "/reservations",
-                CreateProfile: "/account/create"
+                CreateProfile: "/account/create",
+                CreateReservation: "/reservations/create"
             },
             AUTH_EVENTS: {
                 LoginSuccess: "auth-login-success",
@@ -17,13 +18,12 @@
                 LogoutSuccess: "auth-logout-success",
                 SessionTimeout: "auth-session-timeout",
                 NotAuthenticated: "auth-not-authenticated",
-                NotAuthorized: "auth-not-authorized",
-                NewCustomerInProcess: "new-customer-in-process"
+                NotAuthorized: "auth-not-authorized"
             }
         })
         .constant("USER_ROLES", {
-            Clerk: "clerk",
-            Customer: "customer",
-            NewCustomer: "Newcustomer"
+            Clerk: "Clerk",
+            Customer: "Customer",
+            NewCustomer: "NewCustomer"
         });
 }());

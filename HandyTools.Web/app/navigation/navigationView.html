@@ -1,6 +1,6 @@
 ﻿<div ng-model="vm" ng-controller="navigationController as vm">
 
-    <ul class="nav navbar-nav navbar-right" ng-show="vm.currentRole === 'customer'">
+    <ul class="nav navbar-nav navbar-right" ng-show="vm.isCustomer()">
         <li>
             <a href="#/reservations">Reservations</a>
         </li>
@@ -29,7 +29,7 @@
         </li>
     </ul>
 
-    <ul class="nav navbar-nav navbar-right" ng-hide="vm.currentRole !== 'clerk'">
+    <ul class="nav navbar-nav navbar-right" ng-hide="vm.isCustomer()">
         <li>
             <a href="#/pickup">Pick Ups</a>
         </li>

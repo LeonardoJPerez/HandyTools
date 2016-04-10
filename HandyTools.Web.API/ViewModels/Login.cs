@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HandyTools.Web.API.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace HandyTools.Web.API.ViewModels
 {
@@ -11,6 +12,6 @@ namespace HandyTools.Web.API.ViewModels
         public string Password { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public UserRole Role { get; set; }
     }
 }

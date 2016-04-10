@@ -1,8 +1,10 @@
 ﻿using HandyTools.Models;
+using HandyTools.Web.API.Enums;
 using HandyTools.Web.API.Helpers;
 using HandyTools.Web.API.Interfaces;
 using HandyTools.Web.API.ViewModels;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -46,6 +48,8 @@ namespace HandyTools.Web.API.Controllers
         [ResponseType(typeof(Customer))]
         public IHttpActionResult UpdateCustomer([FromBody] Customer customer)
         {
+            Thread.Sleep(1000);
+
             if (!ModelState.IsValid) { return BadRequest(ModelState); }
             if (string.IsNullOrEmpty(customer.UserName)) { return BadRequest(ModelState); }
 
@@ -59,22 +63,23 @@ namespace HandyTools.Web.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                switch (loginViewModel.Type.ToLower())
+                switch (loginViewModel.Role)
                 {
-                    case "customer":
-                        return Ok<LoginResponseViewModel>(new LoginResponseViewModel
+                    case UserRole.Customer:
+                        var code = this._repository.AuthenticateUser<Customer>(loginViewModel.UserName, loginViewModel.Password);
+                        return Ok(new LoginResponseViewModel
                         {
                             UserName = loginViewModel.UserName,
-                            Code = this._repository.AuthenticateUser<Customer>(loginViewModel.UserName, loginViewModel.Password),
-                            Role = loginViewModel.Type
+                            Code = code,
+                            Role = code == 1 ? UserRole.Customer : UserRole.NewCustomer
                         });
 
-                    case "clerk":
-                        return Ok<LoginResponseViewModel>(new LoginResponseViewModel
+                    case UserRole.Clerk:
+                        return Ok(new LoginResponseViewModel
                         {
                             UserName = loginViewModel.UserName,
                             Code = this._repository.AuthenticateUser<Clerk>(loginViewModel.UserName, loginViewModel.Password, false),
-                            Role = loginViewModel.Type
+                            Role = loginViewModel.Role
                         });
 
                     default:

@@ -3,14 +3,14 @@
 
     var app = angular
         .module("handytoolsApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.mask", "ngCookies", "trNgGrid", "angular-uuid", "ngSanitize",
-            "angular-loading-bar", "ui.event", "handy.services", "APPSETTINGS"])
+            "angular-loading-bar", "toaster", "ui.event", "handy.services", "APPSETTINGS"])
         .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
             $routeProvider
                 .when("/account/create", {
                     controller: "profileController as vm",
-                    templateUrl: "app/profile/profileCreateView.html",
+                    templateUrl: "app/profile/profileFormView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.NewCustomer]
                     }
@@ -18,6 +18,13 @@
                 .when("/reservations", {
                     controller: "reservationController as vm",
                     templateUrl: "app/reservation/reservationsView.html",
+                    data: {
+                        authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
+                    }
+                })
+                .when("/reservations/create", {
+                    controller: "reservationCreateController as vm",
+                    templateUrl: "app/reservation/reservationCreateView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
@@ -36,6 +43,13 @@
                         authorizedRoles: [USER_ROLES.Clerk]
                     }
                 })
+                 .when("/profile", {
+                     controller: "profileController as vm",
+                     templateUrl: "app/profile/profileFormView.html",
+                     data: {
+                         authorizedRoles: [USER_ROLES.Customer]
+                     }
+                 })
                 .otherwise({
                     redirectTo: "/",
                     data: {
@@ -72,7 +86,7 @@
 
                 return authService.redirectTo("home");
             } else {
-                authService.redirectTo(session.userRole);
+                if (path === "/") { authService.redirectTo(session.userRole); }
             }
         });
 

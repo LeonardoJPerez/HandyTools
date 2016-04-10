@@ -9,13 +9,7 @@
         var _authService = {};
 
         _authService.login = function (credentials) {
-            return handyApi.Login.save({
-                "userName": credentials.username,
-                "password": credentials.password,
-                "type": credentials.type
-            })
-                .$promise
-                .then(handleLoginResponse);
+            return handyApi.Login.save(credentials).$promise.then(handleLoginResponse);
         };
 
         _authService.isAuthenticated = function () {

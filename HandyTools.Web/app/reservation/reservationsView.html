@@ -1,4 +1,4 @@
-﻿<div class="container" ng-controller="reservationController as vm">
+﻿<div class="container">
     <div class="row top-buffer">
         <div class="pull-left">
             <button class="btn btn-primary btn-sm pull-right" ng-click="vm.createReservation()">
@@ -13,7 +13,7 @@
             </button>
         </div>
     </div>
-    <div class="row top-buffer" ng-init="alertOnSelectionChange();">
+    <div class="row top-buffer" ng-init="displaySelected()">
         <table tr-ng-grid="" class="table table-striped table-hover reservation-grid" selected-items="mySelectedItems" items="vm.reservations" enable-filtering="false"
                cell-width="10em" selection-mode="SingleRow">
             <thead>

@@ -89,6 +89,7 @@
     <Content Include="app\login\loginDialogDirective.js" />
     <Content Include="app\profile\fieldMatchDirective.js" />
     <Content Include="app\reservation\reservationController.js" />
+    <Content Include="app\reservation\reservationModal.html" />
     <Content Include="app\services\constants.js" />
     <Content Include="app\services\handy.authResolver.js" />
     <Content Include="app\services\handy.authInterceptor.js" />
@@ -96,6 +97,7 @@
     <Content Include="app\services\handy.session.js" />
     <Content Include="app\tools\toolsController.js" />
     <Content Include="app\tools\toolsView.html" />
+    <Content Include="Content\animate.css" />
     <Content Include="bower_components\angular-datatables\dist\angular-datatables.js" />
     <Content Include="bower_components\angular-datatables\dist\angular-datatables.min.js" />
     <Content Include="bower_components\angular-datatables\dist\css\angular-datatables.css" />
@@ -496,6 +498,8 @@
     <Content Include="bower_components\tr-ng-grid\trNgGrid.min.css" />
     <Content Include="bower_components\tr-ng-grid\trNgGrid.min.js" />
     <Content Include="Config\constants.js" />
+    <Content Include="Content\toaster.css" />
+    <Content Include="Content\toaster.min.css" />
     <Content Include="gulpfile.js" />
     <Content Include="packages.config" />
     <Content Include="Assets\states.json" />
@@ -519,6 +523,8 @@
     <Content Include="Scripts\event.js" />
     <Content Include="Scripts\event.min.js" />
     <Content Include="Scripts\jquery-2.2.1.min.map" />
+    <Content Include="Scripts\toaster.js" />
+    <Content Include="Scripts\toaster.min.js" />
     <Content Include="Scripts\version.json" />
     <Content Include="Config\dev.json" />
     <Content Include="Config\prod.json" />
@@ -590,6 +596,7 @@
     <Content Include="bower_components\tr-ng-grid\.bower.json" />
     <Content Include="bower_components\tr-ng-grid\bower.json" />
     <Content Include="bower_components\tr-ng-grid\LICENSE" />
+    <Content Include="Content\toaster.scss" />
     <None Include="Web.base.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -606,7 +613,7 @@
     <Content Include="app\navigation\navigationController.js" />
     <Content Include="app\navigation\navigationView.html" />
     <Content Include="app\profile\profileController.js" />
-    <Content Include="app\profile\profileCreateView.html" />
+    <Content Include="app\profile\profileFormView.html" />
     <Content Include="app\profile\profileView.html" />
     <Content Include="app\reservation\reservationCreateController.js" />
     <Content Include="app\reservation\reservationCreateView.html" />

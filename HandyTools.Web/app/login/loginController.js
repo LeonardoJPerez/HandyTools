@@ -14,11 +14,11 @@
         vm.credentials = {
             username: "",
             password: "",
-            type: USER_ROLES.Customer
+            role: USER_ROLES.Customer
         };
 
         vm.isCustomer = function () {
-            return vm.credentials.type === USER_ROLES.Customer;
+            return vm.credentials.role === USER_ROLES.Customer;
         }
 
         vm.validate = function (isvalid, elemid) {
@@ -29,14 +29,16 @@
             }
         }
 
-        vm.setUserType = function (userType) {
-            if (userType === vm.credentials.type) { return; }
-            vm.credentials.type = "none";
-
+        vm.setUserType = function (role) {
+            if (role === vm.credentials.role) { return; }
+            vm.credentials.role = "none";
+          
+            vm.error = false;
+            angular.element(".input-group").removeClass("has-error");
             angular.element("#customer").addClass("ng-hide");
             angular.element("#clerk").addClass("ng-hide");
 
-            vm.credentials.type = userType === USER_ROLES.Customer ? userType : USER_ROLES.Clerk;
+            vm.credentials.role = role;
         };
 
         vm.login = function (credentials) {

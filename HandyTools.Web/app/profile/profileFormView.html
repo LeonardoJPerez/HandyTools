@@ -1,5 +1,5 @@
 ﻿<div class="container-fluid">
-    <form name="profileForm" class="form-horizontal create-profile" novalidate ng-controller="profileController as vm" ng-submit="vm.createProfile(profileForm.$valid)">
+    <form name="profileForm" class="form-horizontal create-profile" novalidate ng-submit="vm.submitProfile(profileForm.$valid)">
         <fieldset>
             <script type="text/ng-template" id="myPopoverTemplate.html">
                 <div>{{dynamicPopover.content}}</div>
@@ -11,7 +11,7 @@
             <div class="row top-buffer">
                 <div class="col-md-6 col-md-offset-5">
                     <!-- Form Name -->
-                    <legend>Create New Profile</legend>
+                    <legend>{{vm.Title}}</legend>
                 </div>
             </div>
             <!-- Account Inputs -->
@@ -22,7 +22,7 @@
                         <label class="control-label" for="txtEmail">Email Address (Username)</label>
                         <div class="form-group" ng-class="{ 'has-error' : vm.showPopup }">
                             <input id="txtEmail" name="email" type="email" placeholder="Enter an Email Address" class="form-control input-md" required
-                                   ng-model="vm.profile.userName" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
+                                   ng-model="vm.profile.userName" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" ng-disabled="!vm.isNewCustomer"
                                    uib-popover-html="vm.popupHtml" popover-placement="right" popover-trigger="none" popover-is-open="vm.showPopup">
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtPassword">Password</label>
                         <div class="form-group">
-                            <input id="txtPassword" name="txtPassword" type="password" placeholder="Enter Password" class="form-control input-md" required ng-model="vm.profile.password">
+                            <input id="txtPassword" name="txtPassword" type="password" placeholder="Enter Password" class="form-control input-md" ng-required="vm.isNewCustomer" ng-model="vm.profile.password">
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                     <div class="col-md-12">
                         <label class="control-label" for="txtConfirmPassword">Confirm Password</label>
                         <div class="form-group">
-                            <input id="txtConfirmPassword" name="txtConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required
+                            <input id="txtConfirmPassword" name="txtConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" ng-required="vm.isNewCustomer"
                                    ng-model="vm.profile.passwordConfirm" field-match="vm.profile.password">
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                 </div>
             </div>
 
-            <!-- Address input -->
+            <!-- City/State input -->
             <div class="row">
                 <!-- City input -->
                 <div class="col-md-3 col-md-offset-3">
@@ -139,16 +139,14 @@
                     <div class="col-md-12">
                         <label class="col-md-2 control-label" for="ddlState">State</label>
                         <div class="form-group">
-                            <select id="ddlState" ng-model="vm.profile.state" class="form-control" required>
-                                <option value="-1" selected>Select a State</option>
-                                <option ng-repeat="state in vm.states" value="{{state.code}}">{{ state.name }}</option>
-                            </select>
+                            <select name="states" id="ddlState" class="form-control"
+                                    ng-options="state.name for state in vm.states track by state.code" ng-model="vm.profile.state" required></select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Address input -->
+            <!-- Country/Zip input -->
             <div class="row">
                 <!-- Country input -->
                 <div class="col-md-3 col-md-offset-3">
@@ -187,7 +185,7 @@
                     <label class="control-label" for="btnSubmit"></label>
                     <div class="form-group">
                         <button id="btnSubmit" name="btnSubmit" class="btn btn-block btn-lg btn-success" type="submit" ng-disabled="profileForm.$invalid">
-                            <span class="glyphicon glyphicon-floppy-disk"></span>  Submit
+                            <span class="glyphicon glyphicon-floppy-disk"></span>  {{ vm.submitText }}
                         </button>
                     </div>
                 </div>

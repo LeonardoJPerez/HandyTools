@@ -8,11 +8,13 @@
     function navigationController($rootScope, $scope, APPSETTINGS, USER_ROLES, authService) {
         var vm = this;
 
-        vm.currentUser = authService.getCurrentUser();
-        vm.currentRole = vm.currentUser.userRole;
+        vm.currentUser = authService.getCurrentUser();      
         vm.userRoles = USER_ROLES;
-
         vm.isAuthorized = authService.isAuthorized;
+
+        vm.isCustomer = function () {
+            return vm.currentUser.userRole === USER_ROLES.Customer;
+        }
 
         vm.logoff = function () {
             authService.logoff(function (user) {

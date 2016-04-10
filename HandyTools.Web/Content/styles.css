@@ -145,3 +145,7 @@ div[ng-view].ng-hide-add {
 tr.ng-scope {
     cursor: pointer;
 }
+
+.toast-success {
+  background-color: #128f76;
+}
