@@ -14,18 +14,19 @@
             endDate: date.setDate(date.getDate() + 10)
         };
 
-        vm.ok = function () {
-            $scope.$close(vm.reservation);
-        };
+        vm.toolRows = [
+        {
+            toolType: { value: '-1', text: 'Select a Tool Type' },
+            tool: { value: '-1', text: 'Select a Tool' }
+        }];
 
-        vm.cancel = function () {
-            $scope.$dismiss("cancel");
-        };
+        vm.toolTypes = this.getToolTypes();
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.altInputFormats = ['M!/d!/yyyy'];
+        vm.tools = [];
 
-        $scope.dateOptions = {
+        vm.altInputFormats = ['M!/d!/yyyy'];
+
+        vm.dateOptions = {
             formatYear: "yyyy",
             formatMonth: "MMMM",
             maxDate: new Date(2020, 5, 22),
@@ -35,24 +36,45 @@
             showWeeks: false
         };
 
-        $scope.open1 = function () {
-            $scope.popup1.opened = true;
-        };
-
-        $scope.popup1 = {
+        vm.startDatePopup = {
             opened: false
         };
 
-        $scope.open2 = function () {
-            $scope.popup2.opened = true;
-        };
-
-        $scope.popup2 = {
+        vm.endDatePopup = {
             opened: false
         };
 
-        $scope.setDate = function (year, month, day) {
-            vm.reservation.startDate = new Date(year, month, day);
+        vm.addRows = function () {
+            vm.tools.push({
+                toolType: { value: '-1', text: 'Select a Tool Type' },
+                tool: { value: '-1', text: 'Select a Tool' }
+            });
+        };
+
+        vm.addHighlight = function () {
+            angular.element(".row.add-tool p").removeClass("text-success");
+        };
+
+        vm.removeHighlight = function () {
+            angular.element(".row.add-tool p").addClass("text-success");
+        };
+
+        vm.openStartDate = function () {
+            vm.startDatePopup.opened = true;
+        };
+
+        vm.openEndDate = function () {
+            vm.endDatePopup.opened = true;
+        };
+
+        var getToolTypes = function() {
+            handyApi.Tools.getToolTypes.query(function (res) {
+                console.log(res);
+            });
+        };
+
+        var getTools = function() {
+            
         };
     }
 }());

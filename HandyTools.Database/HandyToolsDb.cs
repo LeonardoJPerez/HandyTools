@@ -45,9 +45,9 @@ namespace HandyTools.Database
         /// <param name="value">The value.</param>
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
-        public IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false) where TModel : BaseModel
+        public IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false, string whereClause = "") where TModel : BaseModel
         {
-            return this.GetModels<TModel>(key, value, useView, true);
+            return this.GetModels<TModel>(key, value, useView, true, whereClause);
         }
 
         /// <summary>
@@ -59,21 +59,35 @@ namespace HandyTools.Database
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <param name="pluralize">if set to <c>true</c> [pluralize].</param>
         /// <returns></returns>
-        private IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false, bool pluralize = false) where TModel : BaseModel
+        private IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false, bool pluralize = false, string whereClause = "") where TModel : BaseModel
         {
-            var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-            var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
             var entityName = $"{typeof(TModel).Name}";
             if (pluralize) { entityName = $"{entityName}s"; }
 
             if (useView)
             {
-                var returnValue = (DataTable)this.Execute($"select * from v{entityName}", CommandType.Text, false, parameter);
+                var query = $"select * from v{entityName}";
+                if (string.IsNullOrEmpty(whereClause))
+                {
+                    query = $"{query} where {whereClause}";
+                }
+
+                var returnValue = (DataTable)this.Execute(query, CommandType.Text, false, null);
                 return returnValue.TableToList<TModel>();
             }
             else
             {
-                return this.ExecuteStoredProcedure($"Get{entityName}", parameter).TableToList<TModel>();
+                if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(value))
+                {
+                    var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
+
+                    return this.ExecuteStoredProcedure($"Get{entityName}", parameter).TableToList<TModel>();
+                }
+                else
+                {
+                    return this.ExecuteStoredProcedure($"Get{entityName}", null).TableToList<TModel>();
+                }
             }
         }
 
@@ -85,7 +99,7 @@ namespace HandyTools.Database
         /// <param name="value">The value.</param>
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
-        public TModel GetModel<TModel>(string key, string value, bool useView = false) where TModel : BaseModel
+        public TModel GetModel<TModel>(string key, string value, bool useView = false, string whereClause = "") where TModel : BaseModel
         {
             return this.GetModels<TModel>(key, value, useView, false).FirstOrDefault();
         }
@@ -177,10 +191,13 @@ namespace HandyTools.Database
                     CommandType = cmdType
                 };
 
-                foreach (var param in parameters)
+                if (parameters != null)
                 {
-                    cmd.Parameters.AddWithValue(param.Parameter.ParameterName, param.Parameter.Value);
-                    cmd.Parameters[param.Parameter.ParameterName].Direction = param.Direction;
+                    foreach (var param in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(param.Parameter.ParameterName, param.Parameter.Value);
+                        cmd.Parameters[param.Parameter.ParameterName].Direction = param.Direction;
+                    }
                 }
 
                 connection.Open();
@@ -190,12 +207,15 @@ namespace HandyTools.Database
 
                 try
                 {
+                    var dt = new DataTable();
                     readerResult = cmd.ExecuteReader();
                     adapter.SelectCommand = cmd;
 
                     switch (cmdType)
                     {
                         case CommandType.Text:
+                            dt.Load(readerResult);
+                            result = dt;
                             break;
 
                         case CommandType.StoredProcedure:
@@ -208,7 +228,6 @@ namespace HandyTools.Database
                             }
                             else
                             {
-                                var dt = new DataTable();
                                 dt.Load(readerResult);
                                 result = dt;
                             }
@@ -221,7 +240,7 @@ namespace HandyTools.Database
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);            
+                    Console.WriteLine(ex.Message);
                 }
                 finally
                 {

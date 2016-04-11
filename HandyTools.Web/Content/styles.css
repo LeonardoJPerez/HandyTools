@@ -147,5 +147,25 @@ tr.ng-scope {
 }
 
 .toast-success {
-  background-color: #128f76;
+    background-color: #128f76;
+}
+
+.glyphicon.glyphicon-remove {
+    padding-top: 0.5em;
+    margin-left: -1em;
+}
+
+.tools-panel .add-tool {
+    cursor: pointer;
+    padding-top: 10px;
+}
+
+    .tools-panel .add-tool:hover {
+        background-color: #95a5a6;
+        color: #fff !important;   
+    }
+
+hr {
+    margin-top: 15px;
+    margin-bottom: 5px;
 }

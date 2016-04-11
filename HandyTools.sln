@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Web.API", "Handy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Web.API.Tests", "HandyTools.Web.API.Tests\HandyTools.Web.API.Tests.csproj", "{03857951-4CE5-4D9A-89F0-F78B58A494F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Database", "HandyTools.Database\HandyTools.Database.csproj", "{379AE69E-08B9-440F-8C67-A8D9425EB793}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HandyTools.Models", "HandyTools.Models\HandyTools.Models.csproj", "{F1F15717-7A41-4FDD-883E-40728976A38F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{03857951-4CE5-4D9A-89F0-F78B58A494F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03857951-4CE5-4D9A-89F0-F78B58A494F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03857951-4CE5-4D9A-89F0-F78B58A494F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{379AE69E-08B9-440F-8C67-A8D9425EB793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{379AE69E-08B9-440F-8C67-A8D9425EB793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{379AE69E-08B9-440F-8C67-A8D9425EB793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{379AE69E-08B9-440F-8C67-A8D9425EB793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1F15717-7A41-4FDD-883E-40728976A38F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1F15717-7A41-4FDD-883E-40728976A38F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1F15717-7A41-4FDD-883E-40728976A38F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1F15717-7A41-4FDD-883E-40728976A38F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

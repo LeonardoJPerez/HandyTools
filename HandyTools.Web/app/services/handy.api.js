@@ -10,6 +10,10 @@
                     'update': { method: 'PUT' }
                 }),
                 States: $resource(APPSETTINGS.CurrentServerUrl + "assets/states.json"),
+                Tools: {
+                    getToolTypes: $resource(APPSETTINGS.ApiServerUrl + "api/tool/types/:id"),
+                    getToolsByType: $resource(APPSETTINGS.ApiServerUrl + "api/tool/:type")
+                },
                 Reservations: {
                     getByUser: $resource(APPSETTINGS.ApiServerUrl + "api/reservation/getbyuser/:id")
                 }

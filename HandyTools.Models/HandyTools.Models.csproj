@@ -44,6 +44,7 @@
     <Compile Include="Clerk.cs" />
     <Compile Include="ConstructionTool.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="Enums\ToolType.cs" />
     <Compile Include="HandTool.cs" />
     <Compile Include="Interface\IIdentifier.cs" />
     <Compile Include="Interface\IUser.cs" />

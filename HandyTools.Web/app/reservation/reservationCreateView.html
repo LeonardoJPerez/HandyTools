@@ -2,10 +2,11 @@
     <form name="reservationForm" class="form-horizontal create-profile" novalidate ng-submit="vm.ok()">
         <fieldset>
 
-            <div class="row top-buffer">
-                <div class="col-md-6 col-md-offset-5">
+            <div class="row  row-centered top-buffer">
+                <div class="col-md-6 col-md-offset-2 col-centered">
                     <!-- Form Name -->
-                    <legend>Create New Reservation</legend>
+                    <h2>Create New Reservation</h2>
+                    <br />
                 </div>
             </div>
             <!-- Date Range Selection-->
@@ -15,10 +16,10 @@
                     <div class="col-md-12">
                         <label class="control-label" for="dpStartDate">Start Date</label>
                         <div class="input-group input-group-sm">
-                            <input id="dpStartDate" type="text" class="form-control" uib-datepicker-popup ng-model="vm.reservation.startDate" is-open="popup1.opened"
-                                   datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <input id="dpStartDate" type="text" class="form-control" uib-datepicker-popup ng-model="vm.reservation.startDate" is-open="vm.startDatePopup.opened"
+                                   datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="vm.altInputFormats" />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open1()">
+                                <button type="button" class="btn btn-default" ng-click="vm.openStartDate()">
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
@@ -31,10 +32,10 @@
                     <div class="col-md-12">
                         <label class="control-label" for="dpEndDate">End Date</label>
                         <div class="input-group input-group-sm">
-                            <input id="dpEndDate" type="text" class="form-control input-sm" uib-datepicker-popup ng-model="vm.reservation.endDate" is-open="popup2.opened"
-                                   datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <input id="dpEndDate" type="text" class="form-control input-sm" uib-datepicker-popup ng-model="vm.reservation.endDate" is-open="vm.endDatePopup.opened"
+                                   datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="vm.altInputFormats" />
                             <span class="input-group-btn">
-                                <button type="button" class="btn btn-default input-sm" ng-click="open12()">
+                                <button type="button" class="btn btn-default input-sm" ng-click="vm.openEndDate()">
                                     <i class="glyphicon glyphicon-calendar"></i>
                                 </button>
                             </span>
@@ -45,24 +46,41 @@
             <br />
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default tools-panel">
+                        <div class="panel-heading">Tools</div>
                         <div class="panel-body">
-                            <div class="col-md-3 col-md-offset-3">
-                                <div class="form-group form-group-sm">
-                                    <select id="ddlTooType" ng-model="vm.selectedState" ng-options="state.name as state.name for state in vm.states" class="form-control" required>
-                                        <option value="" selected>Select a State</option>
+                            <div class="form-group form-group-sm" ng-repeat="row in vm.toolRows">
+                                <div class="col-xs-1">
+                                    <div class="input-group input-group-sm">
+                                        <p>1</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <select id="ddlTooType" ng-model="row.toolType" ng-options="type in row.toolTypes" class="form-control" required>
+                                        <option value="" selected>Select a ToolType</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-3">
-                                <div class="form-group form-group-sm">
-                                    <select id="ddlTool" ng-model="vm.selectedState" ng-options="state.name as state.name for state in vm.states" class="form-control" required>
-                                        <option value="" selected>Select a State</option>
+                                <div class="col-md-5">
+                                    <select id="ddlTool" ng-model="row.tool" ng-options="tool in vm.tools" class="form-control" required>
+                                        <option value="" selected>Select a Tool</option>
                                     </select>
+                                </div>
+                                <div class="col-xs-1">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row add-tool" ng-mouseenter="vm.addHighlight()" ng-mouseleave="vm.removeHighlight()">
+                                <div class="col-xs-1">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </div>
+                                <div class="col-md-5">
+                                    <p class="text-success">Reserve new Tool</p>
                                 </div>
                             </div>
                         </div>
+                        <div class="panel-footer">Total: 4</div>
                     </div>
                 </div>
             </div>

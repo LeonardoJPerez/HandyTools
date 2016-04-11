@@ -64,5 +64,14 @@
             //    $log.info("Modal dismissed at: " + new Date());
             //});
         };
+
+
+        //vm.ok = function () {
+        //    $scope.$close(vm.reservation);
+        //};
+
+        //vm.cancel = function () {
+        //    $scope.$dismiss("cancel");
+        //};
     }
 }());

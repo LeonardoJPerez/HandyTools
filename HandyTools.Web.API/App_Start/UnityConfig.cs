@@ -19,7 +19,8 @@ namespace HandyTools.Web.API
             container.RegisterType<IDbContext, HandyToolsDb>();
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IReservationRepository, ReservationRepository>();
-            
+            container.RegisterType<IToolRepository, ToolRepository>();
+
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
