@@ -9,7 +9,8 @@
             ApplicationPaths: {
                 ClerkHome: "/pickups",
                 CustomerHome: "/reservations",
-                CreateProfile: "/account/create"
+                CreateProfile: "/account/create",
+                CreateReservation: "/reservation/create"
             },
             AUTH_EVENTS: {
                 LoginSuccess: "auth-login-success",

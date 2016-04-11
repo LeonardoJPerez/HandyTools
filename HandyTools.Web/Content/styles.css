@@ -162,10 +162,14 @@ tr.ng-scope {
 
     .tools-panel .add-tool:hover {
         background-color: #95a5a6;
-        color: #fff !important;   
+        color: #fff !important;
     }
 
 hr {
     margin-top: 15px;
     margin-bottom: 5px;
+}
+
+.panel-footer {
+    min-height: 45px;
 }

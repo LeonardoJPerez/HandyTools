@@ -22,7 +22,7 @@
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
                 })
-                .when("/reservations/create", {
+                .when("/reservation/create", {
                     controller: "reservationCreateController as vm",
                     templateUrl: "app/reservation/reservationCreateView.html",
                     data: {

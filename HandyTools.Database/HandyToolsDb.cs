@@ -67,17 +67,17 @@ namespace HandyTools.Database
             if (useView)
             {
                 var query = $"select * from v{entityName}";
-                if (string.IsNullOrEmpty(whereClause))
+                if (!string.IsNullOrEmpty(whereClause))
                 {
                     query = $"{query} where {whereClause}";
                 }
 
-                var returnValue = (DataTable)this.Execute(query, CommandType.Text, false, null);
+                var returnValue = (DataTable)this.Execute($"{query};", CommandType.Text, false, null);
                 return returnValue.TableToList<TModel>();
             }
             else
             {
-                if (string.IsNullOrEmpty(key) && string.IsNullOrEmpty(value))
+                if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
                 {
                     var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                     var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));

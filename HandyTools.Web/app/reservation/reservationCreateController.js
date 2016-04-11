@@ -3,11 +3,19 @@
 
     angular
         .module("handytoolsApp")
-        .controller("reservationCreateController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", reservationCreateController]);
+        .controller("reservationCreateController", ["$scope", "APPSETTINGS", "handy.api", "$location", "$anchorScroll", reservationCreateController]);
 
-    function reservationCreateController($rootScope, $scope, APPSETTINGS, handyApi, $uibModalInstance) {
+    function reservationCreateController($scope, APPSETTINGS, handyApi, $location, $anchorScroll, $uibModalInstance) {
         var vm = this;
         var date = new Date();
+
+        var getToolTypes = function () {
+            return handyApi.Tools.getToolTypes.query();
+        };
+
+        var getTools = function (toolType) {
+            return handyApi.Tools.getToolsByType.query({ type: toolType });
+        };
 
         vm.reservation = {
             startDate: new Date(),
@@ -20,12 +28,46 @@
             tool: { value: '-1', text: 'Select a Tool' }
         }];
 
-        vm.toolTypes = this.getToolTypes();
-
+        vm.toolTypes = getToolTypes();
         vm.tools = [];
 
-        vm.altInputFormats = ['M!/d!/yyyy'];
+        vm.addRow = function () {
+            if (vm.toolRows.length < 50) {
+                if (vm.toolRows.length > 1) {
+                    $location.hash('lastRow');
+                    $anchorScroll();
+                }
 
+                vm.toolRows.push({
+                    toolType: { value: '-1', text: 'Select a Tool Type' },
+                    tool: { value: '-1', text: 'Select a Tool' }
+                });
+            }
+        };
+        vm.removeRow = function (index) {
+            if (vm.toolRows.length > 1) {
+                vm.toolRows.splice(index, 1);
+            }
+        };
+
+        vm.addHighlight = function () {
+            angular.element(".row.add-tool p").removeClass("text-success");
+        };
+        vm.removeHighlight = function () {
+            angular.element(".row.add-tool p").addClass("text-success");
+        };
+
+        vm.disableAdd = false;
+        vm.back = function () {
+            $location.path("/");
+        };
+
+        vm.toolTypeChange = function (toolType) {
+            vm.tools = getTools(toolType);
+        };
+
+        // DatePicker Methods/Settings
+        vm.altInputFormats = ['M!/d!/yyyy'];
         vm.dateOptions = {
             formatYear: "yyyy",
             formatMonth: "MMMM",
@@ -35,46 +77,22 @@
             startingDay: 0,
             showWeeks: false
         };
-
         vm.startDatePopup = {
             opened: false
         };
-
         vm.endDatePopup = {
             opened: false
-        };
-
-        vm.addRows = function () {
-            vm.tools.push({
-                toolType: { value: '-1', text: 'Select a Tool Type' },
-                tool: { value: '-1', text: 'Select a Tool' }
-            });
-        };
-
-        vm.addHighlight = function () {
-            angular.element(".row.add-tool p").removeClass("text-success");
-        };
-
-        vm.removeHighlight = function () {
-            angular.element(".row.add-tool p").addClass("text-success");
         };
 
         vm.openStartDate = function () {
             vm.startDatePopup.opened = true;
         };
-
         vm.openEndDate = function () {
             vm.endDatePopup.opened = true;
         };
 
-        var getToolTypes = function() {
-            handyApi.Tools.getToolTypes.query(function (res) {
-                console.log(res);
-            });
-        };
-
-        var getTools = function() {
-            
-        };
+        $scope.$watch("vm.toolRows", function (value) {
+            console.log(value);
+        });
     }
 }());

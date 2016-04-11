@@ -11,7 +11,7 @@
                 }),
                 States: $resource(APPSETTINGS.CurrentServerUrl + "assets/states.json"),
                 Tools: {
-                    getToolTypes: $resource(APPSETTINGS.ApiServerUrl + "api/tool/types/:id"),
+                    getToolTypes: $resource(APPSETTINGS.ApiServerUrl + "api/tool/types"),
                     getToolsByType: $resource(APPSETTINGS.ApiServerUrl + "api/tool/:type")
                 },
                 Reservations: {
