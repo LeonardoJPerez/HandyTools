@@ -45,9 +45,14 @@ namespace HandyTools.Database
         /// <param name="value">The value.</param>
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
-        public IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false, string whereClause = "") where TModel : BaseModel
+        public IEnumerable<TModel> GetModels<TModel>(string whereClause = "") where TModel : BaseModel
         {
-            return this.GetModels<TModel>(key, value, useView, true, whereClause);
+            return this.GetModels<TModel>(keyValue: null, useView: true, pluralize: true, whereClause: whereClause);
+        }
+
+        public IEnumerable<TModel> GetModels<TModel>(Dictionary<string, object> keyValues) where TModel : BaseModel
+        {
+            return this.GetModels<TModel>(keyValue: keyValues, useView: false, pluralize: true, whereClause: string.Empty);
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace HandyTools.Database
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <param name="pluralize">if set to <c>true</c> [pluralize].</param>
         /// <returns></returns>
-        private IEnumerable<TModel> GetModels<TModel>(string key, string value, bool useView = false, bool pluralize = false, string whereClause = "") where TModel : BaseModel
+        private IEnumerable<TModel> GetModels<TModel>(Dictionary<string, object> keyValue, bool useView = false, bool pluralize = false, string whereClause = "") where TModel : BaseModel
         {
             var entityName = $"{typeof(TModel).Name}";
             if (pluralize) { entityName = $"{entityName}s"; }
@@ -77,12 +82,24 @@ namespace HandyTools.Database
             }
             else
             {
-                if (!string.IsNullOrEmpty(key) && !string.IsNullOrEmpty(value))
+                if (keyValue != null)
                 {
-                    var prop = typeof(TModel).GetProperty(key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    var parameter = new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, value));
+                    List<MySqlParameter> parameters = new List<MySqlParameter>();
 
-                    return this.ExecuteStoredProcedure($"Get{entityName}", parameter).TableToList<TModel>();
+                    foreach (var kvp in keyValue)
+                    {
+                        var prop = typeof(TModel).GetProperty(kvp.Key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        if (prop != null)
+                        {
+                            parameters.Add(new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, kvp.Value)));
+                        }
+                        else
+                        {
+                            parameters.Add(new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(kvp.Key, kvp.Value)));
+                        }
+                    }
+
+                    return this.ExecuteStoredProcedure($"Get{entityName}", parameters.ToArray()).TableToList<TModel>();
                 }
                 else
                 {
@@ -99,9 +116,10 @@ namespace HandyTools.Database
         /// <param name="value">The value.</param>
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
-        public TModel GetModel<TModel>(string key, string value, bool useView = false, string whereClause = "") where TModel : BaseModel
+        public TModel GetModel<TModel>(string key, string value) where TModel : BaseModel
         {
-            return this.GetModels<TModel>(key, value, useView, false).FirstOrDefault();
+            var param = new Dictionary<string, object>() { { key, value } };
+            return this.GetModels<TModel>(param, useView: false, whereClause: "").FirstOrDefault();
         }
 
         /// <summary>

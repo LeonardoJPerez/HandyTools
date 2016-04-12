@@ -17,38 +17,35 @@
             </div>
             <!-- Login Form Body-->
             <div class="panel-body">
+
                 <div id="username-section" class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 
-                    <input id="customer" type="email" class="form-control" name="user" placeholder="User Name (Or Enter Email to create an Account)" required
+                    <input id="customer" type="email" class="form-control" name="user" placeholder="User Name (Or Enter Email to create an Account)" required ui-event="{ 'enter' : 'vm.login(vm.credentials)' }"
                            ng-blur="vm.validate(loginForm.user.$valid, 'username-section')" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"
                            ng-model="vm.userName" ng-show="vm.isCustomer()">
 
-                    <input id="clerk" type="text" class="form-control" name="clerk" placeholder="Clerk User Name" required
-                           ng-blur="vm.validate(loginForm.clerk.$valid, 'username-section')"
-                           ng-model="vm.clerkName" ng-hide="vm.isCustomer()">
+                    <input id="clerk" type="text" class="form-control" name="clerk" placeholder="Clerk User Name" required ui-event="{ 'enter' : 'vm.login(vm.credentials)' }"
+                           ng-blur="vm.validate(loginForm.clerk.$valid, 'username-section')" ng-model="vm.clerkName" ng-hide="vm.isCustomer()">
                 </div>
 
                 <br />
                 <div id="password-section" class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input id="password" type="password" class="form-control" name="password" placeholder="Password"
-                           ng-blur="vm.validate(loginForm.password.$valid, 'password-section')"
-                           ng-model="vm.credentials.password" required>
+                    <input id="password" type="password" class="form-control" name="password" placeholder="Password" ng-blur="vm.validate(loginForm.password.$valid, 'password-section')"
+                           ng-model="vm.credentials.password" required ui-event="{ 'enter' : 'vm.login(vm.credentials)'} ">
                 </div>
 
                 <br />
 
                 <div class="btn-group btn-group-justified" role="group" aria-label="...">
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn" ng-class="vm.isCustomer() ? 'btn-primary' : 'btn-disabled'"
-                                ng-click="vm.setUserType('Customer')">
+                        <button type="button" class="btn" ng-class="vm.isCustomer() ? 'btn-primary' : 'btn-disabled'" ng-click="vm.setUserType('Customer')">
                             Customer
                         </button>
                     </div>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn" ng-class="vm.isCustomer() ? 'btn-disabled' : 'btn-primary'"
-                                ng-click="vm.setUserType('Clerk')">
+                        <button type="button" class="btn" ng-class="vm.isCustomer() ? 'btn-disabled' : 'btn-primary'" ng-click="vm.setUserType('Clerk')">
                             Clerk
                         </button>
                     </div>

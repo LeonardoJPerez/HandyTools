@@ -17,9 +17,9 @@
                 return "$" + fieldValue.toFixed(2);
             };
         })
-        .controller("reservationController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", "$uibModal", "$log", "$route", "$location", reservationController]);
+        .controller("reservationsController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", "$uibModal", "$log", "$route", "$location", reservationsController]);
 
-    function reservationController($rootScope, $scope, APPSETTINGS, handyApi, $uibModal, $log, $route, $location) {
+    function reservationsController($rootScope, $scope, APPSETTINGS, handyApi, $uibModal, $log, $route, $location) {
         var vm = this;
 
         vm.selectedReservation = {};

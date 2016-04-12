@@ -12,7 +12,9 @@
                 States: $resource(APPSETTINGS.CurrentServerUrl + "assets/states.json"),
                 Tools: {
                     getToolTypes: $resource(APPSETTINGS.ApiServerUrl + "api/tool/types"),
-                    getToolsByType: $resource(APPSETTINGS.ApiServerUrl + "api/tool/:type")
+                    getToolsByType: $resource(APPSETTINGS.ApiServerUrl + "api/tool/", null, {
+                        'post': { method: 'POST', isArray: true }
+                    })
                 },
                 Reservations: {
                     getByUser: $resource(APPSETTINGS.ApiServerUrl + "api/reservation/getbyuser/:id")

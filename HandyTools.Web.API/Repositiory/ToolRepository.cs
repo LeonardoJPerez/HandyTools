@@ -21,20 +21,19 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<Tool> GetTools(ToolType? type)
         {
-            switch (type)
+            return this.GetTools(type, null, null);
+        }
+
+        public IEnumerable<Tool> GetTools(ToolType? toolType, DateTime? startDate, DateTime? endDate)
+        {
+            var parameters = new Dictionary<string, object>()
             {
-                case ToolType.Construction:
-                    return this.Context.GetModels<ConstructionTool>("", "", useView: true);
+                { nameof(startDate), startDate  },
+                { nameof(endDate), endDate  },
+                { nameof(toolType), toolType.ToString()  },
+            };
 
-                case ToolType.Hand:
-                    return this.Context.GetModels<HandTool>("", "", useView: true);
-
-                case ToolType.PowerTool:
-                    return this.Context.GetModels<PowerTool>("", "", useView: true);
-
-                default:
-                    return this.Context.GetModels<Tool>("", "");
-            }
+            return this.Context.GetModels<Tool>(parameters);
         }
 
         public Tool UpdateTool(Tool model)
@@ -44,7 +43,7 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<string> GetToolTypes()
         {
-            return Enum.GetNames(typeof (ToolType)).ToList();
+            return Enum.GetNames(typeof(ToolType)).ToList();
         }
     }
 }

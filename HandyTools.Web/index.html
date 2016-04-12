@@ -12,7 +12,9 @@
     <link href="Content/loading-bar.min.css" rel="stylesheet" />
     <link href="bower_components/tr-ng-grid/trNgGrid.min.css" rel="stylesheet" />
     <link href="Content/animate.css" rel="stylesheet" />
+    <link href="Content/datetimepicker.css" rel="stylesheet" />
     <link href="Content/styles.css" rel="stylesheet" />
+
     <script src="Scripts/modernizr-2.8.3.js"></script>
 </head>
 <body ng-app="handytoolsApp" ng-controller="mainController as vm">
@@ -59,6 +61,8 @@
         <!-- /#page-content-wrapper -->
     </div>
     <script src="Scripts/jquery-2.2.1.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/moment/min/moment-with-locales.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/respond.min.js"></script>
 
@@ -74,8 +78,11 @@
     <script src="Scripts/angular-resource.js"></script>
     <script src="Scripts/angular-cookies.min.js"></script>
     <script src="Scripts/angular-sanitize.min.js"></script>
+
     <script src="Scripts/toaster.min.js"></script>
 
+    <script src="Scripts/datetimepicker.js"></script>
+    <script src="Scripts/datetimepicker.templates.js"></script>
     <script src="Scripts/event.js"></script>
     <script src="Scripts/loading-bar.min.js"></script>
     <script src="Scripts/angular-uuid.js"></script>
@@ -96,7 +103,7 @@
     <script src="app/main/mainController.js"></script>
     <script src="app/login/loginController.js"></script>
     <script src="app/navigation/navigationController.js"></script>
-    <script src="app/reservation/reservationController.js"></script>
+    <script src="app/reservation/reservationsController.js"></script>
     <script src="app/reservation/reservationCreateController.js"></script>
     <script src="app/profile/profileController.js"></script>
     <script src="app/tools/toolsController.js"></script>

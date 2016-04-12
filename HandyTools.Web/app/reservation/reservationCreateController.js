@@ -3,44 +3,86 @@
 
     angular
         .module("handytoolsApp")
-        .controller("reservationCreateController", ["$scope", "APPSETTINGS", "handy.api", "$location", "$anchorScroll", reservationCreateController]);
+        .controller("reservationCreateController", ["$scope", "handy.api", "$location", "$anchorScroll", reservationCreateController]);
 
-    function reservationCreateController($scope, APPSETTINGS, handyApi, $location, $anchorScroll, $uibModalInstance) {
+    function reservationCreateController($scope, handyApi, $location, $anchorScroll, $uibModalInstance) {
         var vm = this;
-        var date = new Date();
+        var startDate = new Date();
+        var endDate = new Date();
+
+        endDate.setDate(startDate.getDate() + 10);
 
         var getToolTypes = function () {
             return handyApi.Tools.getToolTypes.query();
         };
 
         var getTools = function (toolType) {
-            return handyApi.Tools.getToolsByType.query({ type: toolType });
+            return handyApi.Tools.getToolsByType.post(null, {
+                tooltype: toolType,
+                startDate: vm.reservation.startDate,
+                endDate: vm.reservation.endDate
+            });
         };
 
+        var excludeTools = function () {
+            angular.forEach(vm.reservation.tools, function (reservedTool) {
+                for (var i = 0; i < vm.toolRows.length; i++) {
+                    if (vm.toolRows[i].selectedTool && reservedTool.tool.id === vm.toolRows[i].selectedTool.id) {
+                        continue;
+                    }
+
+                    var newArray = [];
+                    if (!vm.toolRows[i].tools) { continue; }
+
+                    for (var j = 0; j < vm.toolRows[i].tools.length; j++) {
+                        if (vm.toolRows[i].tools[j].id !== reservedTool.tool.id) {
+                            newArray.push(vm.toolRows[i].tools[j]);
+                        }
+                    }
+
+                    vm.toolRows[i].tools = newArray;
+                }
+            });
+        }
+
         vm.reservation = {
-            startDate: new Date(),
-            endDate: date.setDate(date.getDate() + 10)
+            startDate: startDate,
+            endDate: endDate,
+            tools: []
         };
 
         vm.toolRows = [
         {
-            toolType: { value: '-1', text: 'Select a Tool Type' },
-            tool: { value: '-1', text: 'Select a Tool' }
+            selectedToolType: null,
+            tools: null,
+            selectedTool: null
         }];
-
         vm.toolTypes = getToolTypes();
-        vm.tools = [];
+
+        var getTotal = function () {
+            var total = 0;
+            angular.forEach(vm.toolRows, function (row) {
+                if (row.selectedTool) {
+                    total += row.selectedTool.dailyRentalCharge;
+                }
+            });
+
+            return parseFloat(total).toFixed(2);
+        }
+
+        vm.reservationTotal = getTotal();
 
         vm.addRow = function () {
             if (vm.toolRows.length < 50) {
                 if (vm.toolRows.length > 1) {
-                    $location.hash('lastRow');
+                    $anchorScroll.yOffset = 50;
                     $anchorScroll();
                 }
 
                 vm.toolRows.push({
-                    toolType: { value: '-1', text: 'Select a Tool Type' },
-                    tool: { value: '-1', text: 'Select a Tool' }
+                    selectedToolType: null,
+                    tools: null,
+                    selectedTool: null
                 });
             }
         };
@@ -48,6 +90,8 @@
             if (vm.toolRows.length > 1) {
                 vm.toolRows.splice(index, 1);
             }
+
+            excludeTools();
         };
 
         vm.addHighlight = function () {
@@ -62,37 +106,47 @@
             $location.path("/");
         };
 
-        vm.toolTypeChange = function (toolType) {
-            vm.tools = getTools(toolType);
+        vm.toolTypeChange = function (row, toolType) {
+            if (toolType) {
+                getTools(toolType).$promise.then(function (t) {
+                    row.tools = t;
+                    excludeTools();
+                });
+            } else {
+                row.tools = null;
+            }
         };
 
-        // DatePicker Methods/Settings
-        vm.altInputFormats = ['M!/d!/yyyy'];
-        vm.dateOptions = {
-            formatYear: "yyyy",
-            formatMonth: "MMMM",
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            initDate: new Date(),
-            startingDay: 0,
-            showWeeks: false
-        };
-        vm.startDatePopup = {
-            opened: false
-        };
-        vm.endDatePopup = {
-            opened: false
+        vm.toolChange = function (tool, index) {
+            vm.reservationTotal = getTotal();
+
+            if (!tool) {
+                // Remove from Reservation Tools Collection.
+                angular.forEach(vm.reservation.tools, function (t, i) {
+                    if (t.rowindex === index) { vm.reservation.tools.splice(i, 1); }
+                });
+
+                return;
+            }
+
+            if (vm.reservation.tools.length === 0) {
+                vm.reservation.tools.push({ rowindex: index, tool });
+            } else {
+                angular.forEach(vm.reservation.tools, function (t, i) {
+                    if (t.rowindex !== index) {
+                        vm.reservation.tools.push({ rowindex: index, tool });
+                    } else {
+                        vm.reservation.tools[i] = { rowindex: index, tool }
+                    }
+                });
+            }
+
+            // Update Tools dropdowns and remove selected tools.
+            excludeTools();
         };
 
-        vm.openStartDate = function () {
-            vm.startDatePopup.opened = true;
-        };
-        vm.openEndDate = function () {
-            vm.endDatePopup.opened = true;
-        };
-
-        $scope.$watch("vm.toolRows", function (value) {
-            console.log(value);
-        });
+        // DatePicker Settings
+        vm.dateOptionsStart = { dropdownSelector: "#ddStartDate", startView: "day", minView: "hour", modelType: "Date" };
+        vm.dateOptionsEnd = { dropdownSelector: "#ddEndDate", startView: "day", minView: "hour", modelType: "Date" };
     }
 }());

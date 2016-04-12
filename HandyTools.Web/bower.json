@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-datatables": "^0.5.4"
+    "angular-datatables": "^0.5.4",
+    "moment": "^2.12.0"
   }
 }

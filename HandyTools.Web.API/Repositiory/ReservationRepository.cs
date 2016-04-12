@@ -18,7 +18,12 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<Reservation> GetReservations(string userName)
         {
-            return this.Context.GetModels<Reservation>("customerUserName", userName);
+            var parameter = new Dictionary<string, object>()
+            {
+                { "customerUserName", userName  },
+            };
+
+            return this.Context.GetModels<Reservation>(parameter);
         }
 
         /// <summary>

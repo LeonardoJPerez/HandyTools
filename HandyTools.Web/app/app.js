@@ -3,7 +3,7 @@
 
     var app = angular
         .module("handytoolsApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.mask", "ngCookies", "trNgGrid", "angular-uuid", "ngSanitize",
-            "angular-loading-bar", "toaster", "ui.event", "handy.services", "APPSETTINGS"])
+            "angular-loading-bar","ui.bootstrap.datetimepicker", "toaster", "ui.event", "handy.services", "APPSETTINGS"])
         .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
@@ -16,7 +16,7 @@
                     }
                 })
                 .when("/reservations", {
-                    controller: "reservationController as vm",
+                    controller: "reservationsController as vm",
                     templateUrl: "app/reservation/reservationsView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
