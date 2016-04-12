@@ -48,30 +48,6 @@
 
         vm.createReservation = function () {
             $location.path(APPSETTINGS.ApplicationPaths.CreateReservation);
-
-            //$log.info("Making a reservation...");
-
-            //var modalInstance = $uibModal.open({
-            //    animation: true,
-            //    templateUrl: "app/reservation/reservationCreateView.html",
-            //    controller: "reservationCreateController as vm",
-            //    size: "lg"
-            //});
-
-            //modalInstance.result.then(function (selectedItem) {
-            //    //$scope.selected = selectedItem;
-            //}, function () {
-            //    $log.info("Modal dismissed at: " + new Date());
-            //});
         };
-
-
-        //vm.ok = function () {
-        //    $scope.$close(vm.reservation);
-        //};
-
-        //vm.cancel = function () {
-        //    $scope.$dismiss("cancel");
-        //};
     }
 }());

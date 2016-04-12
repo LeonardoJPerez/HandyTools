@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("profileController", ["$rootScope", "$scope", "$timeout", "toaster", "handy.authService", "handy.api", "APPSETTINGS", "USER_ROLES", "$sce", profileController]);
+        .controller("profileController", ["$rootScope", "$scope", "toaster", "handy.authService", "handy.api", "APPSETTINGS", "USER_ROLES", "$sce", profileController]);
 
-    function profileController($rootScope, $scope, $timeout, toaster, authService, handyApi, APPSETTINGS, USER_ROLES, $sce) {
+    function profileController($rootScope, $scope, toaster, authService, handyApi, APPSETTINGS, USER_ROLES, $sce) {
         var vm = this;
 
         var getProfile = function () {
@@ -69,8 +69,6 @@
             return authService.redirectTo("/");
         }
 
-       
-
         vm.submitProfile = function (isValid) {
             // Validate profile
             if (isValid) {
@@ -92,7 +90,7 @@
                         }
                     });
                 } else {
-                    handyApi.Profile.update(preparePayload(vm.profile), function (res) {                
+                    handyApi.Profile.update(preparePayload(vm.profile), function (res) {
                         console.log(res);
                         toaster.pop('success', "Account Updated!", "");
                     });

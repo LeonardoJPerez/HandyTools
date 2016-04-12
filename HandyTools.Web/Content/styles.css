@@ -173,3 +173,7 @@ hr {
 .panel-footer {
     min-height: 45px;
 }
+
+.modal-dialog.modal-md {
+    margin-top: 5em;
+}

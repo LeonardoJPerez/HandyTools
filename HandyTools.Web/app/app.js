@@ -3,7 +3,7 @@
 
     var app = angular
         .module("handytoolsApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.mask", "ngCookies", "trNgGrid", "angular-uuid", "ngSanitize",
-            "angular-loading-bar","ui.bootstrap.datetimepicker", "toaster", "ui.event", "handy.services", "APPSETTINGS"])
+            "angular-loading-bar", "ui.bootstrap.datetimepicker", "toaster", "ui.event", "angular-momentjs", "handy.services", "APPSETTINGS"])
         .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
