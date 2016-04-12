@@ -183,16 +183,18 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ToolController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Enums\UserRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="Interfaces\IReportRepository.cs" />
     <Compile Include="Interfaces\IToolRepository.cs" />
     <Compile Include="Interfaces\IReservationRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="ViewModels\ToolsRequest.cs" />
+    <Compile Include="Repositiory\ReportsRepository.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="ViewModels\Login.cs" />
     <Compile Include="ViewModels\LoginResponse.cs" />
