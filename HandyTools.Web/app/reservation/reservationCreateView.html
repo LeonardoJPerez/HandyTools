@@ -72,7 +72,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-5">
-                                    <select id="ddlTool" ng-model="row.selectedTool" ng-options="(tool.description + ' - $' + tool.dailyRentalCharge.toFixed(2))  for tool in row.tools"
+                                    <select id="ddlTool" ng-model="row.selectedTool" ng-options="('#' + tool.id + ' ' + tool.description + ' - $' + tool.dailyRentalCharge.toFixed(2))  for tool in row.tools""
                                             ng-change="vm.toolChange(row.selectedTool, $index)" class="form-control" required ng-disabled="!row.selectedToolType">
                                         <option value="" selected>Select a Tool</option>
                                     </select>
