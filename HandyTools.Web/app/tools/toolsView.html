@@ -1,16 +1,26 @@
 ﻿<div class="container">
-    <div class="row top-buffer">
-        <div class="col-md-3 pull-left">
-            <select class="form-control " name="toolTypes">
-                <option value="-1">Select a Tool Type</option>
-            </select>
+    <div class="row row-centered top-buffer">
+        <div class="center-block">
+            <h2>Tools Inventory</h2>
+            <hr />
         </div>
-        <div class="col-md-4 pull-right">
-            <div class="input-group">
+    </div>
+    <div class="row top-buffer">
+        <div class="col-md-2 pull-left">
+            <div class="form-group form-group-sm">
+                <select class="form-control" name="toolTypes" aria-describedby="sizing-addon2">
+                    <option value="-1">Select a Tool Type</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 pull-right">
+            <div class="input-group input-group-sm">
                 <input type="text" class="form-control" placeholder="Search" aria-describedby="sizing-addon2">
                 <span class="input-group-btn">
                     <button class="btn btn-primary" type="button">
-                        Search
+                        <i class="glyphicon glyphicon-none"></i>
+                        <i class="glyphicon glyphicon-search"></i>
+                        <i class="glyphicon glyphicon-none"></i>
                     </button>
                 </span>
             </div>

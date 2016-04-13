@@ -9,7 +9,7 @@
         var vm = this;
 
         var getProfile = function () {
-            if (vm.IsNewCustomer) {
+            if (vm.isNewCustomer) {
                 vm.profile = {
                     userName: vm.currentUser.userName,
                     password: null,
@@ -41,7 +41,7 @@
         };
 
         var getTitle = function () {
-            return vm.IsNewCustomer ? "Create New Profile" : "View/Edit Profile";
+            return vm.isNewCustomer ? "Create New Profile" : "View/Edit Profile";
         };
 
         var preparePayload = function (profile) {
@@ -65,14 +65,14 @@
         vm.submitText = vm.isNewCustomer ? "Submit" : "Save";
 
         vm.back = function () {
-            if (vm.IsNewCustomer) { authService.setCurrentUser(null); }
+            if (vm.isNewCustomer) { authService.setCurrentUser(null); }
             return authService.redirectTo("/");
         }
 
         vm.submitProfile = function (isValid) {
             // Validate profile
             if (isValid) {
-                if (vm.IsNewCustomer) {
+                if (vm.isNewCustomer) {
                     handyApi.Profile.save(preparePayload(vm.profile), function (res) {
                         console.log(res);
                         if (res.userName) {
