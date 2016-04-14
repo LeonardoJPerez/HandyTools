@@ -32,6 +32,11 @@ branches:
 
 # Don't actually build.
 # build: off
+
+# Used to push to GaTech repo.
+environment:
+    access_token:
+        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
        
 artifacts:
   - path: HandyTools.Web\
