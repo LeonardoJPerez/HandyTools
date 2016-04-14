@@ -36,10 +36,9 @@ branches:
 artifacts:
   - path: HandyTools.Web\
     name: handytoolsweb     
-    type: zip  
+ 
   - path: HandyTools.Web.API\
-    name: handytoolsapi  
-    type: zip
+    name: handytoolsapi
     
 on_success:
   - git config --global credential.helper store
@@ -51,15 +50,6 @@ on_success:
   - git checkout master
   - git pull gatech master
   - git push gatech master
-  
-after_build:
-  appveyor PushArtifact <zip_path> -DeploymentName handytoolsweb
-
-deploy:
-  provider: Environment
-  name: HandyToolsWeb
-  provider: Environment
-  name: HandyToolsWebApi
 
 notifications:
 - provider: Slack
