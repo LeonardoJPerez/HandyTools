@@ -177,3 +177,8 @@ hr {
 .modal-dialog.modal-md {
     margin-top: 5em;
 }
+
+.tools-inventory-filters .col-md-3.filter-col {
+    margin-right: -20px;
+    margin-left: -25px;
+}

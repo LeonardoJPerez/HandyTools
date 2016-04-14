@@ -18,9 +18,9 @@ namespace HandyTools.Models
 
         public DateTime? DropOffDate { get; set; }
 
-        public string PickUpHandledBy { get; set; }
+        public string PickUpClerk { get; set; }
 
-        public string DropOffHandledBy { get; set; }
+        public string DropOffClerk { get; set; }
 
         public string CCNameOnCard { get; set; }
 

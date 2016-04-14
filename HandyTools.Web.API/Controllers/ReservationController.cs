@@ -48,9 +48,9 @@ namespace HandyTools.Web.API.Controllers
                 Deposit = r.Deposit,
                 RentalPrice = r.RentalPrice,
                 DropOffDate = r.ToUnixTime(r.DropOffDate),
-                DropOffHandledBy = r.DropOffHandledBy,
+                DropOffClerk = r.DropOffClerk,
                 PickUpDate = r.ToUnixTime(r.PickUpDate),
-                PickUpHandledBy = r.PickUpHandledBy,
+                PickUpClerk = r.PickUpClerk,
                 Tools = r.Tools
             });
 

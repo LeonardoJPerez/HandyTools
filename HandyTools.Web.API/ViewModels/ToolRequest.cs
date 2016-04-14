@@ -9,6 +9,6 @@ namespace HandyTools.Web.API.ViewModels
 
         public DateTime StartDate { get; set; }
 
-        public ToolType ToolType { get; set; }
+        public ToolType? ToolType { get; set; }
     }
 }
