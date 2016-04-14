@@ -34,32 +34,12 @@ branches:
 # build: off
        
 artifacts:
-  - path: HandyTools.Web\*
-    name: handytoolsweb       
-  - path: HandyTools.Web.API\*
+  - path: HandyTools.Web\
+    name: handytoolsweb     
+    type: zip  
+  - path: HandyTools.Web.API\
     name: handytoolsapi  
-       
-environment:
-    access_token:
-        secure: ZQQ+zSR7as/HV8jDAzoCGcyckNahNpFZ97J+CNiHGZeQrkNWvLPyZWVBeaxzUvJv
-
-deploy:
-- provider: S3
-  access_key_id: AKIAJ5FDT2D2WPEZIUMA
-  secret_access_key:
-    secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
-  region: us-east-1
-  bucket: handytools  
-  artifact: handytoolsweb
-  set_public: false
-- provider: S3
-  access_key_id: AKIAJ5FDT2D2WPEZIUMA
-  secret_access_key:
-    secure: vQsAdbQEVkppDmyU+reBBPHL4zSKb7N2R1mHiO964YuWFvB0yOY3y3M5pTc+B++h
-  region: us-east-1
-  bucket: handytools-api
-  artifact: handytoolsapi
-  set_public: false
+    type: zip
     
 on_success:
   - git config --global credential.helper store
@@ -73,10 +53,13 @@ on_success:
   - git push gatech master
   
 after_build:
-#  - ps: $webroot = Resolve-Path .\HandyTools.Web; [IO.Directory]::GetFiles($webroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($webroot.Path.Length + 1) -DeploymentName handytoolsweb }
-#  - ps: $apiroot = Resolve-Path .\HandyTools.Web.API; [IO.Directory]::GetFiles($apiroot.Path, '*.*', 'AllDirectories') | % { Push-AppveyorArtifact $_ -FileName $_.Substring($apiroot.Path.Length + 1) -DeploymentName handytoolsapi }
-#   - appveyor PushArtifact .\HandyTools.Web -DeploymentName handytoolsweb 
-#   - appveyor PushArtifact .\HandyTools.Web.API -DeploymentName handytoolsapi
+  appveyor PushArtifact <zip_path> -DeploymentName handytoolsweb
+
+deploy:
+  provider: Environment
+  name: HandyToolsWeb
+  provider: Environment
+  name: HandyToolsWebApi
 
 notifications:
 - provider: Slack
