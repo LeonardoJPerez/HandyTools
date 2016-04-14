@@ -18,9 +18,9 @@ namespace HandyTools.Web.API.ViewModels
 
         public long DropOffDate { get; set; }
 
-        public string PickUpHandledBy { get; set; }
+        public string PickUpClerk { get; set; }
 
-        public string DropOffHandledBy { get; set; }
+        public string DropOffClerk { get; set; }
 
         public string Tools { get; set; }
 

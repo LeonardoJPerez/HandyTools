@@ -17,6 +17,11 @@
                 return "$" + fieldValue.toFixed(2);
             };
         })
+        .filter("displayClerk", function () {
+            return function (fieldValue, item) {
+                return fieldValue ? fieldValue : "Pending";
+            };
+        })     
         .controller("reservationsController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", "$uibModal", "$log", "$route", "$location", reservationsController]);
 
     function reservationsController($rootScope, $scope, APPSETTINGS, handyApi, $uibModal, $log, $route, $location) {
