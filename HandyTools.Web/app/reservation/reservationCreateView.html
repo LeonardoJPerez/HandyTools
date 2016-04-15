@@ -1,134 +1,131 @@
 ﻿<div class="container-fluid">
+    <form name="reservationForm" class="form-horizontal" novalidate ng-submit="vm.ok()">
+        <fieldset>
 
-    <div class="row row-centered top-buffer">
-        <div class="center-block">
-            <!-- Form Name -->
-            <h2>Create New Reservation</h2>
-            <hr />
-        </div>
-    </div>
-    <div class="row top-buffer">
-        <form name="reservationForm" class="form-horizontal" novalidate ng-submit="vm.ok()">
-            <fieldset>
+            <div class="row  row-centered top-buffer">
+                <div class="col-md-6 col-md-offset-2 col-centered">
+                    <!-- Form Name -->
+                    <h2>Create New Reservation</h2>
+                    <br />
+                </div>
+            </div>
+            <!-- Date Range Selection-->
+            <div class="row">
+                <!-- StartDate -->
+                <div class="col-md-4 col-md-offset-2">
+                    <div class="col-md-12">
+                        <label class="control-label" for="dpStartDate">Start Date</label>
+                        <div class="dropdown" ng-class="{ 'has-error' : vm.showStartDateError }">
+                            <a class="dropdown-toggle" id="ddStartDate" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" required value="{{vm.reservation.startDate | date:'medium'}}" name="startDate" id="startDate"
+                                           uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showStartDateError" />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="vm.reservation.startDate" data-datetimepicker-config="vm.dateOptionsStart" data-on-set-time="vm.validateStart(newDate, oldDate)" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-                <!-- Date Range Selection-->
-                <div class="row">
-                    <!-- StartDate -->
-                    <div class="col-md-4 col-md-offset-2">
-                        <div class="col-md-12">
-                            <label class="control-label" for="dpStartDate">Start Date</label>
-                            <div class="dropdown" ng-class="{ 'has-error' : vm.showStartDateError }">
-                                <a class="dropdown-toggle" id="ddStartDate" role="button" data-toggle="dropdown" data-target="#">
+                <!-- EndDate -->
+                <div class="col-md-4">
+                    <div class="col-md-12">
+                        <label class="control-label" for="dpEndDate">End Date</label>
+                        <div class="dropdown" ng-class="{ 'has-error' : vm.showEndDateError }">
+                            <a class="dropdown-toggle" id="ddEndDate" role="button" data-toggle="dropdown" data-target="#">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" required value="{{vm.reservation.endDate | date:'medium'}}" name="endDate"
+                                           uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showEndDateError" />
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="vm.reservation.endDate" datetimepicker-config="vm.dateOptionsEnd" data-on-set-time="vm.validateEnd(newDate, oldDate)" />
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default tools-panel">
+                        <div class="panel-heading">Tools</div>
+                        <div class="panel-body">
+                            <div class="form-group form-group-sm" ng-repeat="row in vm.toolRows">
+                                <div class="col-xs-1">
                                     <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control" required value="{{vm.reservation.startDate | date:'medium'}}" name="startDate" id="startDate" placeholder="Start Date"
-                                               uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showStartDateError" />
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
+                                        <p>{{$index + 1}}</p>
                                     </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker ng-model="vm.reservation.startDate" data-datetimepicker-config="vm.dateOptionsStart" data-on-set-time="vm.validateStart(newDate, oldDate)" />
-                                </ul>
+                                </div>
+                                <div class="col-md-5">
+                                    <select id="ddlTooType" ng-model="row.selectedToolType" ng-options="type as type for type in vm.toolTypes track by type" class="form-control" required
+                                            ng-change="vm.toolTypeChange(row, row.selectedToolType)">
+                                        <option value="" selected>Select a ToolType</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <select id="ddlTool" ng-model="row.selectedTool" ng-options="('#' + tool.id + ' ' + tool.description + ' - $' + tool.dailyRentalCharge.toFixed(2))  for tool in row.availableTools"
+                                            ng-change="vm.toolChange(row.selectedTool, $index)" class="form-control" required ng-disabled="!row.selectedToolType">
+                                        <option value="" selected>Select a Tool</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-1" ng-click="vm.removeRow($index)" ng-hide="$index === 0 && vm.toolRows.length === 1">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </div>
+                            </div>
+
+                            <hr />
+                            <div class="row add-tool" ng-mouseenter="vm.addHighlight()" ng-mouseleave="vm.removeHighlight()" ng-click="vm.addRow()" ng-hide="vm.disableAdd">
+                                <div class="col-xs-1">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </div>
+                                <div class="col-md-5">
+                                    <p class="text-success">Reserve new Tool</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="panel-footer">
 
-                    <!-- EndDate -->
-                    <div class="col-md-4">
-                        <div class="col-md-12">
-                            <label class="control-label" for="dpEndDate">End Date</label>
-                            <div class="dropdown" ng-class="{ 'has-error' : vm.showEndDateError }">
-                                <a class="dropdown-toggle" id="ddEndDate" role="button" data-toggle="dropdown" data-target="#">
-                                    <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control" required value="{{vm.reservation.endDate | date:'medium'}}" name="endDate" placeholder="End Date"
-                                               uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showEndDateError" />
-                                        <span class="input-group-addon">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </span>
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                    <datetimepicker ng-model="vm.reservation.endDate" datetimepicker-config="vm.dateOptionsEnd" data-on-set-time="vm.validateEnd(newDate, oldDate)" />
-                                </ul>
+                            <div class="pull-left">Qty: {{vm.toolRows.length}}</div>
+                            <div class="pull-right">
+                                <strong>
+                                    Total: ${{vm.reservationTotal}}
+                                </strong>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        <div class="panel panel-default tools-panel">
-                            <div class="panel-heading">Tools</div>
-                            <div class="panel-body">
-                                <div class="form-group form-group-sm" ng-repeat="row in vm.toolRows">
-                                    <div class="col-xs-1">
-                                        <div class="input-group input-group-sm">
-                                            <p>{{$index + 1}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <select id="ddlTooType" ng-model="row.selectedToolType" ng-options="type as type for type in vm.toolTypes track by type" class="form-control" required
-                                                ng-change="vm.toolTypeChange(row, row.selectedToolType)">
-                                            <option value="" selected>Select a ToolType</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <select id="ddlTool" ng-model="row.selectedTool" ng-options="('#' + tool.id + ' ' + tool.description + ' - $' + tool.dailyRentalCharge.toFixed(2))  for tool in row.tools" "
-                                                ng-change="vm.toolChange(row.selectedTool, $index)" class="form-control" required ng-disabled="!row.selectedToolType">
-                                            <option value="" selected>Select a Tool</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-xs-1" ng-click="vm.removeRow($index)" ng-hide="$index === 0 && vm.toolRows.length === 1">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </div>
-                                </div>
+            </div>
 
-                                <hr />
-                                <div class="row add-tool" ng-mouseenter="vm.addHighlight()" ng-mouseleave="vm.removeHighlight()" ng-click="vm.addRow()" ng-hide="vm.disableAdd">
-                                    <div class="col-xs-1">
-                                        <span class="glyphicon glyphicon-plus"></span>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <p class="text-success">Reserve new Tool</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-
-                                <div class="pull-left">Qty: {{vm.toolRows.length}}</div>
-                                <div class="pull-right">
-                                    <strong>
-                                        Total: ${{vm.reservationTotal}}
-                                    </strong>
-                                </div>
-                            </div>
-                        </div>
+            <div class="row row-centered">
+                <!-- Submit -->
+                <div class="col-md-2 col-centered">
+                    <label class="control-label" for="btnSubmit"></label>
+                    <div class="form-group">
+                        <button id="btnBack" name="btnSubmit" class="btn btn-block btn-lg btn-default" type="button" ng-click="vm.back()">
+                            <span class="glyphicon glyphicon-log-out icon-flipped"></span>  Back
+                        </button>
                     </div>
                 </div>
 
-                <div class="row row-centered">
-                    <!-- Submit -->
-                    <div class="col-md-2 col-centered">
-                        <label class="control-label" for="btnSubmit"></label>
-                        <div class="form-group">
-                            <button id="btnBack" name="btnSubmit" class="btn btn-block btn-lg btn-default" type="button" ng-click="vm.back()">
-                                <span class="glyphicon glyphicon-log-out icon-flipped"></span>  Back
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-md-1 col-centered"></div>
-                    <div class="col-md-2 col-centered">
-                        <label class="control-label" for="btnSubmit"></label>
-                        <div class="form-group">
-                            <button id="btnSubmit" name="btnSubmit" class="btn btn-block btn-lg btn-success" type="submit" ng-disabled="reservationForm.$invalid || vm.disableSubmit">
-                                <span class="glyphicon glyphicon-floppy-disk"></span>  Create
-                            </button>
-                        </div>
+                <div class="col-md-1 col-centered"></div>
+                <div class="col-md-2 col-centered">
+                    <label class="control-label" for="btnSubmit"></label>
+                    <div class="form-group">
+                        <button id="btnSubmit" name="btnSubmit" class="btn btn-block btn-lg btn-success" type="submit" ng-disabled="reservationForm.$invalid || vm.disableSubmit">
+                            <span class="glyphicon glyphicon-floppy-disk"></span>  Create
+                        </button>
                     </div>
                 </div>
-            </fieldset>
-        </form>
-    </div>
+            </div>
+        </fieldset>
+    </form>
 </div>

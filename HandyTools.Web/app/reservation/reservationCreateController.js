@@ -13,7 +13,14 @@
         endDate.setDate(startDate.getDate() + 10);
 
         var getToolTypes = function () {
-            return handyApi.Tools.getToolTypes.query();
+            return handyApi.Tools.getToolTypes.query().$promise.then(function (data) {
+                vm.toolTypes = data;
+                getTools().$promise.then(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        vm.toolsCollection.push(data[i]);
+                    }
+                });
+            });
         };
         var getTools = function (toolType) {
             return handyApi.Tools.getToolsByType.post(null, {
@@ -23,68 +30,40 @@
             });
         };
 
-        var excludeTools = function () {
-            angular.forEach(vm.reservation.tools, function (reservedTool) {
-                for (var i = 0; i < vm.toolRows.length; i++) {
-                    if (vm.toolRows[i].selectedTool && reservedTool.tool.id === vm.toolRows[i].selectedTool.id) {
-                        continue;
-                    }
+        vm.toolsCollection = [];
 
-                    var newArray = [];
-                    if (!vm.toolRows[i].tools) { continue; }
+        var syncAvailableTools = function () {
+            angular.forEach(vm.reservation.tools, function (t) {
+                angular.forEach(vm.toolRows, function (row, i) {
+                    if (t.i !== i && t.tool.type === row.selectedToolType) {
+                        var newArray = [];
 
-                    for (var j = 0; j < vm.toolRows[i].tools.length; j++) {
-                        if (vm.toolRows[i].tools[j].id !== reservedTool.tool.id) {
-                            newArray.push(vm.toolRows[i].tools[j]);
+                        for (var j = 0; j < vm.toolsCollection.length; j++) {
+                            if (vm.toolsCollection[j].type === t.tool.type && t.tool.id !== vm.toolsCollection[j].id) {
+                                newArray.push(vm.toolsCollection[j]);
+                            }
                         }
+
+                        vm.toolRows[i].availableTools = newArray;
+                        $log.info(row.availableTools);
                     }
-                    vm.toolRows[i].tools = newArray;
-                }
+                });
             });
         }
-        var updateReservations = function (tool, index) {
-            vm.reservationTotal = getTotal();
-            var reservedTools = vm.reservation.tools;
-
-            if (!tool) {
-                // Remove from Reservation Tools Collection if selection is null.
-                angular.forEach(reservedTools, function (t, i) {
-                    if (t.rowindex === index) { reservedTools.splice(i, 1); }
-                });
-                return;
-            }
-
-            if (reservedTools.length === 0) {
-                reservedTools.push({ rowindex: index, tool });
-            } else {
-                var pos = null;
-                angular.forEach(reservedTools, function (t, i) {
-                    if (t.tool.id === tool.id) { pos = i; }
-                });
-
-                if (pos) {
-                    reservedTools[pos] = { rowindex: index, tool };
-                } else {
-                    reservedTools.push({ rowindex: index, tool });
-                }
-            }
-
-            vm.reservation.tools = reservedTools;
-        };
 
         vm.reservation = {
             startDate: startDate,
             endDate: endDate,
             tools: []
         };
-
         vm.toolRows = [
         {
             selectedToolType: null,
-            tools: null,
+            availableTools: null,
             selectedTool: null
         }];
-        vm.toolTypes = getToolTypes();
+
+        getToolTypes();
 
         var getTotal = function () {
             var total = 0;
@@ -107,24 +86,23 @@
 
                 vm.toolRows.push({
                     selectedToolType: null,
-                    tools: null,
+                    availableTools: null,
                     selectedTool: null
                 });
+            } else {
+                // Disable Add tool button.
             }
         };
         vm.removeRow = function (index) {
             if (vm.toolRows.length > 1) {
+                var tt = vm.toolRows[index].selectedToolType;
+
                 vm.toolRows.splice(index, 1);
+                vm.reservation.tools.splice(index, 1);
             }
 
-            excludeTools();
-        };
-
-        vm.addHighlight = function () {
-            angular.element(".row.add-tool p").removeClass("text-success");
-        };
-        vm.removeHighlight = function () {
-            angular.element(".row.add-tool p").addClass("text-success");
+            vm.reservationTotal = getTotal();
+            // Enable Add tool button if disable.
         };
 
         vm.disableAdd = false;
@@ -138,7 +116,7 @@
                 animation: true,
                 templateUrl: "app/reservation/reservationSummary.html",
                 controller: "reservationSummaryController as vm",
-                size: "md"               
+                size: "md"
             });
 
             modalInstance.result.then(function (selectedItem) {
@@ -150,20 +128,33 @@
 
         vm.toolTypeChange = function (row, toolType) {
             if (toolType) {
-                getTools(toolType).$promise.then(function (t) {
-                    row.tools = t;
-                    excludeTools();
-                });
+                row.availableTools = getTools(toolType);
             } else {
-                row.tools = null;
+                row.availableTools = null;
             }
-            excludeTools();
+
+            syncAvailableTools();
         };
         vm.toolChange = function (tool, index) {
-            updateReservations(tool, index);
-            // Update Tools dropdowns and remove selected tools.
-            excludeTools();
+            if (tool) {
+                var insertNew = true;
+                for (var i = 0; i < vm.reservation.tools.length; i++) {
+                    if (vm.reservation.tools[i].i === index) {
+                        vm.reservation.tools[i] = { i: i, tool };
+                        insertNew = false;
+                        break;
+                    }
+                }
+
+                if (insertNew) {
+                    vm.reservation.tools.push({ i: index, tool });
+                }
+            } else {
+                vm.reservation.tools.splice(index, 1);
+            }
+
             $log.info(vm.reservation);
+            vm.reservationTotal = getTotal();
         };
 
         // DatePicker Settings
@@ -183,5 +174,18 @@
         vm.showStartDateError = false;
         vm.showEndDateError = false;
         vm.popupHtml = $sce.trustAsHtml("<span class='text-danger'>Date Invalid!</span>");
+
+        // UI Methods
+        vm.addHighlight = function () {
+            angular.element(".row.add-tool p").removeClass("text-success");
+        };
+        vm.removeHighlight = function () {
+            angular.element(".row.add-tool p").addClass("text-success");
+        };
+
+        $scope.$watchCollection("vm.reservation.tools", function (newValue, oldValue) {
+            console.log("Watching: ", newValue);
+            syncAvailableTools();
+        });
     }
 }());
