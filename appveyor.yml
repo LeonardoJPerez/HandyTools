@@ -40,10 +40,10 @@ environment:
        
 artifacts:
   - path: HandyTools.Web\
-    name: handytoolsweb     
+    name: HandyToolsWeb     
  
   - path: HandyTools.Web.API\
-    name: handytoolsapi
+    name: HandyToolsWebApi
     
 on_success:
   - git config --global credential.helper store
@@ -55,6 +55,12 @@ on_success:
   - git checkout master
   - git pull gatech master
   - git push gatech master
+  
+deploy:
+- provider: Environment
+  name: HandyToolsWeb
+- provider: Environment
+  name: HandyToolsWebApi 
 
 notifications:
 - provider: Slack
