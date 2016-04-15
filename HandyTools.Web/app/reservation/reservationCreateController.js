@@ -34,22 +34,46 @@
 
         var syncAvailableTools = function () {
             angular.forEach(vm.reservation.tools, function (t) {
-                angular.forEach(vm.toolRows, function (row, i) {
-                    if (t.i !== i && t.tool.type === row.selectedToolType) {
-                        var newArray = [];
+                var newArray = [];
 
-                        for (var j = 0; j < vm.toolsCollection.length; j++) {
-                            if (vm.toolsCollection[j].type === t.tool.type && t.tool.id !== vm.toolsCollection[j].id) {
-                                newArray.push(vm.toolsCollection[j]);
-                            }
+                for (var j = 0; j < vm.toolsCollection.length; j++) {
+                    if (vm.toolsCollection[j].type === t.tool.type) {
+                        newArray.push(vm.toolsCollection[j]);
+                    }
+                }
+
+                angular.forEach(vm.reservation.tools, function (tt, i) {
+                    for (var j = 0; j < newArray.length; j++) {
+                        if (newArray[j].id === tt.tool.id) {
+                            newArray.splice(j, 1);
+                            break;
                         }
-
-                        vm.toolRows[i].availableTools = newArray;
-                        $log.info(row.availableTools);
                     }
                 });
+
+                angular.forEach(vm.toolRows, function (row, i) {
+                    if (t.tool.type !== row.selectedToolType) {
+                        return;
+                    }
+
+                    angular.copy(newArray, row.availableTools);
+
+                    if (row.selectedTool) {
+                        var found = false;
+                        for (var j = 0; j < row.availableTools.length; j++) {
+                            if (row.availableTools[j].id === t.tool.id) {
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            row.availableTools.unshift(row.selectedTool);
+                        }
+                    }
+
+                    $log.info(row.availableTools);
+                });
             });
-        }
+        };
 
         vm.reservation = {
             startDate: startDate,
@@ -128,12 +152,13 @@
 
         vm.toolTypeChange = function (row, toolType) {
             if (toolType) {
-                row.availableTools = getTools(toolType);
+                getTools(toolType).$promise.then(function (data) {
+                    row.availableTools = data;
+                    syncAvailableTools();
+                });
             } else {
                 row.availableTools = null;
             }
-
-            syncAvailableTools();
         };
         vm.toolChange = function (tool, index) {
             if (tool) {
@@ -153,7 +178,6 @@
                 vm.reservation.tools.splice(index, 1);
             }
 
-            $log.info(vm.reservation);
             vm.reservationTotal = getTotal();
         };
 
