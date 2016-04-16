@@ -1,5 +1,6 @@
 ﻿using HandyTools.Models;
 using System.Collections.Generic;
+using System.Data;
 
 namespace HandyTools.Database
 {
@@ -16,5 +17,7 @@ namespace HandyTools.Database
         T SetModel<T>(T model) where T : BaseModel;
 
         T AddModel<T>(T model) where T : BaseModel;
+
+        IEnumerable<TModel> Execute<TModel, TParam>(string spName, Dictionary<TParam, TParam> parameters, CommandType cmdType = CommandType.StoredProcedure) where TModel : BaseModel;
     }
 }

@@ -1,4 +1,5 @@
-﻿using HandyTools.Web.API.Interfaces;
+﻿using HandyTools.Models;
+using HandyTools.Web.API.Interfaces;
 using HandyTools.Web.API.ViewModels;
 using System.Web.Http;
 
@@ -32,6 +33,44 @@ namespace HandyTools.Web.API.Controllers
         {
             if (!ModelState.IsValid) { return BadRequest(); }
             return Ok(this._repository.GetTools(request.ToolType, request.StartDate, request.EndDate));
+        }
+
+        // GET api/tool/sale/
+        [HttpPost]
+        [Route("sale")]
+        public IHttpActionResult MarkForSale([FromBody] ToolSaleRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }          
+            return Ok(this._repository.MarkForSale(request.ID, request.Clerk, request.SalePrice));
+        }
+
+        // GET api/tool/service/
+        [HttpPost]
+        [Route("service")]
+        public IHttpActionResult MarkForService( [FromBody] ToolServiceRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }
+            return Ok(this._repository.MarkForSale(request.ID, request.Clerk, request.SalePrice));
+        }
+
+        // GET api/tool/{id}
+        [HttpPost]
+        public IHttpActionResult Post(int id, [FromBody] ToolRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }
+            // TODO: Implement.
+
+            var tool = new Tool
+            {
+                Description = request.Description,
+                OriginalPrice = request.OriginalPrice,
+                DailyRentalCharge = request.DailyRentalCharge,
+                Deposit = request.Deposit,               
+                LongDescription = request.LongDescription,            
+                Type = request.ToolType.ToString()
+            };
+
+            return Ok(this._repository.CreateTool(tool));
         }
     }
 }

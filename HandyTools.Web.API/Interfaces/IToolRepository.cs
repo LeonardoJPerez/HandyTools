@@ -16,5 +16,9 @@ namespace HandyTools.Web.API.Interfaces
         IEnumerable<Tool> GetTools(ToolType? type);
 
         IEnumerable<Tool> GetTools(ToolType? type, DateTime? startDate, DateTime? endDate);
+
+        IEnumerable<Tool> MarkForSale(int toolId, string clerk, decimal salePrice);
+
+        IEnumerable<Tool> MarkForService(int toolId);
     }
 }

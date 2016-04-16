@@ -33,7 +33,13 @@ namespace HandyTools.Web.API.Repositiory
         /// <returns></returns>
         public Reservation CreateReservation(Reservation model)
         {
-            return this.Context.AddModel(model);
+            var newModel = this.Context.AddModel(model);
+            return newModel ?? new Reservation();
+        }
+
+        public Reservation UpdateReservation(Reservation model)
+        {
+            return this.Context.SetModel(model);
         }
     }
 }

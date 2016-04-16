@@ -195,6 +195,8 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Repositiory\ReportsRepository.cs" />
+    <Compile Include="ViewModels\ToolServiceRequest.cs" />
+    <Compile Include="ViewModels\ToolSaleRequest.cs" />
     <Compile Include="ViewModels\ToolRequest.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="ViewModels\LoginRequest.cs" />

@@ -165,6 +165,18 @@ namespace HandyTools.Database
             return returnValue.TableToList<TModel>().FirstOrDefault();
         }
 
+        public IEnumerable<TModel> Execute<TModel, TParam>(string spName, Dictionary<TParam, TParam> parameters, CommandType cmdType = CommandType.StoredProcedure) where TModel : BaseModel
+        {
+            var mysqlParameters = new List<MySqlParameter>();
+            foreach (var kvp in parameters)
+            {
+                mysqlParameters.Add(new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(kvp.Key.ToString(), kvp.Value)));
+            }
+
+            var result = (DataTable)this.Execute(spName, CommandType.StoredProcedure, false, mysqlParameters.ToArray());
+            return result.TableToList<TModel>();
+        }
+
         #region Private Methods
 
         /// <summary>

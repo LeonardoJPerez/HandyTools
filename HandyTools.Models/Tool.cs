@@ -23,6 +23,6 @@ namespace HandyTools.Models
 
         public DateTime SoldDate { get; set; }
 
-        public virtual string Type { get; protected set; }
+        public virtual string Type { get; set; }
     }
 }

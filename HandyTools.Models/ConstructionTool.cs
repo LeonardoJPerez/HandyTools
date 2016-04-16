@@ -4,7 +4,7 @@ namespace HandyTools.Models
 {
     public class ConstructionTool : Tool
     {
-        public override string Type { get; protected set; }
+        public override string Type { get; set; }
 
         public ConstructionTool()
         {

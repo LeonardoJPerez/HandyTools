@@ -10,5 +10,7 @@ namespace HandyTools.Web.API.Interfaces
         IEnumerable<Reservation> GetReservations(string userName);
 
         Reservation GetReservation(int reservationId);
+
+        Reservation UpdateReservation(Reservation model);
     }
 }
