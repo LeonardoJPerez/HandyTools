@@ -3,9 +3,9 @@
 
     angular
         .module("handytoolsApp")
-        .controller("reservationCreateController", ["$scope", "handy.api", "$location", "$anchorScroll", "$moment", "$log", "$sce", "$uibModal", reservationCreateController]);
+        .controller("reservationCreateController", ["$scope", "handy.api", "handy.authService", "$location", "$anchorScroll", "$moment", "$log", "$sce", "$uibModal", reservationCreateController]);
 
-    function reservationCreateController($scope, handyApi, $location, $anchorScroll, $moment, $log, $sce, $uibModal) {
+    function reservationCreateController($scope, handyApi, authService, $location, $anchorScroll, $moment, $log, $sce, $uibModal) {
         var vm = this;
         var startDate = new Date();
         var endDate = new Date();
@@ -33,7 +33,7 @@
         var displayResult = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: "app/reservation/reservationSUbmitSummary.html",
+                templateUrl: "app/reservation/reservationSubmitModal.html",
                 controller: "reservationSummaryController as vm",
                 size: "md",
                 resolve: {
@@ -43,10 +43,10 @@
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                $log.info("Reservation Accecpted at: " + new Date());
-            }, function () {
-                $log.info("Reservation dismissed at: " + new Date());
+            modalInstance.result.then(null, function (reason) {
+                if (reason === "home") {
+                    return authService.redirectTo("/");
+                }            
             });
         };
 
@@ -158,12 +158,12 @@
         vm.back = function () {
             $location.path("/");
         };
-        vm.ok = function () {
+        vm.create = function () {
             $log.info("Making a reservation...");
 
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: "app/reservation/reservationSummary.html",
+                templateUrl: "app/reservation/reservationSummaryModal.html",
                 controller: "reservationSummaryController as vm",
                 size: "md",
                 resolve: {
@@ -174,7 +174,7 @@
             });
 
             modalInstance.result.then(function (reservation) {
-                $log.info("Reservation Accecpted at: " + new Date());
+                vm.reservation.id = reservation.id;
                 displayResult();
             }, function () {
                 $log.info("Reservation dismissed at: " + new Date());
@@ -238,9 +238,7 @@
 
         $scope.$watchCollection("vm.reservation.tools", function (newValue, oldValue) {
             syncAvailableTools();
-            calculateCharges();
-
-            console.log("Reservation Updated: ", vm.reservation);
+            calculateCharges();          
         });
     }
 }());

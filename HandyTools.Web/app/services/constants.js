@@ -7,7 +7,7 @@
             ApiServerUrl: "http://localhost:62581/",
             CurrentServerUrl: "http://localhost:49460/",
             ApplicationPaths: {
-                ClerkHome: "/pickups",
+                ClerkHome: "/clerk/dashboard",
                 CustomerHome: "/reservations",
                 CreateProfile: "/account/create",
                 CreateReservation: "/reservation/create"

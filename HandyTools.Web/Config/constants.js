@@ -7,7 +7,7 @@
             ApiServerUrl: "@@APISERVERURL",
             CurrentServerUrl: "@@CURRENTSERVERURL",
             ApplicationPaths: {
-                ClerkHome: "/pickups",
+                ClerkHome: "/clerk/dashboard",
                 CustomerHome: "/reservations",
                 CreateProfile: "/account/create",
                 CreateReservation: "/reservation/create"

@@ -39,18 +39,7 @@
         };
 
         vm.reservations = this.getReservations();
-
-        $scope.mySelectedItems = [];
-
-        $scope.displaySelected = function () {
-            $scope.$watchCollection("mySelectedItems", function (row) {
-                if ($scope.mySelectedItems.length > 0) {
-                    vm.selectedReservation = $scope.mySelectedItems[0];
-                    $log.info(vm.selectedReservation);
-                }
-            });
-        };
-
+      
         vm.createReservation = function () {
             $location.path(APPSETTINGS.ApplicationPaths.CreateReservation);
         };

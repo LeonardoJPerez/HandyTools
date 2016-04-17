@@ -1,0 +1,57 @@
+﻿<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <div class="row row-centered">
+            <div class="center-block">
+                <h3 class="modal-title">Tool Details</h3>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 inline-headers">
+                <h5>Name:</h5>&nbsp;
+                <h4>{{vm.tool.description}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 inline-headers">
+                <h5>Type:</h5>&nbsp;
+                <h4>{{vm.tool.type}}</h4>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-12">
+                <h5>Description:</h5>
+                <h4>{{vm.tool.longDescription}}</h4>  
+            </div>
+        </div>       
+        <div class="row inline-headers">
+            <div class="col-md-12">
+                <h5>Original Price:</h5>
+                <h4>{{vm.tool.originalPrice | currency}}</h4>
+            </div>
+        </div>
+        <div class="row inline-headers">
+            <div class="col-md-12">
+                <h5>Deposit Required:</h5>
+                <h4>{{vm.tool.deposit | currency}}</h4>
+            </div>
+        </div>
+        <div class="row inline-headers">
+            <div class="col-md-12">
+                <h5>Daily Rental Charge Price:</h5>
+                <h4>{{vm.tool.dailyRentalCharge | currency}}</h4>
+            </div>
+        </div>   
+    </div>
+    <div class="modal-footer">
+        <div class="row row-centered inline-headers">
+            <div class="col-md-12">
+                <div class="center-block">                   
+                    <button type="button" class="btn btn-primary" ng-click="vm.close()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

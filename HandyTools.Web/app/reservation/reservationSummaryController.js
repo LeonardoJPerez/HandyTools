@@ -15,19 +15,21 @@
         });
 
         vm.submit = function () {
-            handyapi.Reservations.resource.save(vm.reservation, function (res) {
-                console.log(res);
+            handyapi.Reservations.resource.save(vm.reservation, function (res) {             
                 toaster.pop("success", "Reservation Created!", "");
-                $scope.$close("ok");
-            }, function (res) {
-                console.log("Error: ", res);
+                $scope.$close(res);
+            }, function (res) {               
                 toaster.pop("error", "Reservation fialed! Please review Reservation.", "");
                 $scope.$dismiss("cancel");
             });
         };
 
-        vm.cancel = function () {
+        vm.back = function () {
             $scope.$dismiss("cancel");
+        };
+
+        vm.backHome = function () {
+            $scope.$dismiss("home");
         };
     }
 }());

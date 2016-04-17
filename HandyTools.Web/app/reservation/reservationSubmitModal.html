@@ -3,11 +3,18 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <div class="row row-centered">
             <div class="center-block">
-                <h4 class="modal-title">Reservation Summary</h4>
+                <h3 class="modal-title">Reservation Details</h3>
             </div>
         </div>
     </div>
     <div class="modal-body">
+        <div class="row row-centered">
+            <div class="col-md-12">
+                <h5>Reservation Number:</h5>
+                <h4>{{vm.reservation.id}}</h4>
+                <hr />
+            </div>            
+        </div>
         <div class="row row-centered">
             <div class="col-md-12 inline-headers">
                 <h5>From:</h5>&nbsp;
@@ -29,17 +36,17 @@
                 <table tr-ng-grid="" class="table table-striped table-hover table-responsive disable-pagination" selected-items="mySelectedItems" items="vm.reservation.tools" enable-filtering="false" enable-sorting="false"
                        cell-width="10em" selection-mode="None">
                     <thead>
-                        <tr>
-                            <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
-                            <th field-name="description" display-name="Name" display-align="center" ></th>
-                            <th field-name="dailyRentalCharge" display-name="Daily Rental Charge" display-format="displayCurrency:gridItem" display-align="center" cell-width="12em"></th>
-                        </tr>
+                    <tr>
+                        <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
+                        <th field-name="description" display-name="Name" display-align="center"></th>
+                        <th field-name="dailyRentalCharge" display-name="Daily Rental Charge" display-format="displayCurrency:gridItem" display-align="center" cell-width="12em"></th>
+                    </tr>
                     </thead>
                 </table>
             </div>
         </div>
         <div class="row ">
-            <hr />
+            <hr/>
             <div class="row row-centered">
                 <div class="col-md-12 inline-headers">
                     <h5>Total Rental Price:</h5>&nbsp;<h4>{{vm.reservation.dailyTotal | currency}}</h4>
@@ -55,9 +62,8 @@
     <div class="modal-footer">
         <div class="row row-centered inline-headers">
             <div class="col-md-12">
-                <div class="center-block">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.cancel()">Back</button>
-                    <button type="button" class="btn btn-primary" ng-click="vm.submit()">Submit</button>
+                <div class="center-block">                   
+                    <button type="button" class="btn btn-primary" ng-click="vm.backHome()">Back</button>
                 </div>
             </div>
         </div>
