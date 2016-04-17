@@ -88,6 +88,8 @@
   <ItemGroup>
     <Content Include="app\clerk\clerkDashboardController.js" />
     <Content Include="app\clerk\clerkDashboardView.html" />
+    <Content Include="app\clerk\clerkDashboardModal.html" />
+    <Content Include="app\clerk\clerkDashboardModalController.js" />
     <Content Include="app\tools\toolDetailsModalController.js" />
     <Content Include="app\tools\toolDetailsModal.html" />
     <Content Include="app\tools\toolAddNewView.html" />
@@ -95,7 +97,7 @@
     <Content Include="app\tools\toolMarkForSaleView.html" />
     <Content Include="app\login\loginDialogDirective.js" />
     <Content Include="app\profile\fieldMatchDirective.js" />
-    <Content Include="app\reservation\reservationSubmitModal.html" />
+    <Content Include="app\reservation\reservationSubmittedModal.html" />
     <Content Include="app\reservation\reservationSummaryController.js" />
     <Content Include="app\reservation\reservationsController.js" />
     <Content Include="app\reservation\reservationSummaryModal.html" />
@@ -933,7 +935,6 @@
     <Content Include="app\navigation\navigationView.html" />
     <Content Include="app\profile\profileController.js" />
     <Content Include="app\profile\profileFormView.html" />
-    <Content Include="app\profile\profileView.html" />
     <Content Include="app\reservation\reservationCreateController.js" />
     <Content Include="app\reservation\reservationCreateView.html" />
     <Content Include="app\reservation\reservationsView.html" />

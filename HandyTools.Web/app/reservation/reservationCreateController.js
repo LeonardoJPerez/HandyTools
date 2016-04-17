@@ -33,7 +33,7 @@
         var displayResult = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: "app/reservation/reservationSubmitModal.html",
+                templateUrl: "app/reservation/reservationSubmittedModal.html",
                 controller: "reservationSummaryController as vm",
                 size: "md",
                 resolve: {

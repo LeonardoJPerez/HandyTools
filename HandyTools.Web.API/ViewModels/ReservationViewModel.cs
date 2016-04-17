@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HandyTools.Models;
+using System.Collections.Generic;
 
 namespace HandyTools.Web.API.ViewModels
 {
@@ -23,6 +24,8 @@ namespace HandyTools.Web.API.ViewModels
         public string DropOffClerk { get; set; }
 
         public string Tools { get; set; }
+
+        public IEnumerable<Tool> ToolItems { get; set; }
 
         public double? Deposit { get; set; }
 

@@ -38,6 +38,13 @@
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
                 })
+                 .when("/profile", {
+                     controller: "profileController as vm",
+                     templateUrl: "app/profile/profileFormView.html",
+                     data: {
+                         authorizedRoles: [USER_ROLES.Customer]
+                     }
+                 })
                 .when("/clerk/dashboard", {
                     controller: "clerkDashboardController as vm",
                     templateUrl: "app/clerk/clerkDashboardView.html",
@@ -45,13 +52,20 @@
                         authorizedRoles: [USER_ROLES.Clerk]
                     }
                 })
-                .when("/profile", {
-                    controller: "profileController as vm",
-                    templateUrl: "app/profile/profileFormView.html",
+                 .when("/clerk/tools-management", {
+                     controller: "clerkDashboardController as vm",
+                     templateUrl: "app/clerk/clerkDashboardView.html",
+                     data: {
+                         authorizedRoles: [USER_ROLES.Clerk]
+                     }
+                 })
+                .when("/clerk/service-orders", {
+                    controller: "clerkDashboardController as vm",
+                    templateUrl: "app/clerk/clerkDashboardView.html",
                     data: {
-                        authorizedRoles: [USER_ROLES.Customer]
+                        authorizedRoles: [USER_ROLES.Clerk]
                     }
-                })
+                })               
                 .otherwise({
                     redirectTo: "/",
                     data: {

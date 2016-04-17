@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace HandyTools.Models
 {
@@ -31,6 +32,10 @@ namespace HandyTools.Models
         public string CCTYype { get; set; }
 
         public string Tools { get; set; }
+
+        public string ToolIDs { get; set; }
+
+        public IEnumerable<Tool> ToolsItems { get; set; }
 
         public double? Deposit { get; set; }
 

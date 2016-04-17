@@ -30,6 +30,31 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.GetReservation(id));
         }
 
+        [HttpGet]
+        public IHttpActionResult Get()
+        {
+            var reservations = this._repository.GetReservations(null);
+            var reservationsViewModels = reservations.Select(r =>
+            new ReservationViewModel
+            {
+                ID = r.ID,
+                CustomerUserName = r.CustomerUserName,
+                DateCreated = r.ToUnixTime(r.DateCreated),
+                StartDate = r.ToUnixTime(r.StartDate),
+                EndDate = r.ToUnixTime(r.EndDate),
+                Deposit = r.Deposit,
+                RentalPrice = r.RentalPrice,
+                DropOffDate = r.ToUnixTime(r.DropOffDate),
+                DropOffClerk = r.DropOffClerk,
+                PickUpDate = r.ToUnixTime(r.PickUpDate),
+                PickUpClerk = r.PickUpClerk,
+                Tools = r.Tools, 
+                ToolItems = r.ToolsItems
+            });
+
+            return Ok(reservationsViewModels);
+        }
+
         // GET api/reservation/{username}
         /// <summary>
         /// Gets the list of Reservations by Customer's Username.

@@ -21,37 +21,73 @@
             return function (fieldValue, item) {
                 return fieldValue ? fieldValue : "Pending";
             };
-        })     
-        .controller("clerkDashboardController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", "$uibModal", "$log", "$route", "$location", clerkDashboardController]);
+        })
+        .controller("clerkDashboardController", ["$scope", "handy.api", "$log", "$uibModal", clerkDashboardController]);
 
-    function clerkDashboardController($rootScope, $scope, APPSETTINGS, handyApi, $uibModal, $log, $route, $location) {
+    function clerkDashboardController($scope, handyApi, $log, $uibModal) {
         var vm = this;
 
         vm.selectedReservation = {};
-        
-        this.getReservations = function () {
-            return handyApi.Reservations.getByUser.query({ id: btoa(vm.currentUser.userName) });
+        vm.pickups = [];
+        vm.dropoffs = [];
+
+        var getReservations = function () {
+            return handyApi.Reservations.resource.query(null, function (res) {
+                angular.forEach(res, function (r) {
+                    if (r.pickUpDate === 0) {
+                        vm.pickups.push(r);
+                    } else {
+                        vm.dropoffs.push(r);
+                    }
+                });
+            });
         };
 
-        vm.refresh = function () {
-            $route.reload();
-        };
+        getReservations();
 
-        vm.reservations = this.getReservations();
+        $scope.mySelectedPickUps = [];
+        $scope.mySelectedDropOffs = [];
 
-        $scope.mySelectedItems = [];
+        var displayReservation = function (action) {
+            vm.selectedReservation.action = action;
 
-        $scope.displaySelected = function () {
-            $scope.$watchCollection("mySelectedItems", function (row) {
-                if ($scope.mySelectedItems.length > 0) {
-                    vm.selectedReservation = $scope.mySelectedItems[0];
-                    $log.info(vm.selectedReservation);
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: "app/clerk/clerkDashboardModal.html",
+                controller: "clerkDashboardModalController as vm",
+                size: "md",
+                resolve: {
+                    reservation: function () {
+                        return vm.selectedReservation;
+                    }
+                }
+            });
+
+            modalInstance.result.then(null, function (reason) {
+                if (reason === "home") {
+                    return authService.redirectTo("/");
                 }
             });
         };
 
-        vm.createReservation = function () {
-            $location.path(APPSETTINGS.ApplicationPaths.CreateReservation);
+        $scope.displayPickUp = function () {
+            $scope.$watchCollection("mySelectedPickUps", function (row) {
+                if ($scope.mySelectedPickUps.length > 0) {
+                    vm.selectedReservation = $scope.mySelectedPickUps[0];
+                    $log.info(vm.selectedReservation);
+                    displayReservation("pickup");
+                }
+            });
+        };
+
+        $scope.displayDropOff = function () {
+            $scope.$watchCollection("mySelectedDropOffs", function (row) {
+                if ($scope.mySelectedDropOffs.length > 0) {
+                    vm.selectedReservation = $scope.mySelectedDropOffs[0];
+                    $log.info(vm.selectedReservation);
+                    displayReservation("dropoff");
+                }
+            });
         };
     }
 }());

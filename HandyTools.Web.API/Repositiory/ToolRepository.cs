@@ -27,7 +27,7 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<Tool> GetTools(ToolType? toolType, DateTime? startDate, DateTime? endDate)
         {
-            var parameters = new Dictionary<string, object>()
+            var parameters = new Dictionary<object, object>()
             {
                 { nameof(startDate), startDate  },
                 { nameof(endDate), endDate  },

@@ -1,6 +1,7 @@
 ﻿using HandyTools.Database;
 using HandyTools.Models;
 using HandyTools.Web.API.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,12 +39,27 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<Reservation> GetReservations(string userName)
         {
-            var parameter = new Dictionary<string, object>()
+            var parameter = new Dictionary<object, object>()
             {
                 { "customerUserName", userName  },
             };
 
-            return this.Context.GetModels<Reservation>(parameter);
+            var reservations = this.Context.GetModels<Reservation>(parameter);
+
+            foreach (var r in reservations)
+            {
+                var toolIds = r.ToolIDs.Split(',');
+                var tools = new List<Tool>();
+
+                foreach (var id in toolIds)
+                {
+                    tools.Add(this.Context.GetModel<Tool>(nameof(id), Int32.Parse(id)));
+                }
+
+                r.ToolsItems = tools;
+            }
+
+            return reservations;
         }
 
         public Reservation UpdateReservation(Reservation model)

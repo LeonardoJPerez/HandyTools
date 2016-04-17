@@ -48,6 +48,10 @@ body {
     margin-top: 2em;
 }
 
+.row.top-buffer-sm {
+    margin-top: 1em;
+}
+
 .form-horizontal.create-profile .control-label {
     padding-top: 0;
 }
@@ -188,7 +192,8 @@ hr {
 }
 
 .summary-items {
-    height: 225px;
+    height: auto;
+    max-height: 225px;
     overflow-y: scroll;
 }
 
@@ -204,4 +209,8 @@ hr {
 
 .tr-ng-grid.disable-pagination-total .tr-ng-grid-footer ul.pagination li:last-child {
     display: none;
+}
+
+.paymentform > div{
+    margin: 0 5px;
 }

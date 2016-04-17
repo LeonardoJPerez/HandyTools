@@ -50,7 +50,7 @@ namespace HandyTools.Database
             return this.GetModels<TModel>(keyValue: null, useView: true, pluralize: true, whereClause: whereClause);
         }
 
-        public IEnumerable<TModel> GetModels<TModel>(Dictionary<string, object> keyValues) where TModel : BaseModel
+        public IEnumerable<TModel> GetModels<TModel>(Dictionary<object, object> keyValues) where TModel : BaseModel
         {
             return this.GetModels<TModel>(keyValue: keyValues, useView: false, pluralize: true, whereClause: string.Empty);
         }
@@ -64,7 +64,7 @@ namespace HandyTools.Database
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <param name="pluralize">if set to <c>true</c> [pluralize].</param>
         /// <returns></returns>
-        private IEnumerable<TModel> GetModels<TModel>(Dictionary<string, object> keyValue, bool useView = false, bool pluralize = false, string whereClause = "") where TModel : BaseModel
+        private IEnumerable<TModel> GetModels<TModel>(Dictionary<object, object> keyValue, bool useView = false, bool pluralize = false, string whereClause = "") where TModel : BaseModel
         {
             var entityName = $"{typeof(TModel).Name}";
             if (pluralize) { entityName = $"{entityName}s"; }
@@ -88,14 +88,14 @@ namespace HandyTools.Database
 
                     foreach (var kvp in keyValue)
                     {
-                        var prop = typeof(TModel).GetProperty(kvp.Key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        var prop = typeof(TModel).GetProperty(kvp.Key.ToString(), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                         if (prop != null)
                         {
                             parameters.Add(new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(prop.Name, kvp.Value)));
                         }
                         else
                         {
-                            parameters.Add(new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(kvp.Key, kvp.Value)));
+                            parameters.Add(new MySqlParameter(new MySql.Data.MySqlClient.MySqlParameter(kvp.Key.ToString(), kvp.Value)));
                         }
                     }
 
@@ -116,9 +116,9 @@ namespace HandyTools.Database
         /// <param name="value">The value.</param>
         /// <param name="useView">if set to <c>true</c> [use view].</param>
         /// <returns></returns>
-        public TModel GetModel<TModel>(string key, string value) where TModel : BaseModel
+        public TModel GetModel<TModel>(object key, object value) where TModel : BaseModel
         {
-            var param = new Dictionary<string, object>() { { key, value } };
+            var param = new Dictionary<object, object>() { { key.ToString(), value } };
             return this.GetModels<TModel>(param, useView: false, whereClause: "").FirstOrDefault();
         }
 

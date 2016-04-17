@@ -69,8 +69,9 @@
 
         $scope.displaySelected = function () {
             $scope.$watchCollection("mySelectedItems", function (row) {
-                if ($scope.mySelectedItems.length > 0) {
-                    vm.selectedTool = $scope.mySelectedItems[0];                
+                if ($scope.mySelectedItems.length > 0) {                   
+                    vm.selectedTool = $scope.mySelectedItems[0];
+                    console.log(vm.selectedTool);
                     displayToolInformation();
                 }
             });
