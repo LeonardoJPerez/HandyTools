@@ -26,7 +26,8 @@
         vm.toolTypeChange = function (toolType) {
             vm.tools = getTools(toolType);
         };
-
+        vm.searchText = "";
+        vm.filter = {};
         vm.selectedToolType = null;
         vm.startDate = startDate;
         vm.endDate = endDate;
@@ -43,5 +44,9 @@
 
         vm.toolTypes = getToolTypes();
         vm.tools = getTools();
+
+        $scope.$watch("vm.searchText", function (newValue) {
+            vm.filter = { id: newValue };
+        });
     }
 }());

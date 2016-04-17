@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HandyTools.Web.API.ViewModels
 {
-    public class LoginViewModel
+    public class LoginRequest
     {
         [Required]
         public string UserName { get; set; }

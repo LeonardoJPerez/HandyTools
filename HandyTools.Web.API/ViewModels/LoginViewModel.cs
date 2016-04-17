@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace HandyTools.Web.API.ViewModels
 {
-    public class LoginResponseViewModel
+    public class LoginViewModel
     {
         public string UserName { get; set; }
 

@@ -21,7 +21,7 @@
                     addressLine1: null,
                     addressLine2: null,
                     city: null,
-                    state: { code: '-1', name: 'Select a State' },
+                    state: { code: "-1", name: "Select a State" },
                     country: "USA",
                     postalCode: null
                 };
@@ -31,7 +31,7 @@
                     vm.profile = res;
                     vm.profile.homePhoneNumber = res.homePhoneAreaCode + res.homePhoneNumber;
                     vm.profile.workPhoneNumber = res.workPhoneAreaCode + res.workPhoneNumber;
-                    vm.profile.state = { code: res.state, name: 'Select a State' };
+                    vm.profile.state = { code: res.state, name: "Select a State" };
                 });
             }
         };
@@ -73,8 +73,7 @@
             // Validate profile
             if (isValid) {
                 if (vm.isNewCustomer) {
-                    handyApi.Profile.save(preparePayload(vm.profile), function (res) {
-                        console.log(res);
+                    handyApi.Profile.save(preparePayload(vm.profile), function (res) {                     
                         if (res.userName) {
                             vm.showPopup = false;
 
@@ -84,15 +83,14 @@
                             });
 
                             authService.redirectTo(USER_ROLES.Customer);
-                            $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess)
+                            $rootScope.$broadcast(APPSETTINGS.AUTH_EVENTS.LoginSuccess);
                         } else {
                             vm.showPopup = true;
                         }
                     });
                 } else {
-                    handyApi.Profile.update(preparePayload(vm.profile), function (res) {
-                        console.log(res);
-                        toaster.pop('success', "Account Updated!", "");
+                    handyApi.Profile.update(preparePayload(vm.profile), function (res) {                  
+                        toaster.pop("success", "Account Updated!", "");
                     });
                 }
             }

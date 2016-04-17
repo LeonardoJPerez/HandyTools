@@ -3,14 +3,21 @@
 
     angular
         .module("handytoolsApp")
-        .controller("reservationCreateController", ["$scope", "handy.api", "$location", "$anchorScroll", "$moment",
-            "$log", "$sce", "$uibModal", reservationCreateController]);
+        .controller("reservationCreateController", ["$scope", "handy.api", "$location", "$anchorScroll", "$moment", "$log", "$sce", "$uibModal", reservationCreateController]);
 
-    function reservationCreateController($scope, handyApi, $location, $anchorScroll, $moment, $log, $sce, $uibModal, $uibModalInstance) {
+    function reservationCreateController($scope, handyApi, $location, $anchorScroll, $moment, $log, $sce, $uibModal) {
         var vm = this;
         var startDate = new Date();
         var endDate = new Date();
         endDate.setDate(startDate.getDate() + 10);
+
+        var getTools = function (toolType) {
+            return handyApi.Tools.getToolsByType.post(null, {
+                tooltype: toolType,
+                startDate: vm.reservation.startDate,
+                endDate: vm.reservation.endDate
+            });
+        };
 
         var getToolTypes = function () {
             return handyApi.Tools.getToolTypes.query().$promise.then(function (data) {
@@ -22,11 +29,24 @@
                 });
             });
         };
-        var getTools = function (toolType) {
-            return handyApi.Tools.getToolsByType.post(null, {
-                tooltype: toolType,
-                startDate: vm.reservation.startDate,
-                endDate: vm.reservation.endDate
+
+        var displayResult = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: "app/reservation/reservationSUbmitSummary.html",
+                controller: "reservationSummaryController as vm",
+                size: "md",
+                resolve: {
+                    reservation: function () {
+                        return vm.reservation;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $log.info("Reservation Accecpted at: " + new Date());
+            }, function () {
+                $log.info("Reservation dismissed at: " + new Date());
             });
         };
 
@@ -75,10 +95,14 @@
             });
         };
 
+        vm.currentUser = $scope.getCurrentUser();
         vm.reservation = {
             startDate: startDate,
             endDate: endDate,
-            tools: []
+            tools: [],
+            dailyTotal: 0.00,
+            depositTotal: 0.00,
+            customerUserName: vm.currentUser.userName
         };
         vm.toolRows = [
         {
@@ -89,17 +113,19 @@
 
         getToolTypes();
 
-        var getTotal = function () {
-            var total = 0;
+        var calculateCharges = function () {
+            var dailyTotal = 0, depositTotal = 0;
             angular.forEach(vm.toolRows, function (row) {
                 if (row.selectedTool) {
-                    total += row.selectedTool.dailyRentalCharge;
+                    dailyTotal += row.selectedTool.dailyRentalCharge;
+                    depositTotal += row.selectedTool.deposit;
                 }
             });
 
-            return parseFloat(total).toFixed(2);
-        }
-        vm.reservationTotal = getTotal();
+            vm.reservation.dailyTotal = parseFloat(dailyTotal).toFixed(2);
+            vm.reservation.depositTotal = parseFloat(depositTotal).toFixed(2);
+        };
+        calculateCharges();
 
         vm.addRow = function () {
             if (vm.toolRows.length < 50) {
@@ -125,7 +151,6 @@
                 vm.reservation.tools.splice(index, 1);
             }
 
-            vm.reservationTotal = getTotal();
             // Enable Add tool button if disable.
         };
 
@@ -140,11 +165,17 @@
                 animation: true,
                 templateUrl: "app/reservation/reservationSummary.html",
                 controller: "reservationSummaryController as vm",
-                size: "md"
+                size: "md",
+                resolve: {
+                    reservation: function () {
+                        return vm.reservation;
+                    }
+                }
             });
 
-            modalInstance.result.then(function (selectedItem) {
+            modalInstance.result.then(function (reservation) {
                 $log.info("Reservation Accecpted at: " + new Date());
+                displayResult();
             }, function () {
                 $log.info("Reservation dismissed at: " + new Date());
             });
@@ -177,8 +208,6 @@
             } else {
                 vm.reservation.tools.splice(index, 1);
             }
-
-            vm.reservationTotal = getTotal();
         };
 
         // DatePicker Settings
@@ -208,8 +237,10 @@
         };
 
         $scope.$watchCollection("vm.reservation.tools", function (newValue, oldValue) {
-            console.log("Watching: ", newValue);
             syncAvailableTools();
+            calculateCharges();
+
+            console.log("Reservation Updated: ", vm.reservation);
         });
     }
 }());

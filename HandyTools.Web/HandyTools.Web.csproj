@@ -88,6 +88,7 @@
   <ItemGroup>
     <Content Include="app\login\loginDialogDirective.js" />
     <Content Include="app\profile\fieldMatchDirective.js" />
+    <Content Include="app\reservation\reservationSubmitSummary.html" />
     <Content Include="app\reservation\reservationSummaryController.js" />
     <Content Include="app\reservation\reservationsController.js" />
     <Content Include="app\reservation\reservationSummary.html" />

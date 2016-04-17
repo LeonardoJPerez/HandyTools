@@ -21,6 +21,15 @@ namespace HandyTools.Web.API.Controllers
             this._repository = repository;
         }
 
+        // GET api/reservation/{id}
+        [HttpGet]
+        [Route("{id}")]
+        public IHttpActionResult Get(int id)
+        {
+            if (id <= 0) { return BadRequest(); }
+            return Ok(this._repository.GetReservation(id));
+        }
+
         // GET api/reservation/{username}
         /// <summary>
         /// Gets the list of Reservations by Customer's Username.
@@ -57,32 +66,48 @@ namespace HandyTools.Web.API.Controllers
             return Ok(reservationsViewModels);
         }
 
-        // GET api/reservation/{id}
-        [HttpGet]
-        [Route("{id}")]
-        public IHttpActionResult Get(int id)
-        {
-            if (id <= 0) { return BadRequest(); }
-            return Ok(this._repository.GetReservation(id));
-        }
-
-        [HttpPut]
-        // PUT api/reservation
-        public IHttpActionResult Put(int id, [FromBody] Reservation reservation)
+        [HttpPost]
+        // POST api/reservation
+        public IHttpActionResult Post([FromBody] ReservationCreateRequest request)
         {
             if (!ModelState.IsValid) { return BadRequest(); }
 
-            if (string.IsNullOrEmpty(""))
+            if (request.StartDate > request.EndDate || request.EndDate < request.StartDate)
             {
-                return BadRequest("Missing Username value");
+                return BadRequest("Date Range invalid.");
             }
 
-            // Add Date Checks
-            // Add Tools limit checks
-            // Add customer username check
-            // Add Credit card information check.
+            if (request.Tools.Count() > 50)
+            {
+                return BadRequest("Maximum amount of Tools (50+) reached.");
+            }
 
-            return Ok(this._repository.CreateReservation(reservation));
+            if (!request.Tools.Any())
+            {
+                return BadRequest("Tools collection empty.");
+            }
+
+            if (request.StartDate > request.EndDate || request.EndDate < request.StartDate)
+            {
+                return BadRequest("Missing Username value.");
+            }
+
+            if (request.StartDate > request.EndDate || request.EndDate < request.StartDate)
+            {
+                return BadRequest("Missing Username value.");
+            }
+
+            // Add customer username check
+            var reservation = new Reservation
+            {
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
+                Deposit = request.DepositTotal,
+                RentalPrice = request.DailyTotal,
+                CustomerUserName = request.CustomerUserName,
+            };
+
+            return Ok(this._repository.CreateReservation(reservation, request.Tools));
         }
     }
 }

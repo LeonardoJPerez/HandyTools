@@ -5,7 +5,7 @@ namespace HandyTools.Web.API.Interfaces
 {
     public interface IReservationRepository
     {
-        Reservation CreateReservation(Reservation model);
+        Reservation CreateReservation(Reservation model, IEnumerable<Tool> tools);
 
         IEnumerable<Reservation> GetReservations(string userName);
 

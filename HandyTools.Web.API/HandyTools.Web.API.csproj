@@ -195,12 +195,14 @@
     <Compile Include="Interfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Repositiory\ReportsRepository.cs" />
+    <Compile Include="ViewModels\ReservationCreateRequest.cs" />
+    <Compile Include="ViewModels\ReservationCreateModel.cs" />
     <Compile Include="ViewModels\ToolServiceRequest.cs" />
     <Compile Include="ViewModels\ToolSaleRequest.cs" />
     <Compile Include="ViewModels\ToolRequest.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="ViewModels\LoginRequest.cs" />
-    <Compile Include="ViewModels\LoginResponse.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositiory\BaseRepository.cs" />
     <Compile Include="Repositiory\ReservationRepository.cs" />

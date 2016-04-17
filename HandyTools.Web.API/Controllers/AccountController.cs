@@ -59,7 +59,7 @@ namespace HandyTools.Web.API.Controllers
         // POST: api/account/login
         [HttpPost]
         [Route("login")]
-        public IHttpActionResult Login(LoginViewModel loginViewModel)
+        public IHttpActionResult Login(LoginRequest loginViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace HandyTools.Web.API.Controllers
                 {
                     case UserRole.Customer:
                         var code = this._repository.AuthenticateUser<Customer>(loginViewModel.UserName, loginViewModel.Password);
-                        return Ok(new LoginResponseViewModel
+                        return Ok(new LoginViewModel
                         {
                             UserName = loginViewModel.UserName,
                             Code = code,
@@ -75,7 +75,7 @@ namespace HandyTools.Web.API.Controllers
                         });
 
                     case UserRole.Clerk:
-                        return Ok(new LoginResponseViewModel
+                        return Ok(new LoginViewModel
                         {
                             UserName = loginViewModel.UserName,
                             Code = this._repository.AuthenticateUser<Clerk>(loginViewModel.UserName, loginViewModel.Password, false),

@@ -2,6 +2,7 @@
 using HandyTools.Models;
 using HandyTools.Web.API.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HandyTools.Web.API.Repositiory
 {
@@ -9,6 +10,25 @@ namespace HandyTools.Web.API.Repositiory
     {
         public ReservationRepository(IDbContext context) : base(context)
         {
+        }
+
+        /// <summary>
+        /// Creates a new Reservation.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        public Reservation CreateReservation(Reservation model, IEnumerable<Tool> tools)
+        {
+            var parameters = new Dictionary<object, object>
+            {
+                { "startDate", model.StartDate  },
+                { "endDate", model.EndDate},
+                { "username", model.CustomerUserName},
+                { "toolIds", string.Join(",", tools.Select(t => t.ID))}
+            };
+
+            var newModel = this.Context.Execute<Reservation, object>("InsertReservation", parameters).FirstOrDefault();
+            return newModel ?? new Reservation();
         }
 
         public Reservation GetReservation(int reservationId)
@@ -24,17 +44,6 @@ namespace HandyTools.Web.API.Repositiory
             };
 
             return this.Context.GetModels<Reservation>(parameter);
-        }
-
-        /// <summary>
-        /// Creates a new Reservation.
-        /// </summary>
-        /// <param name="model">The model.</param>
-        /// <returns></returns>
-        public Reservation CreateReservation(Reservation model)
-        {
-            var newModel = this.Context.AddModel(model);
-            return newModel ?? new Reservation();
         }
 
         public Reservation UpdateReservation(Reservation model)

@@ -17,7 +17,8 @@
                     })
                 },
                 Reservations: {
-                    getByUser: $resource(APPSETTINGS.ApiServerUrl + "api/reservation/getbyuser/:id")
+                    getByUser: $resource(APPSETTINGS.ApiServerUrl + "api/reservation/getbyuser/:id"),
+                    resource: $resource(APPSETTINGS.ApiServerUrl + "api/reservation/")
                 }
             };
         }]);

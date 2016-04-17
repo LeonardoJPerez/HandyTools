@@ -182,3 +182,26 @@ hr {
     margin-right: -20px;
     margin-left: -25px;
 }
+
+.summary-date {
+    white-space: nowrap;
+}
+
+.summary-items {
+    height: 250px;
+    overflow-y: scroll;
+}
+
+.inline-headers h4, .inline-headers h5 {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+.tr-ng-grid.disable-pagination tfoot.ng-scope,
+.tr-ng-grid.disable-pagination .tr-ng-grid-footer ul.pagination li:last-child {
+    display: none;
+}
+
+.tr-ng-grid.disable-pagination-total .tr-ng-grid-footer ul.pagination li:last-child {
+    display: none;
+}
