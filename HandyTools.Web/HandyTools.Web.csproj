@@ -86,15 +86,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\clerk\clerkToolController.js" />
     <Content Include="app\clerk\clerkDashboardController.js" />
+    <Content Include="app\clerk\clerkToolView.html" />
     <Content Include="app\clerk\clerkDashboardView.html" />
     <Content Include="app\clerk\clerkDashboardModal.html" />
     <Content Include="app\clerk\clerkDashboardModalController.js" />
+    <Content Include="app\clerk\tools\toolMarkForServiceController.js" />
+    <Content Include="app\clerk\tools\toolMarkForSaleController.js" />
+    <Content Include="app\contract\customerContractModal.html" />
+    <Content Include="app\contract\customerContractModalController.js" />
     <Content Include="app\tools\toolDetailsModalController.js" />
     <Content Include="app\tools\toolDetailsModal.html" />
-    <Content Include="app\tools\toolAddNewView.html" />
-    <Content Include="app\tools\toolMarkForService.html" />
-    <Content Include="app\tools\toolMarkForSaleView.html" />
+    <Content Include="app\clerk\tools\toolAddNewView.html" />
+    <Content Include="app\clerk\tools\toolMarkForServiceView.html" />
+    <Content Include="app\clerk\tools\toolMarkForSaleView.html" />
     <Content Include="app\login\loginDialogDirective.js" />
     <Content Include="app\profile\fieldMatchDirective.js" />
     <Content Include="app\reservation\reservationSubmittedModal.html" />

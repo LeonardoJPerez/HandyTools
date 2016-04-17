@@ -39,6 +39,7 @@ namespace HandyTools.Web.API.Controllers
             {
                 ID = r.ID,
                 CustomerUserName = r.CustomerUserName,
+                CustomerName = r.CustomerName,
                 DateCreated = r.ToUnixTime(r.DateCreated),
                 StartDate = r.ToUnixTime(r.StartDate),
                 EndDate = r.ToUnixTime(r.EndDate),
@@ -48,8 +49,8 @@ namespace HandyTools.Web.API.Controllers
                 DropOffClerk = r.DropOffClerk,
                 PickUpDate = r.ToUnixTime(r.PickUpDate),
                 PickUpClerk = r.PickUpClerk,
-                Tools = r.Tools, 
-                ToolItems = r.ToolsItems
+                Tools = r.Tools,
+                ToolItems = r.ToolItems
             });
 
             return Ok(reservationsViewModels);
@@ -76,6 +77,7 @@ namespace HandyTools.Web.API.Controllers
             {
                 ID = r.ID,
                 CustomerUserName = r.CustomerUserName,
+                CustomerName = r.CustomerName,
                 DateCreated = r.ToUnixTime(r.DateCreated),
                 StartDate = r.ToUnixTime(r.StartDate),
                 EndDate = r.ToUnixTime(r.EndDate),
@@ -91,8 +93,8 @@ namespace HandyTools.Web.API.Controllers
             return Ok(reservationsViewModels);
         }
 
-        [HttpPost]
         // POST api/reservation
+        [HttpPost]
         public IHttpActionResult Post([FromBody] ReservationCreateRequest request)
         {
             if (!ModelState.IsValid) { return BadRequest(); }
@@ -133,6 +135,66 @@ namespace HandyTools.Web.API.Controllers
             };
 
             return Ok(this._repository.CreateReservation(reservation, request.Tools));
+        }
+
+        // POST api/reservation/pickup/
+        [HttpPost]
+        [Route("pickup")]
+        public IHttpActionResult PickUp([FromBody] ReservationPickUpRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }
+
+            if (string.IsNullOrEmpty(request.PickupHandledby))
+            {
+                return BadRequest("Clerk Informatin missing.");
+            }
+
+            if (request.ID == 0)
+            {
+                return BadRequest("Reservation ID missing.");
+            }
+
+            // Add customer username check
+            var reservation = new Reservation
+            {
+                PickUpClerk = request.PickupHandledby,
+                PickUpDate = request.PickuUpDate,
+                ID = request.ID,
+                CCNameOnCard = request.CCNameOnCard,
+                CCNumber = request.CCNumber,
+                CCExpirationDate = request.CCExpirationDate,
+                CCTYype = request.CCType
+            };
+
+            return Ok(this._repository.UpdateReservationPickUp(reservation));
+        }
+
+        // POST api/reservation/dropoff/
+        [HttpPost]
+        [Route("dropoff")]
+        public IHttpActionResult DropOff([FromBody] ReservationDropOffRequest request)
+        {
+            if (!ModelState.IsValid) { return BadRequest(); }
+
+            if (string.IsNullOrEmpty(request.DropOffHandledBy))
+            {
+                return BadRequest("Clerk Informatin missing.");
+            }
+
+            if (request.ID == 0)
+            {
+                return BadRequest("Reservation ID missing.");
+            }
+
+            // Add customer username check
+            var reservation = new Reservation
+            {
+                DropOffClerk = request.DropOffHandledBy,
+                DropOffDate = request.DropOffDate,
+                ID = request.ID,
+            };
+
+            return Ok(this._repository.UpdateReservationDropOff(reservation));
         }
     }
 }

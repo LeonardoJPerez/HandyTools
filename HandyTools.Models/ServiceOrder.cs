@@ -4,7 +4,7 @@ namespace HandyTools.Models
 {
     public class ServiceOrder : BaseModel, IIdentifier
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         public DateTime DateCreated { get; set; }
 

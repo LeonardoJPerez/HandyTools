@@ -2,6 +2,6 @@
 {
     public interface IIdentifier
     {
-        string ID { get; set; }
+        int ID { get; set; }
     }
 }

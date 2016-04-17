@@ -11,6 +11,8 @@ namespace HandyTools.Web.API.Interfaces
 
         Reservation GetReservation(int reservationId);
 
-        Reservation UpdateReservation(Reservation model);
+        Reservation UpdateReservationPickUp(Reservation model);
+
+        Reservation UpdateReservationDropOff(Reservation model);
     }
 }

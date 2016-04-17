@@ -45,7 +45,47 @@ namespace HandyTools.Web.API.Repositiory
             };
 
             var reservations = this.Context.GetModels<Reservation>(parameter);
+            InitToolItems(reservations);
 
+            return reservations;
+        }
+
+        public Reservation UpdateReservationPickUp(Reservation model)
+        {
+            var parameter = new Dictionary<object, object>()
+            {
+                {"id", model.ID},
+                {"pickupdate", model.PickUpDate},
+                {"pickuphandledby", model.PickUpClerk},
+                {"ccnameoncard", model.CCNameOnCard},
+                {"ccexpirationdate", model.CCExpirationDate},
+                {"ccnumber", model.CCNumber},
+                {"cctype", model.CCTYype}
+            };
+
+            var reservations = this.Context.Execute<Reservation, object>("SetPickUpInformation", parameter);
+            InitToolItems(reservations);
+
+            return reservations.FirstOrDefault();
+        }
+
+        public Reservation UpdateReservationDropOff(Reservation model)
+        {
+            var parameter = new Dictionary<object, object>()
+            {
+                { "id", model.ID  },
+                { "dropoffdate", model.DropOffDate},
+                { "dropoffhandledby", model.DropOffClerk  }
+            };
+
+            var reservations = this.Context.Execute<Reservation, object>("SetDropOffInformation", parameter);
+            InitToolItems(reservations);
+
+            return reservations.FirstOrDefault();
+        }
+
+        private void InitToolItems(IEnumerable<Reservation> reservations)
+        {
             foreach (var r in reservations)
             {
                 var toolIds = r.ToolIDs.Split(',');
@@ -56,15 +96,8 @@ namespace HandyTools.Web.API.Repositiory
                     tools.Add(this.Context.GetModel<Tool>(nameof(id), Int32.Parse(id)));
                 }
 
-                r.ToolsItems = tools;
+                r.ToolItems = tools;
             }
-
-            return reservations;
-        }
-
-        public Reservation UpdateReservation(Reservation model)
-        {
-            return this.Context.SetModel(model);
         }
     }
 }

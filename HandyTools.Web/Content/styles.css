@@ -211,6 +211,6 @@ hr {
     display: none;
 }
 
-.paymentform > div{
-    margin: 0 5px;
+.paymentform .payment-fields div{
+    
 }

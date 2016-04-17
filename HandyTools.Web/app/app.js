@@ -53,8 +53,8 @@
                     }
                 })
                  .when("/clerk/tools-management", {
-                     controller: "clerkDashboardController as vm",
-                     templateUrl: "app/clerk/clerkDashboardView.html",
+                     controller: "clerkToolController as vm",
+                     templateUrl: "app/clerk/clerkToolView.html",
                      data: {
                          authorizedRoles: [USER_ROLES.Clerk]
                      }

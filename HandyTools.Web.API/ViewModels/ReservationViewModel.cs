@@ -5,7 +5,7 @@ namespace HandyTools.Web.API.ViewModels
 {
     public class ReservationViewModel
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         public long DateCreated { get; set; }
 
@@ -14,6 +14,8 @@ namespace HandyTools.Web.API.ViewModels
         public long EndDate { get; set; }
 
         public string CustomerUserName { get; set; }
+
+        public string CustomerName { get; set; }
 
         public long PickUpDate { get; set; }
 

@@ -10,7 +10,7 @@ namespace HandyTools.Models
 
         public string Description { get; set; }
 
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         public DateTime LastServiced { get; set; }
 

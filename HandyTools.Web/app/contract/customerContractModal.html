@@ -1,0 +1,92 @@
+﻿<div class="modal-content">
+    <div class="modal-header">        
+        <div class="row row-centered">
+            <div class="center-block">
+                <h3 class="modal-title">HandyMan Tools Rental Contract</h3>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="row row-centered">
+            <div class="col-md-6 inline-headers">
+                <h5>Reservation Number:</h5>&nbsp;
+                <h4>{{vm.reservation.id}}</h4>
+            </div>
+      
+            <div class="col-md-6 inline-headers">
+                <h5>Clerk On Duty:</h5>&nbsp;
+                <h4>{{vm.clerk}}</h4>
+            </div>
+        </div>
+        <div class="row row-centered">
+            <div class="col-md-6 inline-headers">
+                <h5>Customer Name:</h5>&nbsp;
+                <h4>{{vm.reservation.customerName}}</h4>
+            </div>         
+            <div class="col-md-6 inline-headers">
+                <h5>Credit Card #:</h5>&nbsp;
+                <h4>{{vm.reservation.ccNumber}}</h4>
+            </div>
+        </div>
+        <div class="row row-centered">
+            <div class="col-md-6 inline-headers">
+                <h5>Start Date:</h5>&nbsp;
+                <h4>{{vm.reservation.startDate | date: 'medium'}}</h4>
+            </div>
+       
+            <div class="col-md-6 inline-headers">
+                <h5>End Date:</h5>&nbsp;
+                <h4>{{vm.reservation.endDate | date: 'medium'}}</h4>
+            </div>
+        </div>
+
+        <div class="row row-centered top-buffer" ng-show="vm.showToolsSection">
+            <div class="center-block">
+                <h5>Tools</h5>
+                <hr />
+            </div>
+        </div>
+        <div class="row top-buffer-sm" ng-show="vm.showToolsSection">
+            <div class="col-md-12 summary-items center-block">
+                <table tr-ng-grid="" class="table table-striped table-hover table-responsive disable-pagination" selected-items="mySelectedItems" items="vm.reservation.toolItems"
+                       enable-filtering="false" enable-sorting="false" cell-width="10em" selection-mode="None">
+                    <thead>
+                        <tr>
+                            <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
+                            <th field-name="description" display-name="Name" display-align="center"></th>
+                            <th field-name="dailyRentalCharge" display-name="Daily Rental Charge" display-format="displayCurrency:gridItem" display-align="center" cell-width="12em"></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <hr/>
+            <div class="row row-centered top-buffer-sm">
+                <div class="col-md-12 inline-headers">
+                    <h5>Total Estimated Rental:</h5>&nbsp;<h4>{{vm.reservation.rentalPrice | currency}}</h4>
+                </div>
+            </div>
+            <div class="row row-centered inline-headers">
+                <div class="col-md-12">
+                    <h5>Total Deposit Held:</h5>&nbsp;<h4>{{vm.reservation.deposit | currency}}</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row row-centered top-buffer-sm" ng-show="vm.showToolsSection">
+            <div class="col-md-12 inline-headers">
+                <h5>Signature:</h5>&nbsp;
+                <h4>_________________________________________________</h4>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="row row-centered inline-headers">
+            <div class="col-md-12">
+                <div class="center-block">                  
+                    <button type="submit" class="btn btn-primary" ng-click="vm.backHome()">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

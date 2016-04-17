@@ -47,7 +47,7 @@
 
                     <!-- Content View -->
                     <div ng-view ng-animate></div>
-                    <toaster-container toaster-options="{'time-out': 2000, 'position-class': 'toast-bottom-right'}"></toaster-container>
+                    <toaster-container toaster-options="{'time-out': 3500, 'position-class': 'toast-bottom-right', 'body-output-type': 'trustedHtml'}"></toaster-container>
                 </div>
 
                 <!-- Footer Content -->
@@ -109,7 +109,10 @@
     <script src="app/tools/toolDetailsModalController.js"></script>
     <script src="app/clerk/clerkDashboardController.js"></script>
     <script src="app/clerk/clerkDashboardModalController.js"></script>
-
+    <script src="app/contract/customerContractModalController.js"></script>
+    <script src="app/clerk/clerkToolController.js"></script>
+    <script src="app/clerk/tools/toolMarkForSaleController.js"></script>
+    <script src="app/clerk/tools/toolMarkForServiceController.js"></script>
     <!-- Directives Scripts -->
     <script src="app/login/loginDialogDirective.js"></script>
     <script src="app/profile/fieldMatchDirective.js"></script>

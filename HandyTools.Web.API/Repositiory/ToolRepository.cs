@@ -31,10 +31,20 @@ namespace HandyTools.Web.API.Repositiory
             {
                 { nameof(startDate), startDate  },
                 { nameof(endDate), endDate  },
-                { nameof(toolType), toolType.ToString()  },
+                { nameof(toolType), toolType.ToString()  }
             };
 
             return this.Context.GetModels<Tool>(parameters);
+        }
+
+        public IEnumerable<Tool> GetToolsForClerk(ToolType? toolType)
+        {
+            var parameters = new Dictionary<object, object>()
+            {
+                { nameof(toolType), toolType.ToString()  }
+            };
+
+            return this.Context.Execute<Tool, object>("GetToolsClerk", parameters);
         }
 
         public Tool UpdateTool(Tool model)
@@ -47,7 +57,7 @@ namespace HandyTools.Web.API.Repositiory
             return Enum.GetNames(typeof(ToolType)).ToList();
         }
 
-        public IEnumerable<Tool> MarkForSale(int toolId, string clerk, decimal salePrice)
+        public Tool MarkForSale(int toolId, string clerk, decimal salePrice)
         {
             var parameters = new Dictionary<object, object>
             {
@@ -56,10 +66,10 @@ namespace HandyTools.Web.API.Repositiory
                 { nameof(salePrice), salePrice },
             };
 
-            return this.Context.Execute<Tool, object>("MarkForSale", parameters);
+            return this.Context.Execute<Tool, object>("MarkForSale", parameters).FirstOrDefault();
         }
 
-        public IEnumerable<Tool> MarkForService(int toolId)
+        public Tool MarkForService(int toolId)
         {
             throw new NotImplementedException();
         }

@@ -5,7 +5,7 @@ namespace HandyTools.Models
 {
     public class Reservation : BaseModel, IIdentifier
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
 
         public DateTime DateCreated { get; set; }
 
@@ -14,6 +14,8 @@ namespace HandyTools.Models
         public DateTime EndDate { get; set; }
 
         public string CustomerUserName { get; set; }
+
+        public string CustomerName { get; set; }
 
         public DateTime? PickUpDate { get; set; }
 
@@ -35,7 +37,7 @@ namespace HandyTools.Models
 
         public string ToolIDs { get; set; }
 
-        public IEnumerable<Tool> ToolsItems { get; set; }
+        public IEnumerable<Tool> ToolItems { get; set; }
 
         public double? Deposit { get; set; }
 

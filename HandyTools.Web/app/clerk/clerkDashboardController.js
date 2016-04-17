@@ -22,9 +22,9 @@
                 return fieldValue ? fieldValue : "Pending";
             };
         })
-        .controller("clerkDashboardController", ["$scope", "handy.api", "$log", "$uibModal", clerkDashboardController]);
+        .controller("clerkDashboardController", ["$scope", "handy.api", "$route", "$log", "$uibModal", clerkDashboardController]);
 
-    function clerkDashboardController($scope, handyApi, $log, $uibModal) {
+    function clerkDashboardController($scope, handyApi, $route, $log, $uibModal) {
         var vm = this;
 
         vm.selectedReservation = {};
@@ -63,9 +63,31 @@
                 }
             });
 
+            modalInstance.result.then(function (res) {
+                displayContract(res);
+            }, function (reason) {
+                if (reason === "home") {
+                    $route.reload();
+                }
+            });
+        };
+
+        var displayContract = function (reservation) { 
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: "app/contract/customerContractModal.html",
+                controller: "customerContractModalController as vm",
+                size: "lg",
+                resolve: {
+                    reservation: function () {
+                        return reservation;
+                    }
+                }
+            });
+
             modalInstance.result.then(null, function (reason) {
                 if (reason === "home") {
-                    return authService.redirectTo("/");
+                    $route.reload();
                 }
             });
         };
@@ -73,8 +95,7 @@
         $scope.displayPickUp = function () {
             $scope.$watchCollection("mySelectedPickUps", function (row) {
                 if ($scope.mySelectedPickUps.length > 0) {
-                    vm.selectedReservation = $scope.mySelectedPickUps[0];
-                    $log.info(vm.selectedReservation);
+                    vm.selectedReservation = $scope.mySelectedPickUps[0];                  
                     displayReservation("pickup");
                 }
             });
@@ -83,8 +104,7 @@
         $scope.displayDropOff = function () {
             $scope.$watchCollection("mySelectedDropOffs", function (row) {
                 if ($scope.mySelectedDropOffs.length > 0) {
-                    vm.selectedReservation = $scope.mySelectedDropOffs[0];
-                    $log.info(vm.selectedReservation);
+                    vm.selectedReservation = $scope.mySelectedDropOffs[0];                     
                     displayReservation("dropoff");
                 }
             });
