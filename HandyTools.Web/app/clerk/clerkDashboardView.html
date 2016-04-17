@@ -1,0 +1,84 @@
+﻿<div class="container">
+    <div class="row row-centered top-buffer">
+        <div class="center-block">
+            <h2>Pick Ups</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="pull-left">
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.createReservation()">
+                <i class="glyphicon glyphicon-plus"></i>
+                <i class="glyphicon glyphicon-none"></i> Make a Reservation
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.refresh()">
+                <i class="glyphicon glyphicon-refresh"></i>
+                <i class="glyphicon glyphicon-none"></i> Refresh
+            </button>
+        </div>
+    </div>
+    <div class="row top-buffer" ng-init="displaySelected()">
+        <table tr-ng-grid="" class="table table-striped table-hover reservation-grid" selected-items="mySelectedItems" items="vm.reservations" enable-filtering="false"
+               cell-width="10em" selection-mode="SingleRow" page-items="10">
+            <thead>
+            <tr>
+                <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
+                <th field-name="dateCreated" display-name="Created" display-format="displayAsShortDate:gridItem" display-align="center"></th>
+                <th field-name="startDate" display-name="Start" display-format="displayAsShortDate:gridItem" display-align="center"></th>
+                <th field-name="endDate" display-name="End" display-format="displayAsShortDate:gridItem" display-align="center">></th>
+                <th field-name="tools" display-name="Tools"></th>
+                <th field-name="deposit" display-name="Deposit" display-align="center" cell-width="9em" display-format="displayCurrency:gridItem"></th>
+                <th field-name="rentalPrice" display-name="Rental Total" display-align="center" cell-width="9em" display-format="displayCurrency:gridItem"></th>
+                <th field-name="pickUpClerk" display-name="PickUp Clerk" cell-width="8em" display-align="center" display-format="displayClerk:gridItem"></th>
+                <th field-name="dropOffClerk" display-name="DropOff Clerk" cell-width="8em" display-align="center" display-format="displayClerk:gridItem"></th>
+            </tr>
+            </thead>
+            <!--<tbody>
+            <tr ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"></tr>
+            </tbody>-->
+        </table>
+    </div>
+    <div class="row row-centered top-buffer">
+        <div class="center-block">
+            <h2>Drop Offs</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row top-buffer">
+        <div class="pull-left">
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.createReservation()">
+                <i class="glyphicon glyphicon-plus"></i>
+                <i class="glyphicon glyphicon-none"></i> Make a Reservation
+            </button>
+        </div>
+        <div>
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.refresh()">
+                <i class="glyphicon glyphicon-refresh"></i>
+                <i class="glyphicon glyphicon-none"></i> Refresh
+            </button>
+        </div>
+    </div>
+    <div class="row top-buffer" ng-init="displaySelected()">
+        <table tr-ng-grid="" class="table table-striped table-hover reservation-grid" selected-items="mySelectedItems" items="vm.reservations" enable-filtering="false"
+               cell-width="10em" selection-mode="SingleRow" page-items="10">
+            <thead>
+                <tr>
+                    <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
+                    <th field-name="dateCreated" display-name="Created" display-format="displayAsShortDate:gridItem" display-align="center"></th>
+                    <th field-name="startDate" display-name="Start" display-format="displayAsShortDate:gridItem" display-align="center"></th>
+                    <th field-name="endDate" display-name="End" display-format="displayAsShortDate:gridItem" display-align="center">></th>
+                    <th field-name="tools" display-name="Tools"></th>
+                    <th field-name="deposit" display-name="Deposit" display-align="center" cell-width="9em" display-format="displayCurrency:gridItem"></th>
+                    <th field-name="rentalPrice" display-name="Rental Total" display-align="center" cell-width="9em" display-format="displayCurrency:gridItem"></th>
+                    <th field-name="pickUpClerk" display-name="PickUp Clerk" cell-width="8em" display-align="center" display-format="displayClerk:gridItem"></th>
+                    <th field-name="dropOffClerk" display-name="DropOff Clerk" cell-width="8em" display-align="center" display-format="displayClerk:gridItem"></th>
+                </tr>
+            </thead>
+            <!--<tbody>
+            <tr ng-class="{success: hover}" ng-mouseenter="hover = true" ng-mouseleave="hover = false"></tr>
+            </tbody>-->
+        </table>
+    </div>
+</div>

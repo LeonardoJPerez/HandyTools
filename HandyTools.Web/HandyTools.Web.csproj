@@ -86,6 +86,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\clerk\clerkDashboardController.js" />
+    <Content Include="app\clerk\clerkDashboardView.html" />
+    <Content Include="app\tools\toolAddNewView.html" />
+    <Content Include="app\tools\toolMarkForService.html" />
+    <Content Include="app\tools\toolMarkForSaleView.html" />
     <Content Include="app\login\loginDialogDirective.js" />
     <Content Include="app\profile\fieldMatchDirective.js" />
     <Content Include="app\reservation\reservationSubmitSummary.html" />
@@ -1792,6 +1797,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

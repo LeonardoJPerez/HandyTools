@@ -22,9 +22,8 @@
             }, function (res) {
                 console.log("Error: ", res);
                 toaster.pop("error", "Reservation fialed! Please review Reservation.", "");
+                $scope.$dismiss("cancel");
             });
-
-          
         };
 
         vm.cancel = function () {

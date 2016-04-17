@@ -2,8 +2,10 @@
     "use strict";
 
     var app = angular
-        .module("handytoolsApp", ["ngRoute", "ngAnimate", "ui.bootstrap", "ui.mask", "ngCookies", "trNgGrid", "angular-uuid", "ngSanitize",
-            "angular-loading-bar", "ui.bootstrap.datetimepicker", "toaster", "ui.event", "angular-momentjs", "handy.services", "APPSETTINGS"])
+        .module("handytoolsApp", [
+            "ngRoute", "ngAnimate", "ui.bootstrap", "ui.mask", "ngCookies", "trNgGrid", "angular-uuid", "ngSanitize",
+            "angular-loading-bar", "ui.bootstrap.datetimepicker", "toaster", "ui.event", "angular-momentjs", "handy.services", "APPSETTINGS"
+        ])
         .config(function ($routeProvider, cfpLoadingBarProvider, USER_ROLES) {
             cfpLoadingBarProvider.includeSpinner = false;
 
@@ -36,35 +38,27 @@
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer]
                     }
                 })
-                .when("/pickups", {
-                    controller: "reservationController as vm",
-                    templateUrl: "app/reservation/reservationsView.html",
+                .when("/clerk/dashboard", {
+                    controller: "clerkDashboardController as vm",
+                    templateUrl: "app/clerk/clerkDashboardView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk]
                     }
                 })
-                 .when("/profile", {
-                     controller: "profileController as vm",
-                     templateUrl: "app/profile/profileFormView.html",
-                     data: {
-                         authorizedRoles: [USER_ROLES.Customer]
-                     }
-                 })
+                .when("/profile", {
+                    controller: "profileController as vm",
+                    templateUrl: "app/profile/profileFormView.html",
+                    data: {
+                        authorizedRoles: [USER_ROLES.Customer]
+                    }
+                })
                 .otherwise({
                     redirectTo: "/",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk, USER_ROLES.Customer, USER_ROLES.NewCustomer]
                     }
                 });
-        })
-    //.config(function ($httpProvider) {
-    //    $httpProvider.interceptors.push([
-    //      "$injector",
-    //      function ($injector) {
-    //          return $injector.get("handy.authInterceptor");
-    //      }
-    //    ]);
-    //});
+        });
 
     app.run(["$rootScope", "$location", "APPSETTINGS", "handy.authService", "handy.session", function ($rootScope, $location, APPSETTINGS, authService, session) {
         $rootScope.$on("$routeChangeStart", function (event, next) {
