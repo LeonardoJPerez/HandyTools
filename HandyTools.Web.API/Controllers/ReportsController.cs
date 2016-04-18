@@ -1,5 +1,5 @@
-﻿using HandyTools.Web.API.Enums;
-using HandyTools.Web.API.Interfaces;
+﻿using HandyTools.Web.API.Interfaces;
+using HandyTools.Web.API.ViewModels;
 using System.Web.Http;
 
 namespace HandyTools.Web.API.Controllers
@@ -16,22 +16,19 @@ namespace HandyTools.Web.API.Controllers
 
         // GET api/reports/5
         [HttpGet]
-        [Route("{type}")]
-        public IHttpActionResult Get(ReportType type)
+        [Route("{id}")]
+        public IHttpActionResult Get(int id, [FromBody] ReportRequest request)
         {
-            switch (type)
+            switch (id)
             {
-                case ReportType.Report1:
-                    return Ok(this._repository.GetReport1());
-                    break;
+                case 1:
+                    return Ok(this._repository.GetReport1(request.StartDate, request.EndDate));
 
-                case ReportType.Report2:
-                    return Ok(this._repository.GetReport1());
-                    break;
+                case 2:
+                    return Ok(this._repository.GetReport2(request.StartDate, request.EndDate));
 
-                case ReportType.Report3:
-                    return Ok(this._repository.GetReport1());
-                    break;
+                case 3:
+                    return Ok(this._repository.GetReport3(request.StartDate, request.EndDate));
 
                 default:
                     return BadRequest();

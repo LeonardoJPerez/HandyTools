@@ -199,6 +199,7 @@
     <Compile Include="ViewModels\ReservationPickUpRequest.cs" />
     <Compile Include="ViewModels\ReservationCreateRequest.cs" />
     <Compile Include="ViewModels\ReservationCreateModel.cs" />
+    <Compile Include="ViewModels\ReportRequest.cs" />
     <Compile Include="ViewModels\ToolServiceRequest.cs" />
     <Compile Include="ViewModels\ToolSaleRequest.cs" />
     <Compile Include="ViewModels\ToolRequest.cs" />
