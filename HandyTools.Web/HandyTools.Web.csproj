@@ -92,6 +92,12 @@
     <Content Include="app\clerk\clerkDashboardView.html" />
     <Content Include="app\clerk\clerkDashboardModal.html" />
     <Content Include="app\clerk\clerkDashboardModalController.js" />
+    <Content Include="app\clerk\reports\clerkReportController.js" />
+    <Content Include="app\clerk\reports\customerReportController.js" />
+    <Content Include="app\clerk\reports\clerkReportView.html" />
+    <Content Include="app\clerk\reports\inventoryReportController.js" />
+    <Content Include="app\clerk\reports\customerReportView.html" />
+    <Content Include="app\clerk\reports\inventoryReportView.html" />
     <Content Include="app\clerk\tools\toolAddNewController.js" />
     <Content Include="app\clerk\tools\toolMarkForServiceController.js" />
     <Content Include="app\clerk\tools\toolMarkForSaleController.js" />

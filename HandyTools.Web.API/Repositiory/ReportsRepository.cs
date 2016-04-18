@@ -1,4 +1,5 @@
 ﻿using HandyTools.Database;
+using HandyTools.Models;
 using HandyTools.Web.API.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,37 @@ namespace HandyTools.Web.API.Repositiory
         {
         }
 
-        public IEnumerable<string> GetReport1()
+        public IEnumerable<Report1> GetReport1(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<object, object>()
+            {
+                { nameof(startDate), startDate },
+                { nameof(endDate), endDate}
+            };
+
+            return this.Context.Execute<Report1, object>("GetReport_RevenuePerTool", parameters);
         }
 
-        public IEnumerable<string> GetReport2()
+        public IEnumerable<Report2> GetReport2(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<object, object>()
+            {
+                { nameof(startDate), startDate },
+                { nameof(endDate), endDate}
+            };
+
+            return this.Context.Execute<Report2, object>("GetReport_RentedTools", parameters);
         }
 
-        public IEnumerable<string> GetReport3()
+        public IEnumerable<Report3> GetReport3(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); var parameters = new Dictionary<object, object>()
+            {
+                { nameof(startDate), startDate },
+                { nameof(endDate), endDate}
+            };
+
+            return this.Context.Execute<Report3, object>("GetReport_ EmployeeOfTheMonth", parameters);
         }
     }
 }

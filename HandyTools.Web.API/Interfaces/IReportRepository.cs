@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using HandyTools.Models;
+using System;
+using System.Collections.Generic;
 
 namespace HandyTools.Web.API.Interfaces
 {
     public interface IReportRepository
     {
-        IEnumerable<string> GetReport1();
+        IEnumerable<Report1> GetReport1(DateTime startDate, DateTime endDate);
 
-        IEnumerable<string> GetReport2();
+        IEnumerable<Report2> GetReport2(DateTime startDate, DateTime endDate);
 
-        IEnumerable<string> GetReport3();
+        IEnumerable<Report3> GetReport3(DateTime startDate, DateTime endDate);
     }
 }

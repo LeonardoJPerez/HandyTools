@@ -52,6 +52,7 @@
     <Compile Include="Interface\IUserName.cs" />
     <Compile Include="PowerTool.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report1.cs" />
     <Compile Include="Reservation.cs" />
     <Compile Include="ServiceOrder.cs" />
     <Compile Include="Tool.cs" />
