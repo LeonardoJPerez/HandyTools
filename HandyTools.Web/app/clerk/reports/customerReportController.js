@@ -21,27 +21,39 @@
             return function (fieldValue, item) {
                 return fieldValue ? fieldValue : "Pending";
             };
-        })     
-        .controller("reservationsController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", "$uibModal", "$log", "$route", "$location", reservationsController]);
+        })
+        .controller("customerReportController", ["$rootScope", "$scope", "APPSETTINGS", "handy.api", customerReportController]);
 
-    function reservationsController($rootScope, $scope, APPSETTINGS, handyApi, $uibModal, $log, $route, $location) {
+    function customerReportController($rootScope, $scope, APPSETTINGS, handyApi) {
         var vm = this;
 
-        vm.selectedReservation = {};
-        vm.currentUser = $scope.getCurrentUser();
+        var startDate = new Date();
+        var endDate = new Date();
+        endDate.setDate(startDate.getDate() + 10);
 
-        this.getReservations = function () {
-            return handyApi.Reservations.getByUser.query({ id: btoa(vm.currentUser.userName) });
+        vm.startDate = startDate;
+        vm.endDate = endDate;
+        vm.dateOptionsStart = { dropdownSelector: "#ddStartDate", startView: "day", minView: "day", modelType: "Date" };
+        vm.dateOptionsEnd = { dropdownSelector: "#ddEndDate", startView: "day", minView: "day", modelType: "Date" };
+
+        this.getReport = function () {
+            return handyApi.Reports.post({ id: 2 }, {
+                startDate: vm.startDate,
+                endDate: vm.endDate
+            });
         };
 
         vm.refresh = function () {
             $route.reload();
         };
 
-        vm.reservations = this.getReservations();
-      
-        vm.createReservation = function () {
-            $location.path(APPSETTINGS.ApplicationPaths.CreateReservation);
+        vm.items = this.getReport();
+
+        vm.validateStart = function (newDate, oldDate) {
+            vm.showStartDateError = $moment(newDate).isAfter(vm.endDate);
+        };
+        vm.validateEnd = function (newDate, oldDate) {
+            vm.showEndDateError = $moment(newDate).isBefore(vm.startDate);
         };
     }
 }());

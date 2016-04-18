@@ -1,4 +1,5 @@
-﻿(function () {
+﻿/// <reference path="../navigation/navigationView.html" />
+(function () {
     "use strict";
 
     angular
@@ -8,6 +9,9 @@
                 Login: $resource(APPSETTINGS.ApiServerUrl + "api/account/login"),
                 Profile: $resource(APPSETTINGS.ApiServerUrl + "api/account/:id", null, {
                     'update': { method: 'PUT' }
+                }),
+                Reports: $resource(APPSETTINGS.ApiServerUrl + "api/reports/:id", { id: '@id' }, {
+                    'post': { method: 'POST', isArray: true }
                 }),
                 States: $resource(APPSETTINGS.CurrentServerUrl + "assets/states.json"),
                 Tools: {

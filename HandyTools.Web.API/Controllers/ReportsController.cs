@@ -15,7 +15,7 @@ namespace HandyTools.Web.API.Controllers
         }
 
         // GET api/reports/5
-        [HttpGet]
+        [HttpPost]
         [Route("{id}")]
         public IHttpActionResult Get(int id, [FromBody] ReportRequest request)
         {

@@ -58,29 +58,22 @@
                      data: {
                          authorizedRoles: [USER_ROLES.Clerk]
                      }
-                 })
-                .when("/clerk/service-orders", {
-                    controller: "clerkDashboardController as vm",
-                    templateUrl: "app/clerk/clerkDashboardView.html",
-                    data: {
-                        authorizedRoles: [USER_ROLES.Clerk]
-                    }
-                })
-                .when("/clerk/reports/inventory-reports", {
+                 })              
+                .when("/clerk/reports/inventory-report", {
                     controller: "inventoryReportController as vm",
                     templateUrl: "app/clerk/reports/inventoryReportView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk]
                     }
                 })
-                .when("/clerk/customer-reports", {
+                .when("/clerk/reports/customer-report", {
                     controller: "customerReportController as vm",
                     templateUrl: "app/clerk/reports/customerReportView.html",
                     data: {
                         authorizedRoles: [USER_ROLES.Clerk]
                     }
                 })
-                .when("/clerk/clerk-reports", {
+                .when("/clerk/reports/clerk-report", {
                     controller: "clerkReportController as vm",
                     templateUrl: "app/clerk/reports/clerkReportView.html",
                     data: {

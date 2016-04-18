@@ -36,7 +36,7 @@ namespace HandyTools.Web.API.Repositiory
 
         public IEnumerable<Report3> GetReport3(DateTime startDate, DateTime endDate)
         {
-            throw new NotImplementedException(); var parameters = new Dictionary<object, object>()
+            var parameters = new Dictionary<object, object>()
             {
                 { nameof(startDate), startDate },
                 { nameof(endDate), endDate}
