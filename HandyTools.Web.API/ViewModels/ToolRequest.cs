@@ -1,5 +1,6 @@
 ﻿using HandyTools.Web.API.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace HandyTools.Web.API.ViewModels
 {
@@ -22,5 +23,7 @@ namespace HandyTools.Web.API.ViewModels
         public double OriginalPrice { get; set; }
 
         public double SalePrice { get; set; }
+
+        public List<string> Accessories { get; set; }
     }
 }

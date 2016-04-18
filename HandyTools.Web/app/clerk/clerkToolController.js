@@ -16,7 +16,7 @@
             return handyApi.Tools.getToolTypes.query();
         };
         var getTools = function (toolType) {
-            return handyApi.Tools.getToolsClerk.post(null, {
+            return handyApi.Tools.getToolsClerk.post({
                 tooltype: toolType                
             });
         };
@@ -30,8 +30,9 @@
         vm.selectedToolType = null;
         vm.selectedTool = null; 
         vm.toolTypes = getToolTypes();
-        vm.tools = getTools();
+        vm.tools = getTools(null);
         vm.clerk = authService.getCurrentUser().userName;
+
         vm.markForSale = function (gridItem) {
             console.log(gridItem);
             gridItem.clerk = vm.clerk;
@@ -67,6 +68,19 @@
                         return gridItem;
                     }
                 }
+            });
+
+            modalInstance.result.then(function(res) {
+                $route.reload();
+            }, null);
+        }
+
+        vm.addNewTool = function () {             
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: "app/clerk/tools/toolAddNewView.html",
+                controller: "toolAddNewController as vm",
+                size: "md"                 
             });
 
             modalInstance.result.then(function (res) {

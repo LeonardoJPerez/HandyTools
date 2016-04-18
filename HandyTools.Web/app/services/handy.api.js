@@ -11,6 +11,7 @@
                 }),
                 States: $resource(APPSETTINGS.CurrentServerUrl + "assets/states.json"),
                 Tools: {
+                    addTool: $resource(APPSETTINGS.ApiServerUrl + "api/tool/new"),
                     getToolTypes: $resource(APPSETTINGS.ApiServerUrl + "api/tool/types"),
                     getToolsByType: $resource(APPSETTINGS.ApiServerUrl + "api/tool/", null, {
                         'post': { method: 'POST', isArray: true }

@@ -92,6 +92,7 @@
     <Content Include="app\clerk\clerkDashboardView.html" />
     <Content Include="app\clerk\clerkDashboardModal.html" />
     <Content Include="app\clerk\clerkDashboardModalController.js" />
+    <Content Include="app\clerk\tools\toolAddNewController.js" />
     <Content Include="app\clerk\tools\toolMarkForServiceController.js" />
     <Content Include="app\clerk\tools\toolMarkForSaleController.js" />
     <Content Include="app\contract\customerContractModal.html" />

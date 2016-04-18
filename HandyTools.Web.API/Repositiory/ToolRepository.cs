@@ -73,5 +73,19 @@ namespace HandyTools.Web.API.Repositiory
         {
             throw new NotImplementedException();
         }
+
+        public void AddAccessory(int ID, List<string> accessories)
+        {
+            for (int i = 0; i < accessories.Count; i++)
+            {
+                var d = new Dictionary<object, object>()
+                {
+                    { "id", ID },
+                    { "accessory", accessories[i] }
+                };
+
+                this.Context.Execute<Tool, object>("InsertAccessory", d).FirstOrDefault();
+            }
+        }
     }
 }

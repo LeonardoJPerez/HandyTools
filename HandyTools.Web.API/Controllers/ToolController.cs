@@ -27,7 +27,7 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.GetToolTypes());
         }
 
-        // GET api/tool/
+        // POST api/tool/
         [HttpPost]
         public IHttpActionResult GetTools([FromBody] ToolRequest request)
         {
@@ -35,15 +35,16 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.GetTools(request.ToolType, request.StartDate, request.EndDate));
         }
 
-        // GET api/tool/clerk
+        // POST api/tool/clerk
         [HttpPost]
+        [Route("clerk")]
         public IHttpActionResult GetToolsForClerk([FromBody] ToolRequest request)
         {
             if (!ModelState.IsValid) { return BadRequest(); }
             return Ok(this._repository.GetToolsForClerk(request.ToolType));
         }
 
-        // GET api/tool/sale/
+        // POST api/tool/sale/
         [HttpPost]
         [Route("sell")]
         public IHttpActionResult MarkForSale([FromBody] ToolSaleRequest request)
@@ -52,7 +53,7 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.MarkForSale(request.ID, request.Clerk, request.SalePrice));
         }
 
-        // GET api/tool/service/
+        // POST api/tool/service/
         [HttpPost]
         [Route("service")]
         public IHttpActionResult MarkForService([FromBody] ToolServiceRequest request)
@@ -61,12 +62,12 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.MarkForSale(request.ID, request.Clerk, request.SalePrice));
         }
 
-        // GET api/tool/{id}
+        // POST api/tool/new
         [HttpPost]
-        public IHttpActionResult Post(int id, [FromBody] ToolRequest request)
+        [Route("new")]
+        public IHttpActionResult AddTool([FromBody] ToolRequest request)
         {
             if (!ModelState.IsValid) { return BadRequest(); }
-            // TODO: Implement.
 
             var tool = new Tool
             {
@@ -78,7 +79,13 @@ namespace HandyTools.Web.API.Controllers
                 Type = request.ToolType.ToString()
             };
 
-            return Ok(this._repository.CreateTool(tool));
+            var newTool = this._repository.CreateTool(tool);
+            if (request.ToolType == Enums.ToolType.PowerTool)
+            {
+                this._repository.AddAccessory(newTool.ID, request.Accessories);
+            }
+
+            return Ok(newTool);
         }
     }
 }
