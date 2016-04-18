@@ -8,7 +8,7 @@ namespace HandyTools.Models
 
         public HandTool()
         {
-            this.Type = ToolType.Hand.ToString();
+            this.Type = Web.API.Enums.ToolType.Hand.ToString();
         }
     }
 }

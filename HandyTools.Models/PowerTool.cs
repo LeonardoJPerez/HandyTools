@@ -8,7 +8,7 @@ namespace HandyTools.Models
 
         public PowerTool()
         {
-            this.Type = ToolType.PowerTool.ToString();
+            this.Type = Web.API.Enums.ToolType.PowerTool.ToString();
         }
     }
 }

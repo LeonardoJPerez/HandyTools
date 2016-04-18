@@ -8,7 +8,7 @@ namespace HandyTools.Models
 
         public ConstructionTool()
         {
-            this.Type = ToolType.Construction.ToString();
+            this.Type = Web.API.Enums.ToolType.Construction.ToString();
         }
     }
 }
