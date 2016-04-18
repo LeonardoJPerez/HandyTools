@@ -59,7 +59,17 @@ namespace HandyTools.Web.API.Controllers
         public IHttpActionResult MarkForService([FromBody] ToolServiceRequest request)
         {
             if (!ModelState.IsValid) { return BadRequest(); }
-            return Ok(this._repository.MarkForSale(request.ID, request.Clerk, request.SalePrice));
+
+            var serviceOrder = new ServiceOrder()
+            {
+                Cost = request.Cost,
+                DateCompleted = request.EndDate,
+                DateCreated = request.StartDate,
+                ServiceBy = request.Clerk,
+                ToolID = request.ID
+            };
+
+            return Ok(this._repository.MarkForService(serviceOrder));
         }
 
         // POST api/tool/new

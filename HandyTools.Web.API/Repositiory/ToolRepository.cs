@@ -69,9 +69,18 @@ namespace HandyTools.Web.API.Repositiory
             return this.Context.Execute<Tool, object>("MarkForSale", parameters).FirstOrDefault();
         }
 
-        public Tool MarkForService(int toolId)
+        public Tool MarkForService(ServiceOrder serviceOrder)
         {
-            throw new NotImplementedException();
+            var parameters = new Dictionary<object, object>()
+            {
+                { "toolId", serviceOrder.ToolID  },
+                { "dateCreated", serviceOrder.DateCreated  },
+                { "dateCompleted", serviceOrder.DateCompleted  },
+                { "cost", serviceOrder.Cost  },
+                { "servicedBy", serviceOrder.ServiceBy  }
+            };
+
+            return this.Context.Execute<Tool, object>("InsertServiceOrder", parameters).FirstOrDefault();
         }
 
         public void AddAccessory(int ID, List<string> accessories)

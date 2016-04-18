@@ -20,12 +20,12 @@
                 $scope.$close("close");
             }, function (res) {
                 toaster.pop("error", "Tool could no be marked for Sale.", "");
-                $scope.$close("close");
+                $scope.$dismiss("close");
             });
         };
 
         vm.back = function () {
-            $scope.$close("close");
+            $scope.$dismiss("close");
         };
     }
 }());

@@ -21,7 +21,8 @@ namespace HandyTools.Web.API.Interfaces
 
         Tool MarkForSale(int toolId, string clerk, decimal salePrice);
 
-        Tool MarkForService(int toolId);
+        Tool MarkForService(ServiceOrder serviceOrder);
+
         void AddAccessory(int iD, List<string> accessories);
     }
 }

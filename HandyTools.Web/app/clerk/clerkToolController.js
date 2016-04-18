@@ -33,8 +33,7 @@
         vm.tools = getTools(null);
         vm.clerk = authService.getCurrentUser().userName;
 
-        vm.markForSale = function (gridItem) {
-            console.log(gridItem);
+        vm.markForSale = function (gridItem) {          
             gridItem.clerk = vm.clerk;
 
             var modalInstance = $uibModal.open({
@@ -62,7 +61,7 @@
                 animation: true,
                 templateUrl: "app/clerk/tools/toolMarkForServiceView.html",
                 controller: "toolMarkForServiceController as vm",
-                size: "sm",
+                size: "md",
                 resolve: {
                     tool: function () {
                         return gridItem;
