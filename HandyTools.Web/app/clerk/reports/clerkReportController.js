@@ -43,17 +43,17 @@
             });
         };
 
-        vm.refresh = function () {
-            $route.reload();
+        vm.submit = function () {
+            vm.items = this.getReport();
         };
-
-        vm.items = this.getReport();
-
+     
         vm.validateStart = function (newDate, oldDate) {
             vm.showStartDateError = $moment(newDate).isAfter(vm.endDate);
         };
         vm.validateEnd = function (newDate, oldDate) {
             vm.showEndDateError = $moment(newDate).isBefore(vm.startDate);
         };
+
+        vm.submit();
     }
 }());

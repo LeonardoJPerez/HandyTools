@@ -82,8 +82,7 @@
 
                 case -1:
                     // User not found.
-                    if (response.userRole === USER_ROLES.Customer) {
-                        response.userRole = USER_ROLES.NewCustomer;
+                    if (response.userRole === USER_ROLES.NewCustomer) {                    
                         _authService.setCurrentUser(response);
                     } else {
                         response.userRole = USER_ROLES.Invalid;

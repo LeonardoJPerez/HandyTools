@@ -31,17 +31,23 @@
                     <a class="dropdown-toggle" id="ddEndDate" role="button" data-toggle="dropdown" data-target="#">
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control" required value="{{vm.endDate | date:'medium'}}" name="endDate" placeholder="End Date"
-                                   uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showEndDateError" />
+                                   uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showEndDateError"/>
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-calendar"></i>
                             </span>
                         </div>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker ng-model="vm.endDate" datetimepicker-config="vm.dateOptionsEnd" data-on-set-time="vm.validateEnd(newDate, oldDate)" />
+                        <datetimepicker ng-model="vm.endDate" datetimepicker-config="vm.dateOptionsEnd" data-on-set-time="vm.validateEnd(newDate, oldDate)"/>
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.submit()">
+                <i class="glyphicon glyphicon-refresh"></i>
+                <i class="glyphicon glyphicon-none"></i> Submit
+            </button>
         </div>
     </div>
     <div class="row top-buffer">
@@ -51,9 +57,9 @@
                 <tr>
                     <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
                     <th field-name="description" display-name="Description" display-align="left"></th>
-                    <th field-name="revenue" display-name="Revenue" display-align="center"></th>
-                    <th field-name="cost" display-name="Cost" display-align="center"></th>
-                    <th field-name="profit" display-name="Profit" display-align="center"></th>
+                    <th field-name="revenue" display-name="Revenue" display-align="center" display-format="displayCurrency:gridItem"></th>
+                    <th field-name="cost" display-name="Cost" display-align="center" display-format="displayCurrency:gridItem"></th>
+                    <th field-name="profit" display-name="Profit" display-align="center" display-format="displayCurrency:gridItem"></th>
                 </tr>
             </thead>
         </table>

@@ -20,7 +20,7 @@ namespace HandyTools.Web.API.Repositiory
                 { nameof(endDate), endDate}
             };
 
-            return this.Context.Execute<Report1, object>("GetReport_RevenuePerTool", parameters);
+            return this.Context.Execute<Report1, object>("GetReportRevenuePerTool", parameters);
         }
 
         public IEnumerable<Report2> GetReport2(DateTime startDate, DateTime endDate)
@@ -31,7 +31,7 @@ namespace HandyTools.Web.API.Repositiory
                 { nameof(endDate), endDate}
             };
 
-            return this.Context.Execute<Report2, object>("GetReport_RentedTools", parameters);
+            return this.Context.Execute<Report2, object>("GetReportRentedTools", parameters);
         }
 
         public IEnumerable<Report3> GetReport3(DateTime startDate, DateTime endDate)
@@ -42,7 +42,7 @@ namespace HandyTools.Web.API.Repositiory
                 { nameof(endDate), endDate}
             };
 
-            return this.Context.Execute<Report3, object>("GetReport_ EmployeeOfTheMonth", parameters);
+            return this.Context.Execute<Report3, object>("GetReportEmployeeOfTheMonth", parameters);
         }
     }
 }

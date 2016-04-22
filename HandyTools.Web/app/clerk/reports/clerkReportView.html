@@ -31,17 +31,24 @@
                     <a class="dropdown-toggle" id="ddEndDate" role="button" data-toggle="dropdown" data-target="#">
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control" required value="{{vm.endDate | date:'medium'}}" name="endDate" placeholder="End Date"
-                                   uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showEndDateError" />
+                                   uib-popover-html="vm.popupHtml" popover-placement="top" popover-trigger="none" popover-is-open="vm.showEndDateError"/>
                             <span class="input-group-addon">
                                 <i class="glyphicon glyphicon-calendar"></i>
                             </span>
                         </div>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                        <datetimepicker ng-model="vm.endDate" datetimepicker-config="vm.dateOptionsEnd" data-on-set-time="vm.validateEnd(newDate, oldDate)" />
+                        <datetimepicker ng-model="vm.endDate" datetimepicker-config="vm.dateOptionsEnd" data-on-set-time="vm.validateEnd(newDate, oldDate)"/>
                     </ul>
                 </div>
             </div>
+        </div>
+
+        <div class="pull-right">
+            <button class="btn btn-primary btn-sm pull-right" ng-click="vm.submit()">
+                <i class="glyphicon glyphicon-refresh"></i>
+                <i class="glyphicon glyphicon-none"></i> Submit
+            </button>
         </div>
     </div>
     <div class="row top-buffer">
@@ -49,12 +56,12 @@
                cell-width="10em" selection-mode="None" page-items="10">
             <thead>
                 <tr>
-                    <th field-name="ClerkID" display-name="ClerkID" cell-width="3em" enable-sorting="false" display-align="center"></th>
-                    <th field-name="firstname" display-name="firstname" display-align="left"></th>
-                    <th field-name="lastname" display-name="lastname" display-align="left"></th>
-                    <th field-name="HandledPickups" display-name="handledPickups" display-align="center">></th>
-                    <th field-name="HandledDropoffs" display-name="handledDropoffs" display-align="center"></th>
-                    <th field-name="Total" display-name="total" display-align="center" cell-width="9em"></th>
+                    <th field-name="clerkID" display-name="ClerkID" cell-width="3em" enable-sorting="false" display-align="center"></th>
+                    <th field-name="firstName" display-name="Firstname" display-align="center"></th>
+                    <th field-name="lastName" display-name="Lastname" display-align="center"></th>
+                    <th field-name="handledPickups" display-name="Pickups" display-align="center">></th>
+                    <th field-name="handledDropoffs" display-name="DropOffs" display-align="center"></th>
+                    <th field-name="total" display-name="Total" display-align="center" cell-width="9em"></th>
                 </tr>
             </thead>
         </table>
