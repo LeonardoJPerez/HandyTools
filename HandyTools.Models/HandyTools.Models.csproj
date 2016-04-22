@@ -55,6 +55,7 @@
     <Compile Include="Report1.cs" />
     <Compile Include="Reservation.cs" />
     <Compile Include="ServiceOrder.cs" />
+    <Compile Include="Accessory.cs" />
     <Compile Include="Tool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

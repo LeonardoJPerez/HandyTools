@@ -99,6 +99,8 @@
     <Content Include="app\clerk\reports\customerReportView.html" />
     <Content Include="app\clerk\reports\inventoryReportView.html" />
     <Content Include="app\clerk\tools\toolAddNewController.js" />
+    <Content Include="app\clerk\tools\toolDisplayAccessoriesController.js" />
+    <Content Include="app\clerk\tools\toolDisplayAccessories.html" />
     <Content Include="app\clerk\tools\toolMarkForServiceController.js" />
     <Content Include="app\clerk\tools\toolMarkForSaleController.js" />
     <Content Include="app\contract\customerContractModal.html" />

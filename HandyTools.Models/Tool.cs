@@ -19,10 +19,15 @@ namespace HandyTools.Models
         public double OriginalPrice { get; set; }
 
         public double SalePrice { get; set; }
+
         public string SoldBy { get; set; }
 
         public DateTime SoldDate { get; set; }
 
         public virtual string Type { get; set; }
+
+        public bool ForSale { get; set; }
+
+        public bool InService { get; set; }
     }
 }

@@ -12,6 +12,11 @@
                 return new Date(fieldValue).toLocaleString();
             };
         })
+        .filter("displayBoolean", function () {
+            return function (fieldValue, item) {
+                return fieldValue === true ? "Yes" : "No";                 
+            };
+        })
         .filter("displayCurrency", function () {
             return function (fieldValue, item) {
                 return "$" + fieldValue.toFixed(2);

@@ -24,7 +24,8 @@
                         'post': { method: 'POST', isArray: true }
                     }),
                     sellTool: $resource(APPSETTINGS.ApiServerUrl + "api/tool/sell"),
-                    serviceTool: $resource(APPSETTINGS.ApiServerUrl + "api/tool/service")
+                    serviceTool: $resource(APPSETTINGS.ApiServerUrl + "api/tool/service"),
+                    getAccessories: $resource(APPSETTINGS.ApiServerUrl + "api/tool/accessories/:id", { id: '@id'})
                 },
                 Reservations: {
                     getByUser: $resource(APPSETTINGS.ApiServerUrl + "api/reservation/getbyuser/:id"),

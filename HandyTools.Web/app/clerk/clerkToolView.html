@@ -35,7 +35,7 @@
     </div>
     <div class="row top-buffer" ng-init="displaySelected()">
         <table tr-ng-grid="" class="table table-striped table-hover reservation-grid" selected-items="mySelectedItems" items="vm.tools" enable-filtering="false"
-               filter-by="vm.searchText" filter-by-fields="vm.filter" order-by="" page-items="10" cell-width="10em" selection-mode="None">
+               filter-by="vm.searchText" filter-by-fields="vm.filter" order-by="" page-items="10" cell-width="10em" selection-mode="SingleRow">
             <thead>
                 <tr>
                     <th field-name="id" display-name="ID" cell-width="3em" enable-sorting="false" display-align="center"></th>
@@ -43,6 +43,8 @@
                     <th field-name="type" display-name="Type" display-align="center"></th>
                     <th field-name="dailyRentalCharge" display-name="Daily Rental Charge" display-format="displayCurrency:gridItem" display-align="center"></th>
                     <th field-name="deposit" display-name="Deposit" display-align="center" display-format="displayCurrency:gridItem"></th>
+                    <th field-name="forSale" display-name="For Sale" display-align="center"  display-format="displayBoolean:gridItem"></th>
+                    <th field-name="inService" display-name="In Service" display-align="center"  display-format="displayBoolean:gridItem"></th>
                     <th  display-align="center" cell-width="10em"><div class="tr-ng-title">Actions</div></th>                    
                 </tr>
             </thead>
@@ -51,13 +53,13 @@
                     <td>
                         <div class="row">
                             <div class="col-md-2">
-                                <button class="btn btn-primary btn-sm" ng-click="vm.markForSale(gridItem);">
+                                <button class="btn btn-primary btn-sm" ng-disabled="gridItem.forSale" ng-click="vm.markForSale(gridItem);">
                                     Sell
                                 </button>
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary btn-sm" ng-click="vm.markForService(gridItem);">
+                                <button class="btn btn-primary btn-sm" ng-disabled="gridItem.inService" ng-click="vm.markForService(gridItem);">
                                     Service
                                 </button>
                             </div>

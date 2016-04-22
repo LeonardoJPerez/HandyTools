@@ -27,6 +27,14 @@ namespace HandyTools.Web.API.Controllers
             return Ok(this._repository.GetToolTypes());
         }
 
+        // GET api/tool/types
+        [HttpGet]
+        [Route("accessories/{id}")]
+        public IHttpActionResult GetAccessories(int id)
+        {
+            return Ok(this._repository.GetAccessories(id));
+        }
+
         // POST api/tool/
         [HttpPost]
         public IHttpActionResult GetTools([FromBody] ToolRequest request)

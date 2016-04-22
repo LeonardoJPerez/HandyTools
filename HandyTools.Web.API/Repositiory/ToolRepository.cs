@@ -96,5 +96,15 @@ namespace HandyTools.Web.API.Repositiory
                 this.Context.Execute<Tool, object>("InsertAccessory", d).FirstOrDefault();
             }
         }
+
+        public IEnumerable<Accessory> GetAccessories(int toolId)
+        {
+            var parameters = new Dictionary<object, object>()
+            {
+                { "id", toolId },
+            };
+
+            return this.Context.Execute<Accessory, object>("GetAccessories", parameters);
+        }
     }
 }

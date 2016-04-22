@@ -15,6 +15,8 @@ namespace HandyTools.Web.API.Interfaces
 
         IEnumerable<Tool> GetTools(ToolType? type);
 
+        IEnumerable<Accessory> GetAccessories(int toolId);
+
         IEnumerable<Tool> GetTools(ToolType? type, DateTime? startDate, DateTime? endDate);
 
         IEnumerable<Tool> GetToolsForClerk(ToolType? toolType);
