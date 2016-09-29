@@ -62,10 +62,10 @@ deploy:
 - provider: Environment
   name: HandyToolsWebApi 
 
-notifications:
-- provider: Slack
-  incoming_webhook: https://hooks.slack.com/services/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
-  channel: handytools-bot
-  on_build_success: true
-  on_build_failure: true
-  on_build_status_changed: true
+#notifications:
+#- provider: Slack
+#  incoming_webhook: https://hooks.slack.com/services/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
+#  channel: handytools-bot
+#  on_build_success: true
+#  on_build_failure: true
+#  on_build_status_changed: true
