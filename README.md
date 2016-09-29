@@ -4,4 +4,6 @@ HandyTools
 
 WebSite: http://ec2-54-86-182-32.compute-1.amazonaws.com/#/
 
-Web API: http://ec2-54-88-14-114.compute-1.amazonaws.com/swagger/ui/index
+
+[//]: # (WebSite: http://ec2-54-86-182-32.compute-1.amazonaws.com/#/)
+[//]: # (Web API: http://ec2-54-88-14-114.compute-1.amazonaws.com/swagger/ui/index)
